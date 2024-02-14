@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>I Exist!</title>
-<canvas id="top_left" width="600" height="60"></canvas>
-<style>
-  body {
-    background-color: rgb(107, 0, 0);
-  }
-.button {
-  display: inline-block;
-  padding: 15px 25px;
-  font-size: 24px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: #d7d700;
-  background-color: #410000;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #aa2761;
-}
+  
+  <head>
+    <meta charset="UTF-8" />
+    <title>I Exist!</title>
+    <canvas id="top_left" width="600" height="60"></canvas>
+    <style>
+      body {
+        background-color: rgb(107, 0, 0);
+      }
+      .button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #d7d700;
+        background-color: #410000;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #aa2761;
+      }
 
-.button:hover {background-color: #351660}
+      .button:hover {background-color: #351660}
 
-.button:active {
-  background-color: #5b4974;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-</style>
-<script>
-        var tl_canvas = document.getElementById('top_left');
-        var tl_context = tl_canvas.getContext('2d');
-        tl_context.fillStyle = 'rgba(0, 65, 65, 1.0)';
-        tl_context.fillRect(0, 0, 300, 60);
-        tl_context.fillStyle = 'rgba(65, 0, 0, 1.0)';
-        tl_context.fillRect(300, 0, 300, 60);
-        tl_context.font = '30pt Georgia';
-        tl_context.fillStyle = 'rgba(255, 215, 0, 1.0)';
-        tl_context.fillText('TTRPG Meetup', 10, 40);
-        tl_context.fillStyle = 'rgba(192, 192, 192, 1.0)';
-        tl_context.fillText('Team Silver', 310, 40);
-</script>
-</head>
-<body>
-
-<button class="button"
-onclick="document.location='https://wyattcake1.github.io/CS410Silver/feasibility-presentation'">Feasability Presentation</button>
-
-</body>
+      .button:active {
+        background-color: #5b4974;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+    </style>
+    <script>
+      var tl_canvas = document.getElementById('top_left');
+      var tl_context = tl_canvas.getContext('2d');
+      tl_context.fillStyle = 'rgba(0, 65, 65, 1.0)';
+      tl_context.fillRect(0, 0, 300, 60);
+      tl_context.fillStyle = 'rgba(65, 0, 0, 1.0)';
+      tl_context.fillRect(300, 0, 300, 60);
+      tl_context.font = '30pt Georgia';
+      tl_context.fillStyle = 'rgba(255, 215, 0, 1.0)';
+      tl_context.fillText('TTRPG Meetup', 10, 40);
+      tl_context.fillStyle = 'rgba(192, 192, 192, 1.0)';
+      tl_context.fillText('Team Silver', 310, 40);
+    </script>
+  </head>
+  <body>
+    <h1></h1>
+    <button class="button"
+      onclick="document.location='https://wyattcake1.github.io/CS410Silver/feasibility-presentation'">Feasability Presentation</button>
+    </body>
 </html>
