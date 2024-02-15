@@ -29,3 +29,20 @@ body {
     color: #d7d700;
     font-size: 45px;
 }
+.bioContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 100px;
+}
+.bio {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 200px;
+    color:#d7d700;
+    text-align: center;
+    font-size: 35px;
+    white-space: nowrap;
+}
+.bio img{
+    margin-left: auto;
+}
