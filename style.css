@@ -17,7 +17,9 @@ body {
     box-shadow: 0 9px #aa2761;
 }
 
-.button:hover {background-color: #351660}
+.button:hover {
+    background-color: #351660
+}
 
 .button:active {
     background-color: #5b4974;
