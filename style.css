@@ -45,4 +45,6 @@ body {
 }
 .bio img{
     margin-left: auto;
+    width: 25%;
+    height: 25%;
 }
