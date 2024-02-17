@@ -7,7 +7,7 @@ function main(){
   tl_context.fillRect(300, 0, 300, 60);
   tl_context.font = '30pt Georgia';
   tl_context.fillStyle = 'rgba(255, 215, 0, 1.0)';
-  tl_context.fillText('TTRPG Meetup', 10, 40);
+  tl_context.fillText('RoleCall', 10, 40);
   tl_context.fillStyle = 'rgba(192, 192, 192, 1.0)';
   tl_context.fillText('Team Silver', 310, 40);
 }
