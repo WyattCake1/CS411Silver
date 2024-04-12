@@ -48,3 +48,16 @@ body {
     width: 25%;
     height: 25%;
 }
+.statement {
+    margin-bottom: 100px;
+    color:#d7d700;
+    text-align: center;
+    font-size: 30px;
+    white-space: nowrap;
+}
+.characteristics {
+    margin-bottom: 100px;
+    color:#d7d700;
+    font-size: 30px;
+    white-space: nowrap;
+}
