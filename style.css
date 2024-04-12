@@ -77,3 +77,13 @@ body {
     font-size: 25px;
     white-space: nowrap;
 }
+.references{
+    list-style-type: none;
+    margin-bottom: 100px;
+    color:#d7d700;
+    font-size: 20px;
+    white-space: nowrap;
+}
+.references li{
+    margin-bottom: 50px;
+}
