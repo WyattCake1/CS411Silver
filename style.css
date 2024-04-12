@@ -71,3 +71,9 @@ body {
     font-size: 20px;
     white-space: nowrap; 
 }
+.pitch{
+    margin-bottom: 100px;
+    color:#d7d700;
+    font-size: 25px;
+    white-space: nowrap;
+}
