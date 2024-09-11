@@ -87,3 +87,48 @@ body {
 .references li{
     margin-bottom: 50px;
 }
+.labs{
+    display: flex;
+    flex-direction: column;
+    margin-top: none;
+}
+.labDisplay{
+    width:850px;
+    height: 90vh;
+}
+.labContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 0 20px;
+}
+.buttonContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.buttonGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.buttonGroup button{
+    border:1px solid #aa2761;
+    background-color: #410000;
+    color:#d7d700;
+    width: 300px;
+    height: 60px;
+    margin: 0 10px
+}
+.buttonGroup button:hover{
+    background-color: #aa2761;
+    border:1px solid #410000
+}
+.labTitle {
+    color: #d7d700;
+    font-size: 45px;
+    margin: 0 140px;
+}
+.buttonGroup a {
+    text-decoration: none;
+}
