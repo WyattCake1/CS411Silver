@@ -22,14 +22,12 @@ Docker Compose allows us to run the Flask web server and MySQL database in seper
 CS411SILVER/
 ├── backend/
 │   ├── Dockerfile           # Dockerfile for Flask backend
+│   ├── requirements.txt     # Python dependencies
 │   ├── src/
 │   │   └── app.py           # Flask app code
-│   │   └── init-test.py     # For backend test 
-│   │   └── requirements.txt # Python dependencie
 │   └── tests/               # Unit tests for the backend
 ├── database/                # Directory for database-related files
 │   ├── data/                # MySQL data will be stored here
-│   ├── init-test.sql        # For backend test
 ├── docker/
 │   ├── docker-compose.yml   # Docker Compose setup
 │   ├── README.md            # This README.md 
@@ -73,7 +71,7 @@ This tests the communication between the Flask container and the MySQL container
 ```
 
 #### Workflows 
-You can make changes to the backend and those changes will be reflected in the running Docker container because of volume mounting.
+You can make changes to the backend and those changes will be reflected in the running Docker container thanks to [volume mounting](https://docs.docker.com/engine/storage/volumes/).
 
 To rebuild and restart containers use:
 ```
