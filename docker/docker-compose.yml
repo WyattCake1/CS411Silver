@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: python-backend
+    build:
+      context: ../backend  # Navigate out of docker/ and into backend/
+      dockerfile: ../backend/Dockerfile  # Dockerfile is located in backend directory
+    ports:
+      - "5000:5000"  # Exposing port 5000 from the container to 5001 on the host
+    environment:
+      - MYSQL_HOST=db  # Database host name (service name in docker-compose)
+      - MYSQL_PORT=3306  # Database port
+      - MYSQL_USER=testuser  # Database username
+      - MYSQL_ROOT_PASSWORD=testpassword  # Database root password
+      - MYSQL_DB=testdb  # Database name
+    depends_on:
+      - db  # Ensure the db service starts before the backend
+    restart: always  # Restart policy
+    volumes:
+      - ../backend/src:/app/src  # Mount the backend/src directory into the container
+      - ../backend/tests:/app/tests  # Mount the tests directory into the container
+
+  db:
+    container_name: mysql-db
+    image: mysql:8.0  # Using the latest MySQL image
+    environment:
+      MYSQL_ROOT_PASSWORD: testpassword  # Root password for MySQL
+      MYSQL_DATABASE: testdb  # Database to create on startup
+      MYSQL_USER: testuser  # User to create on startup
+      MYSQL_PASSWORD: testpassword  # Password for the new user
+    ports:
+      - "3306:3306"  # Exposing port 3306 for MySQL
+    volumes:
+      - db_data:/var/lib/mysql  # Named volume for MySQL data persistence
+      - ../database:/docker-entrypoint-initdb.d  # Mounting the SQL script directory
+    command: --init-file /docker-entrypoint-initdb.d/init-test.sql  # Command to run the initialization script
+    restart: always  # Restart policy
+
+volumes:
+  db_data:  # Named volume definition for MySQL data
