@@ -67,7 +67,7 @@ This tests the communication between the Flask container and the MySQL container
 
 ##### Expected Output:
 ```
-[{"id":1,"name":"Behran"},{"id":2,"name":"Bradley"},{"id":3,"name":"Chris"},{"id":4,"name":"Sebastian"},{"id":5,"name":"Wyatt"}]
+[{"id":1,"name":"Berhan"},{"id":2,"name":"Bradley"},{"id":3,"name":"Chris"},{"id":4,"name":"Sebastian"},{"id":5,"name":"Wyatt"}]
 ```
 
 #### Workflows 
