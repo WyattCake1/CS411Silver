@@ -1,5 +1,8 @@
 # Docker - Python Backend with MySQL Setup
 
+## Acknowledgments
+Thank you to Docker for creating the [Docker workshop](https://docs.docker.com/get-started/workshop/). This information was critical for understanding and setting up this configuration. 
+
 ## Prerequisites
 Make sure you have these installed
 
