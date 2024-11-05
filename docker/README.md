@@ -1,4 +1,5 @@
 # Docker - Python Backend with MySQL Setup
+### Author: Chris Skeens
 
 ## Acknowledgments
 Thank you to Docker for creating the [Docker workshop](https://docs.docker.com/get-started/workshop/). This information was critical for understanding and setting up this configuration. 
@@ -9,6 +10,8 @@ Make sure you have these installed
 [Docker](https://www.docker.com/products/docker-desktop/)
 
 [Docker Compose](https://docs.docker.com/compose/install/)
+
+*The database container will not initialize correctly if port 3306 is being used by your local environment* 
 
 ### Backend Configuration
 The Python backend is located in the `backend/` folder and is built using the `Dockerfile`. The backend will run a Flask web server that communicates with the MySQL db. 
