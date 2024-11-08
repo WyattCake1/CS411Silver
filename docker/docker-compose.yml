@@ -30,7 +30,7 @@ services:
       MYSQL_USER: testuser  # User to create on startup
       MYSQL_PASSWORD: testpassword  # Password for the new user
     ports:
-      - "3306:3306"  # Exposing port 3306 for MySQL
+      - "3307:3307"  # Exposing port 3306 for MySQL
     volumes:
       - db_data:/var/lib/mysql  # Named volume for MySQL data persistence
       - ../database:/docker-entrypoint-initdb.d  # Mounting the SQL script directory
