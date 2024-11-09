@@ -6,7 +6,7 @@ listings = [
     {"id":1,"name":"Pathfinder"},
     {"id":2,"name":"Dungeons and Dragons"},
     {"id":3,"name":"Cyberpunk RED"},
-    {"id":4,"name":"Call of Cuthulu"},
+    {"id":4,"name":"Call of Cuthulu"}
 ]
 
 @app.route('/listings', methods=['GET'])

@@ -18,25 +18,31 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.rolecall.ui.theme.ResponseCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
 
 @Preview(showBackground = true)
 @Composable
 fun UserListingsPage() {
-    val userListings = remember { mutableListOf<Listing>() }
-
-
-
-    getListings(userListings)
-
+    val userListings = remember { mutableStateListOf<Listing>() }
+    LaunchedEffect(Unit) {
+        if(userListings.isEmpty()){
+            getListings(userListings)
+        }
+    }
     Scaffold{ innerPadding ->
         Column(
             modifier = Modifier
@@ -49,10 +55,23 @@ fun UserListingsPage() {
         }
     }
 }
-fun getListings(userListings: MutableList<Listing>) {
-    userListings.add(Listing(1, "Listing 1"))
-    userListings.add(Listing(2, "Listing 2"))
-    userListings.add(Listing(3, "Listing 3"))
+suspend fun getListings(userListings: MutableList<Listing>) {
+    val flaskClient = FlaskClient()
+    withContext(Dispatchers.IO){
+    flaskClient.requestUserListings(object : ResponseCallback{
+        override fun onSuccess(response: String) {
+            val listings = response.drop(1).dropLast(3).split("},")
+            for (listing in listings) {
+                val newListing = Listing(listing)
+                userListings.add(newListing)
+            }
+        }
+
+        override fun onError(e: IOException?) {
+            System.err.println(e?.message)
+        }
+    })
+        }
 }
 
 @Composable
@@ -85,10 +104,11 @@ fun ListingItem(listing: Listing){
             ){
                 Row(verticalAlignment = Alignment.CenterVertically){
                     Text(
-                        text = listing.name,
+                        text = listing.getName(),
                         fontSize = 32.sp,
                     )
-                    IconButton(onClick = { }){
+                    IconButton(onClick = {
+                    }){
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = "Listing Details",
@@ -97,7 +117,9 @@ fun ListingItem(listing: Listing){
                     }
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Button(modifier = Modifier.weight(1f),onClick = { }) {
                         Text(
