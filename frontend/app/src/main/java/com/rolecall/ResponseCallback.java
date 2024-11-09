@@ -1,4 +1,4 @@
-package com.rolecall.ui.theme;
+package com.rolecall;
 
 import java.io.IOException;
 

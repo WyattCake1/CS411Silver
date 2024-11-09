@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rolecall.ui.theme.ResponseCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -43,22 +42,27 @@ fun UserListingsPage() {
             getListings(userListings)
         }
     }
-    Scaffold{ innerPadding ->
+    Render(userListings)
+}
+@Composable
+fun Render(userListings: MutableList<Listing>) {
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             RenderHeader()
             RenderListings(userListings)
         }
     }
 }
 suspend fun getListings(userListings: MutableList<Listing>) {
+    println("Getting")
     val flaskClient = FlaskClient()
     withContext(Dispatchers.IO){
-    flaskClient.requestUserListings(object : ResponseCallback{
+    flaskClient.requestUserListings(object : ResponseCallback {
         override fun onSuccess(response: String) {
             val listings = response.drop(1).dropLast(3).split("},")
             for (listing in listings) {
@@ -71,21 +75,27 @@ suspend fun getListings(userListings: MutableList<Listing>) {
             System.err.println(e?.message)
         }
     })
-        }
+    }
 }
 
 @Composable
 fun RenderListings(userListings: List<Listing>){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        userListings.forEach{
-            ListingItem(it)
+    if (userListings.isEmpty()){
+        //clean up this
+        Text("You have no listings, get started matching with button below")
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            userListings.forEach{
+                ListingItem(it)
+            }
         }
     }
+
 }
 
 @Composable
@@ -104,8 +114,8 @@ fun ListingItem(listing: Listing){
             ){
                 Row(verticalAlignment = Alignment.CenterVertically){
                     Text(
-                        text = listing.getName(),
-                        fontSize = 32.sp,
+                        text = listing.name,
+                        fontSize = 28.sp,
                     )
                     IconButton(onClick = {
                     }){

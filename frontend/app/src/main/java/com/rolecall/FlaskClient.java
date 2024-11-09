@@ -1,8 +1,5 @@
 package com.rolecall;
 
-import com.rolecall.ui.theme.FlaskEndpoints;
-import com.rolecall.ui.theme.ResponseCallback;
-
 import java.io.IOException;
 
 import okhttp3.Call;
