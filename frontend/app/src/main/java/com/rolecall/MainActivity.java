@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.rolecall.R;
 
 public class MainActivity extends AppCompatActivity {
+    //Test Comment 2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
