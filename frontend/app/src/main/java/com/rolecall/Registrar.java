@@ -57,36 +57,30 @@ public class Registrar extends AppCompatActivity {
         Button submitButton;
 
 
-        // register editText with instance
+
         editText = (EditText) findViewById(R.id.editText);
         editPassword= (EditText)findViewById(R.id.editpassword);
         editEmail= (EditText)findViewById(R.id.editemail);
 
 
-        // also register the submit button with the appropriate id
+
         submitButton = (Button) findViewById(R.id.submitButton);
 
-        // handle the button with the onClickListener
+
         submitButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        // get the data with the
-                        // "editText.text.toString()"
-
                         setEnteredData(editText.getText().toString());
                         setEnteredPassword(editPassword.getText().toString());
                         setEnteredEmail(editEmail.getText().toString());
-                        //enteredEmail = editEmail.getText().toString();
 
-                        // check whether the retrieved data is
-                        // empty or not based on the emptiness
-                        // provide the Toast Message
+                        // check whether the retrieved data is empty or not
+
                         if (enteredData.isEmpty() || enteredPassword.isEmpty() || enteredEmail.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Please Enter the Data", Toast.LENGTH_LONG).show();
                         } else {
-                            //setEnteredData(enteredData);
                             Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
                         }
 
