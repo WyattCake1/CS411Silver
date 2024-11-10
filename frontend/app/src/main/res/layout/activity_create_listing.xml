@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="start"
+    android:padding="50dp"
+    tools:context="com.rolecall.CreateListing">
+
+    <TextView
+        android:id="@+id/game_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Title" />
+
+    <TextView
+        android:id="@+id/char_slots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Character Slots" />
+
+    <TextView
+        android:id="@+id/pref_environment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prefferred Enviornment" />
+
+    <Spinner
+        android:id="@+id/pref_environment_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/max_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum Distance"
+
+        />
+
+    <TextView
+        android:id="@+id/pref_role_char"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prefferred Role for Character"
+
+        />
+
+    <TextView
+        android:id="@+id/pref_role_campaign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prefferred Role in Campaign"
+
+        />
+
+    <TextView
+        android:id="@+id/campaign_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Campaign Difficulty" />
+
+    <Spinner
+        android:id="@+id/campaign_difficulty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/pref_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Schedule"
+
+        />
+</LinearLayout>
