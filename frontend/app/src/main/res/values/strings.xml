@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RoleCall</string>
+    <string name="title_activity_user_listings_page">UserListingsPage</string>
 </resources>
