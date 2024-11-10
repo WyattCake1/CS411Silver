@@ -2,8 +2,7 @@ package com.rolecall;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,23 +12,27 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rolecall.R;
 
-public class MainActivity extends AppCompatActivity {
+public class Profile extends AppCompatActivity {
+    Registrar myObject = new Registrar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
-        final Button mybutton = findViewById(R.id.supabutton);
+        Intent intent= getIntent();
+        String holder= intent.getStringExtra("Username");
 
-        mybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Registrar.class);
-                view.getContext().startActivity(intent);}
-        });
 
+        TextView textView = (TextView) findViewById(R.id.usertext);
+        textView.setText(holder);
+        holder= intent.getStringExtra("Password");
+        textView= (TextView) findViewById(R.id.userpassword);
+        textView.setText(holder);
+        holder= intent.getStringExtra("Email");
+        textView= (TextView) findViewById(R.id.useremail);
+        textView.setText(holder);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
