@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.472" />
 
     <Button
-        android:id="@+id/supabuttons"
+        android:id="@+id/List"
         android:layout_width="190dp"
         android:layout_height="91dp"
         android:text="Listings"

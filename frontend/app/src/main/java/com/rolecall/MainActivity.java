@@ -22,11 +22,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Button mybutton = findViewById(R.id.supabutton);
+        final Button ListingButton = findViewById(R.id.List);
 
         mybutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Registrar.class);
+                view.getContext().startActivity(intent);}
+        });
+
+        ListingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ViewListing.class);
                 view.getContext().startActivity(intent);}
         });
 
