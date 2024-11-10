@@ -9,7 +9,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class FlaskClient{
-
     OkHttpClient client = new OkHttpClient();
     public FlaskClient(){
 
