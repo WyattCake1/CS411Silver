@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        final Button mybutton = findViewById(R.id.supabutton);
-        final Button ListingButton = findViewById(R.id.List);
+        final Button mybutton = findViewById(R.id.new_account_button);
+        final Button ListingButton = findViewById(R.id.login_button);
 
         mybutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
         ListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 Intent intent = new Intent(view.getContext(), UserListingsPage.class);
+=======
+                Intent intent = new Intent(view.getContext(), CreateListing.class);
+>>>>>>> main
                 view.getContext().startActivity(intent);}
         });
 

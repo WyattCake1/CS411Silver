@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">RoleCall</string>
+<<<<<<< HEAD
     <string name="title_activity_user_listings_page">UserListingsPage</string>
+=======
+    <string name="account_creation">Create Account</string>
+    <string name="login_label">Login</string>
+    <string name="empty_field">Null</string>
+    <string name="location_label">Location:</string>
+    <string name="difficulty_label">Difficulty:</string>
+    <string name="schedule_label">Schedule</string>
+    <string name="start_label">Start Time:</string>
+    <string name="end_label">End Time:</string>
+    <string name="role_label">Desired Role</string>
+    <string name="back_button_label">Back</string>
+    <string name="match_button_label">Match</string>
+>>>>>>> main
 </resources>

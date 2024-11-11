@@ -5,6 +5,226 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rolecall.ViewListing">
+    tools:context="com.rolecall.ViewListing"
+    android:background="@drawable/gradient_background">
+
+    <View
+        android:id="@+id/frame"
+        android:layout_width="300dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/listing_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </View>
+
+    <TextView
+        android:id="@+id/game_name_field"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintTop_toTopOf="@+id/frame">
+    </TextView>
+
+    <TextView
+        android:id="@+id/location_label"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/location_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/game_name_field">
+    </TextView>
+
+    <TextView
+        android:id="@+id/environment_field"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toEndOf="@+id/location_label"
+        app:layout_constraintTop_toTopOf="@+id/location_label">
+    </TextView>
+
+    <TextView
+        android:id="@+id/difficulty_label"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/difficulty_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/environment_field">
+    </TextView>
+
+    <TextView
+        android:id="@+id/difficulty_field"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toEndOf="@+id/difficulty_label"
+        app:layout_constraintTop_toTopOf="@+id/difficulty_label">
+    </TextView>
+
+    <TextView
+        android:id="@+id/schedule_label"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/schedule_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty_label">
+    </TextView>
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="30dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/start_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_label">
+    </TextView>
+
+    <TextView
+        android:id="@+id/start_time_field"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toEndOf="@+id/start_time"
+        app:layout_constraintTop_toTopOf="@+id/start_time">
+    </TextView>
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="30dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/end_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/start_time">
+    </TextView>
+
+    <TextView
+        android:id="@+id/end_time_field"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toEndOf="@+id/end_time"
+        app:layout_constraintTop_toTopOf="@+id/end_time">
+    </TextView>
+
+    <TextView
+        android:id="@+id/role_label"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/role_label"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/end_time">
+    </TextView>
+
+    <TextView
+        android:id="@+id/role_field"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/empty_field"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/role_label">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/back_button"
+            android:text="@string/back_button_label"
+            android:textColor="@color/white"
+            android:onClick="backToListings">
+        </androidx.appcompat.widget.AppCompatButton>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="10dp"
+            android:layout_weight="1">
+        </View>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/match_button"
+            android:text="@string/match_button_label"
+            android:textColor="@color/white"
+            android:onClick="backToListings">
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
