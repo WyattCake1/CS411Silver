@@ -12,4 +12,5 @@
     <string name="role_label">Desired Role</string>
     <string name="back_button_label">Back</string>
     <string name="match_button_label">Match</string>
+    <string name="submit_button_label">Submit</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.rolecall;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -40,6 +43,8 @@ public class CreateListing extends AppCompatActivity {
         environment_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView)parent.getChildAt(0)).setTextSize(20);
                 String item = parent.getItemAtPosition(position).toString();
                 Toast.makeText(CreateListing.this, "Selected Location: " + item, Toast.LENGTH_SHORT).show();
             }
@@ -63,6 +68,8 @@ public class CreateListing extends AppCompatActivity {
         difficulty_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView)parent.getChildAt(0)).setTextSize(20);
                 String item = parent.getItemAtPosition(position).toString();
                 Toast.makeText(CreateListing.this, "Selected Difficulty: " + item, Toast.LENGTH_SHORT).show();
             }
@@ -72,5 +79,9 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void viewListing(View v){
+        startActivity(new Intent(CreateListing.this, ViewListing.class));
     }
 }

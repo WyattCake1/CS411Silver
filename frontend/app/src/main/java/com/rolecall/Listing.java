@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 public class Listing {
     private int id;
+    private boolean campaign;
     private String name;
     private String environment;
     private String startTime;
@@ -37,6 +38,10 @@ public class Listing {
         return id;
     }
 
+    public boolean isCampaign() {
+        return campaign;
+    }
+
     public String getName() {
         return name;
     }
@@ -63,6 +68,10 @@ public class Listing {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCampaign(boolean campaign) {
+        this.campaign = campaign;
     }
 
     public void setName(String name) {
