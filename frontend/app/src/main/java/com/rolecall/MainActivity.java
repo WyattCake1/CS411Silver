@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        final Button mybutton = findViewById(R.id.supabutton);
-        final Button ListingButton = findViewById(R.id.List);
+        final Button mybutton = findViewById(R.id.new_account_button);
+        final Button ListingButton = findViewById(R.id.login_button);
 
         mybutton.setOnClickListener(new View.OnClickListener() {
             @Override
