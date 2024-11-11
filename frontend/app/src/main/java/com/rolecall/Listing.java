@@ -1,11 +1,7 @@
 package com.rolecall;
-<<<<<<< HEAD
-//Extremely Empty Boiler plate Listing class for testing
-=======
 
 import java.text.SimpleDateFormat;
 
->>>>>>> main
 public class Listing {
     private int id;
     private String name;

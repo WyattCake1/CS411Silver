@@ -34,11 +34,7 @@ public class MainActivity extends AppCompatActivity {
         ListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
                 Intent intent = new Intent(view.getContext(), UserListingsPage.class);
-=======
-                Intent intent = new Intent(view.getContext(), CreateListing.class);
->>>>>>> main
                 view.getContext().startActivity(intent);}
         });
 
