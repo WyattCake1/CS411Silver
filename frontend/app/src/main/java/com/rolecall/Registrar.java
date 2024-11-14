@@ -7,6 +7,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+
 
 
 import androidx.activity.EdgeToEdge;
@@ -52,20 +59,14 @@ public class Registrar extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registrar);
 
-
         EditText editText;
         EditText editPassword;
         EditText editEmail;
         Button submitButton;
 
-
-
         editText = (EditText) findViewById(R.id.editText);
         editPassword= (EditText)findViewById(R.id.editpassword);
         editEmail= (EditText)findViewById(R.id.editemail);
-
-
-
         submitButton = (Button) findViewById(R.id.submitButton);
 
 
@@ -78,16 +79,51 @@ public class Registrar extends AppCompatActivity {
                         setEnteredPassword(editPassword.getText().toString());
                         setEnteredEmail(editEmail.getText().toString());
 
-                        // check whether the retrieved data is empty or not
+                        new Thread(() -> {
+                            try {
+                                String urlString = "http://10.0.2.2:5000/register";
+                                String encodedParams = "username=" + URLEncoder.encode(getEnteredData(), "UTF-8") +
+                                        "&password=" + URLEncoder.encode(getEnteredPassword(), "UTF-8") +
+                                        "&email=" + URLEncoder.encode(getEnteredEmail(), "UTF-8");
+                                urlString += "?" + encodedParams;
 
-                        if (enteredData.isEmpty() || enteredPassword.isEmpty() || enteredEmail.isEmpty()) {
-                            Toast.makeText(getApplicationContext(), "Please Enter the Data", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
-                        }
+                                URL url = new URL(urlString);
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                conn.setRequestMethod("GET");
 
+                                int responseCode = conn.getResponseCode();
+                                if (responseCode == 200) {
+                                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                    StringBuilder content = new StringBuilder();
+                                    String inputLine;
+
+                                    while ((inputLine = in.readLine()) != null) {
+                                        content.append(inputLine);
+                                    }
+
+                                    in.close();
+                                    conn.disconnect();
+
+                                    // Print the response
+                                    System.out.println("Response: " + content.toString());
+
+                                    // Show a Toast on success (must run on UI thread)
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show());
+                                } else {
+                                    System.out.println("Request failed with status: " + responseCode);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
+                            }
+                        }).start();
                     }
                 });
+
+
+
+
+
 
         Button mybutton = findViewById(R.id.nextButton);
         mybutton.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +135,6 @@ public class Registrar extends AppCompatActivity {
                 intent.putExtra("Email",enteredEmail);
                 view.getContext().startActivity(intent);}
         });
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

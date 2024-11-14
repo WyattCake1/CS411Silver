@@ -9,5 +9,5 @@ ENV FLASK_APP=src/app.py
 EXPOSE 5000
 
 
-CMD ["python", "./src/app.py"]
-#CMD ["python", "./src/init-test.py"]
+#CMD ["python", "./src/app.py"]
+CMD ["python", "./src/init-test.py"]
