@@ -94,20 +94,10 @@ public class Registrar extends AppCompatActivity {
                                 int responseCode = conn.getResponseCode();
                                 if (responseCode == 200) {
                                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                                    StringBuilder content = new StringBuilder();
-                                    String inputLine;
-
-                                    while ((inputLine = in.readLine()) != null) {
-                                        content.append(inputLine);
-                                    }
 
                                     in.close();
                                     conn.disconnect();
 
-                                    // Print the response
-                                    System.out.println("Response: " + content.toString());
-
-                                    // Show a Toast on success (must run on UI thread)
                                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show());
                                 } else {
                                     System.out.println("Request failed with status: " + responseCode);
@@ -119,11 +109,6 @@ public class Registrar extends AppCompatActivity {
                         }).start();
                     }
                 });
-
-
-
-
-
 
         Button mybutton = findViewById(R.id.nextButton);
         mybutton.setOnClickListener(new View.OnClickListener() {
