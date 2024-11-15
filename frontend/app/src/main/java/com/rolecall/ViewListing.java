@@ -36,7 +36,7 @@ public class ViewListing extends AppCompatActivity {
     public void fillFields(View v){
         //Dummy Listing for proof of concept
         display = new Listing();
-        display.setName("Dungeons & Dragons");
+        display.setGameName("Dungeons & Dragons");
         display.setEnvironment("Foundry Virtual Tabletop");
         display.setStartTime("Mon 12:30 PM");
         display.setEndTime("Mon 4:30 PM");
@@ -49,7 +49,7 @@ public class ViewListing extends AppCompatActivity {
         TextView startTime = findViewById(R.id.start_time_field);
         TextView endTime = findViewById(R.id.end_time_field);
         TextView role = findViewById(R.id.role_field);
-        gameName.setText(display.getName());
+        gameName.setText(display.getGameName());
         difficulty.setText(display.getDifficulty());
         environment.setText(display.getEnvironment());
         startTime.setText(display.getStartTime());
