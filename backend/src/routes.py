@@ -47,7 +47,7 @@ def save_user_listings():
 def get_users():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM users;')
+    cursor.execute('SELECT * FROM UserProfiles;')
     users = cursor.fetchall()
     conn.close()
     return jsonify(users)
@@ -62,7 +62,7 @@ def set_users():
     email = request.args.get('email')
 
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('INSERT INTO users (name,password,email) VALUES (%s, %s, %s);', (username,password,email))
+    cursor.execute('INSERT INTO UserProfiles (name,password,email) VALUES (%s, %s, %s);', (username,password,email))
     conn.commit()
     conn.close()
 
