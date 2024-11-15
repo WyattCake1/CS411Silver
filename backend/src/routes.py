@@ -43,6 +43,35 @@ def save_user_listings():
 
     return jsonify({"message": "Listing saved", "listing_id": listing_id}),201
 
+@main.route('/users', methods=['GET'])
+def get_users():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM users;')
+    users = cursor.fetchall()
+    conn.close()
+    return jsonify(users)
+
+@main.route('/register', methods=['GET'])
+def set_users():
+    conn=get_db_connection()
+
+     # Retrieve query parameters
+    username = request.args.get('username')
+    password = request.args.get('password')
+    email = request.args.get('email')
+
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('INSERT INTO users (name,password,email) VALUES (%s, %s, %s);', (username,password,email))
+    conn.commit()
+    conn.close()
+
+    # Process the data or respond with the received data
+    response = {
+        "message": f"Hello, {username}. Your password is {password}, your email is {email}."
+    }
+    return jsonify(response)
+
 
 
 @main.route('/flaskStatus', methods=['GET'])

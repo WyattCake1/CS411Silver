@@ -8,6 +8,7 @@ USE rolecall_database;
 CREATE TABLE IF NOT EXISTS UserProfiles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL
 );
 
@@ -28,8 +29,9 @@ CREATE TABLE IF NOT EXISTS UserListings (
 );
 
 -- Test Inserts
-INSERT INTO UserProfiles (name, email) VALUES
-    ('Test User', 'user@test.com');
+INSERT INTO UserProfiles (name,password,email) VALUES
+    ('Test User','testPass', 'user@test.com'),
+    ('Berhans','BEESecret','bclar006@gmail.com');
 
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
     (TRUE, 'Dnd', 'Online', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Hard', 'Healer', 1),
