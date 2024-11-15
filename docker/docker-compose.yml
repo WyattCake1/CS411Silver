@@ -9,33 +9,40 @@ services:
     ports:
       - "5000:5000"  # Exposing port 5000 from the container to 5001 on the host
     environment:
-      - MYSQL_HOST=db  # Database host name (service name in docker-compose)
-      - MYSQL_PORT=3306  # Database port
-      - MYSQL_USER=testuser  # Database username
-      - MYSQL_ROOT_PASSWORD=testpassword  # Database root password
-      - MYSQL_DB=testdb  # Database name
+      DB_HOST: db
+      DB_USER: testuser
+      DB_PASSWORD: testpassword
+      DB_NAME: rolecall_database  # Database name
     depends_on:
       - db  # Ensure the db service starts before the backend
     restart: always  # Restart policy
     volumes:
       - ../backend/src:/app/src  # Mount the backend/src directory into the container
       - ../backend/tests:/app/tests  # Mount the tests directory into the container
-
+    networks:
+      - rolecall-network
   db:
+    image: mysql:8.0
     container_name: mysql-db
-    image: mysql:8.0  # Using the latest MySQL image
     environment:
-      MYSQL_ROOT_PASSWORD: testpassword  # Root password for MySQL
-      MYSQL_DATABASE: testdb  # Database to create on startup
-      MYSQL_USER: testuser  # User to create on startup
-      MYSQL_PASSWORD: testpassword  # Password for the new user
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: rolecall_database
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
     ports:
-      - "3306:3306"  # Exposing port 3306 for MySQL
+      - "3306:3306"
+    command: --bind-address=0.0.0.0
     volumes:
-      - db_data:/var/lib/mysql  # Named volume for MySQL data persistence
-      - ../database:/docker-entrypoint-initdb.d  # Mounting the SQL script directory
-    command: --init-file /docker-entrypoint-initdb.d/init-test.sql  # Command to run the initialization script
-    restart: always  # Restart policy
+      - mysql_data:/var/lib/mysql
+      - ../database/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - rolecall-network
+
+
+networks:
+  rolecall-network:
+    driver: bridge
 
 volumes:
-  db_data:  # Named volume definition for MySQL data
+  mysql_data:
+    driver: local

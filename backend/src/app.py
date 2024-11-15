@@ -1,17 +1,13 @@
-from flask import Flask,jsonify
+from flask import Flask
+import db
+from routes import main
 
-app = Flask(__name__)
+def start_app():
+    app = Flask(__name__)
+    db.init_app(app)
+    app.register_blueprint(main)
 
-listings = [
-    {"id":1,"name":"Pathfinder"},
-    {"id":2,"name":"Dungeons and Dragons"},
-    {"id":3,"name":"Cyberpunk RED"},
-    {"id":4,"name":"Call of Cuthulu"}
-]
-
-@app.route('/listings', methods=['GET'])
-def get_listings():
-    return jsonify(listings)
+    return app
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    start_app().run(host='0.0.0.0', port=5000, debug=True)

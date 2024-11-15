@@ -80,15 +80,16 @@ fun Render(userListings: MutableList<Listing>) {
 suspend fun getListings(userListings: MutableList<Listing>) {
     val flaskClient = FlaskClient()
     withContext(Dispatchers.IO){
-        flaskClient.requestUserListings(object : ResponseCallback {
+        //using default user id 1 for time being
+        flaskClient.requestUserListings(1,object : ResponseCallback {
             override fun onSuccess(response: String) {
-                val listings = response.drop(1).dropLast(3).split("},")
+                val trimmedResponse = response.trim().removePrefix("[").removeSuffix("]")
+                val listings = trimmedResponse.split("},").map { "$it}" }.map {it.trim()}
                 for (listing in listings) {
                     val newListing = Listing(listing)
                     userListings.add(newListing)
                 }
             }
-
             override fun onError(e: IOException?) {
                 System.err.println(e?.message)
             }
@@ -132,11 +133,10 @@ fun ListingItem(listing: Listing){
             ){
                 Row(verticalAlignment = Alignment.CenterVertically){
                     Text(
-                        text = listing.name,
+                        text = listing.gameName,
                         fontSize = 28.sp,
                     )
-                    IconButton(onClick = {
-                    }){
+                    IconButton(onClick = {}){
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = "Listing Details",

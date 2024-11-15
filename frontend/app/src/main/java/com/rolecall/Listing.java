@@ -1,49 +1,109 @@
 package com.rolecall;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class Listing {
-    private int id;
     private boolean campaign;
-    private String name;
+    private String gameName;
     private String environment;
     private String startTime;
     private String endTime;
     private String difficulty;
     private String role;
+    private String userProfileId;
 
+    //Empty
     public Listing(){
     }
-
-    public Listing(int id, String name){
-        this.id = id;
-        this.name =name;
+    
+    //Passed in values (when making new ones)
+    public Listing(boolean campaign, String gameName, String environment, String startTime, String endTime,
+            String difficulty, String role, String userProfileId) {
+        this.campaign = campaign;
+        this.gameName = gameName;
+        this.environment = environment;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.difficulty = difficulty;
+        this.role = role;
+        this.userProfileId = userProfileId;
     }
+
+    //passed in json
     public Listing(String json){
-        String[] attributes = json.substring(1).split(",");
+        String cleanJson = json.substring(1,json.length()-1).trim();
+        String[] attributes = cleanJson.split(",\n");
         for (String attribute : attributes){
-            String[] values = attribute.split(":");
-            switch(values[0]){
-                case "\"id\"":
-                    this.id = Integer.parseInt(values[1]);
+            attribute = attribute.trim();
+            String[] splitAttribute = attribute.split(":",2);
+            String id = splitAttribute[0].substring(1,splitAttribute[0].length()-1).trim();
+            String value = splitAttribute[1].trim();
+            switch (id){
+                case "campaign":
+                    this.campaign = Integer.parseInt(value) == 1;
                     break;
-                case "\"name\"":
-                    this.name = values[1];
+                case "gameName":
+                    this.gameName = value.substring(1,value.length()-1);
+                    break;
+                case "environment":
+                    this.environment = value.substring(1,value.length()-1);
+                    break;
+                case "startTime":
+                    this.startTime = value.substring(1,value.length()-1);
+                    break;
+                case "endTime":
+                    this.endTime = value.substring(1,value.length()-1);
+                    break;
+                case "difficulty":
+                    this.difficulty = value.substring(1,value.length()-1);
+                    break;
+                case "role":
+                    this.role = value.substring(1,value.length()-1);
+                    break;
+                case "userProfileId":
+                    this.userProfileId = value;
                     break;
             }
         }
     }
 
-    public int getId() {
-        return id;
+    public String toJson() {
+
+        return "{" +
+                "\"campaign\": " + campaign + ", " +
+                "\"gameName\": \"" + gameName + "\", " +
+                "\"environment\": \"" + environment + "\", " +
+                "\"startTime\": \"" + convertToTimeStamp(startTime) + "\", " +
+                "\"endTime\": \"" + convertToTimeStamp(endTime) + "\", " +
+                "\"difficulty\": \"" + difficulty + "\", " +
+                "\"role\": \"" + role + "\", " +
+                "\"userProfileId\": \"" + userProfileId + "\"" +
+                "}";
     }
 
+    public Timestamp convertToTimeStamp(String time){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.getDefault());
+        try {
+            System.out.println(time);
+            Date parsedDate = dateFormat.parse(time);
+            System.out.println(parsedDate);
+            return new Timestamp(parsedDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public boolean isCampaign() {
         return campaign;
     }
 
-    public String getName() {
-        return name;
+    public String getGameName() {
+        return gameName;
     }
 
     public String getEnvironment() {
@@ -66,16 +126,16 @@ public class Listing {
         return role;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getUserProfileId(){
+        return this.userProfileId;
     }
 
     public void setCampaign(boolean campaign) {
         this.campaign = campaign;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public void setEnvironment(String environment) {
@@ -96,5 +156,9 @@ public class Listing {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setUserProfileId(String userProfileId){
+        this.userProfileId = userProfileId;
     }
 }
