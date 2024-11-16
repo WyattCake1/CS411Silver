@@ -55,6 +55,33 @@ public class CreateListing extends AppCompatActivity {
             }
         });
 
+        ArrayList<String> arrayDist = new ArrayList<>();
+        arrayDist.add("5");
+        arrayDist.add("10");
+        arrayDist.add("25");
+        arrayDist.add("50");
+        arrayDist.add("100");
+        ArrayAdapter<String> adapterDist = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
+        adapterEnv.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        Spinner distance_spinner = findViewById(R.id.max_distance_spinner);
+        distance_spinner.setAdapter(adapterDist);
+        distance_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView)parent.getChildAt(0)).setTextSize(20);
+                String item = parent.getItemAtPosition(position).toString();
+                Toast.makeText(CreateListing.this, "Selected Max Distance: " + item, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
 
         ArrayList<String> arrayDiff = new ArrayList<>();
         arrayDiff.add("First Game");

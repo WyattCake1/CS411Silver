@@ -13,4 +13,21 @@
     <string name="back_button_label">Back</string>
     <string name="match_button_label">Match</string>
     <string name="submit_button_label">Submit</string>
+    <string name="create_listing_title">Create Listing</string>
+    <string name="game_title_label">Game Title</string>
+    <string name="char_slot_label">Character Slots</string>
+    <string name="pref_role_char">Character Roles</string>
+    <string name="pref_role_camp">Campaign Roles</string>
+    <string name="location_spin_label">Select Location</string>
+    <string name="max_dist_label">Select Maximum Distance</string>
+    <string name="difficulty_spin_label">Select Difficulty</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="sunday_label">Sunday</string>
+    <string name="monday_label">Monday</string>
+    <string name="tuesday_label">Tuesday</string>
+    <string name="wed_label">Wednesday</string>
+    <string name="thursday_label">Thursday</string>
+    <string name="friday_label">Friday</string>
+    <string name="saturday_label">Saturday</string>
 </resources>
