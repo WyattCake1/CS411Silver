@@ -56,7 +56,6 @@ def get_users():
 def set_users():
     conn=get_db_connection()
 
-     # Retrieve query parameters
     username = request.args.get('username')
     password = request.args.get('password')
     email = request.args.get('email')
@@ -66,7 +65,6 @@ def set_users():
     conn.commit()
     conn.close()
 
-    # Process the data or respond with the received data
     response = {
         "message": f"Hello, {username}. Your password is {password}, your email is {email}."
     }
