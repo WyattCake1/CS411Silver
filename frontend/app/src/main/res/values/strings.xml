@@ -14,6 +14,8 @@
     <string name="match_button_label">Match</string>
     <string name="submit_button_label">Submit</string>
     <string name="create_listing_title">Create Listing</string>
+    <string name="character_type_listing">Character Listing</string>
+    <string name="campaign_type_listing">Campaign Listing</string>
     <string name="game_title_label">Game Title</string>
     <string name="char_slot_label">Character Slots</string>
     <string name="pref_role_char">Character Roles</string>
