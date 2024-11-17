@@ -79,7 +79,7 @@ public class Registrar extends AppCompatActivity {
                         setEnteredPassword(editPassword.getText().toString());
                         setEnteredEmail(editEmail.getText().toString());
 
-                        new Thread(() -> {
+                         Thread HttpThread= new  Thread(() -> {
                             try {
                                 String urlString = "http://10.0.2.2:5000/register";
                                 String encodedParams = "username=" + URLEncoder.encode(getEnteredData(), "UTF-8") +
@@ -88,25 +88,24 @@ public class Registrar extends AppCompatActivity {
                                 urlString += "?" + encodedParams;
 
                                 URL url = new URL(urlString);
-                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                conn.setRequestMethod("GET");
+                                HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+                                myConnection.setRequestMethod("GET");
 
-                                int responseCode = conn.getResponseCode();
+                                int responseCode = myConnection.getResponseCode();
                                 if (responseCode == 200) {
-                                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                    BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
 
                                     in.close();
-                                    conn.disconnect();
+                                    myConnection.disconnect();
 
                                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show());
                                 } else {
-                                    System.out.println("Request failed with status: " + responseCode);
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
                                 }
                             } catch (Exception e) {
-                                e.printStackTrace();
                                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
                             }
-                        }).start();
+                        });HttpThread.start();
                     }
                 });
 
