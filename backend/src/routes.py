@@ -43,6 +43,17 @@ def save_user_listings():
 
     return jsonify({"message": "Listing saved", "listing_id": listing_id}),201
 
+@main.route('/listings/<int:userId>', methods=['GET'])
+def get_match_listings(userId):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM UserListings WHERE userProfileId != %s",(userId,))
+    compare_listings = cursor.fetchall()
+    conn.close()
+    #TODO call match_listings function and return results
+    # results = match_listings(compare_listings, passed in user listing)
+    # retrun results
+
 @main.route('/users', methods=['GET'])
 def get_users():
     conn = get_db_connection()
