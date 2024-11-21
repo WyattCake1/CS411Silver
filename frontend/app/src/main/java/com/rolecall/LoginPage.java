@@ -86,8 +86,8 @@ public class LoginPage extends AppCompatActivity {
                                 JSONParser jsonParser = new JSONParser();
 
 
-                                String encodedParams = "username=" + URLEncoder.encode(username, "UTF-8") +
-                                        "&password=" + URLEncoder.encode(password, "UTF-8");
+                                String encodedParams = "username=" + URLEncoder.encode(getEnteredData(), "UTF-8") +
+                                        "&password=" + URLEncoder.encode(getEnteredPassword(), "UTF-8");
 
                                 urlString+= "?"+encodedParams;
                                 URL url = new URL(urlString);
@@ -125,9 +125,7 @@ public class LoginPage extends AppCompatActivity {
                                     }
 
 
-                                    if (holder == "") {
-                                        System.out.println("Wrong login.");
-
+                                    if (holder.isEmpty()) {
                                         View.OnClickListener listener = new View.OnClickListener() {
 
                                         @Override
@@ -137,6 +135,7 @@ public class LoginPage extends AppCompatActivity {
                                         }
                                     };
                                         submitButton.setOnClickListener(listener);
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show());
 
 
                                     } else {
