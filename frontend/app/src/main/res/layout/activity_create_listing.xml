@@ -594,8 +594,8 @@
         <RadioGroup
             android:layout_width="337dp"
             android:layout_height="126dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="128dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="88dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -614,6 +614,20 @@
                 android:text="@string/campaign_type_listing"
                 android:textColor="@color/white" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/choose_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/choose_listing_type_title"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
