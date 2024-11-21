@@ -70,6 +70,23 @@ def set_users():
     }
     return jsonify(response)
 
+@main.route('/login', methods=['GET'])
+def check_users():
+    conn=get_db_connection()
+
+    username = request.args.get('username')
+    password = request.args.get('password')
+    
+
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('Select name, password from UserProfiles Where name=%(emp_no)s AND password=%(emp_no2)s ;',{ 'emp_no': username,'emp_no2': password })
+    result=cursor.fetchall()
+    conn.commit()
+    conn.close()
+
+    
+    return jsonify(result)
+
 
 
 @main.route('/flaskStatus', methods=['GET'])
