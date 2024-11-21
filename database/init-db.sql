@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS UserListings (
     campaign BOOLEAN NOT NULL,
     gameName VARCHAR(255) NOT NULL,
     environment VARCHAR(100) NOT NULL,
-    startTime TIMESTAMP,
-    endTime TIMESTAMP,
+    startTime VARCHAR(100),
+    endTime VARCHAR(100),
     difficulty VARCHAR(100),
     role VARCHAR(100),
     userProfileId INT,
@@ -34,6 +34,6 @@ INSERT INTO UserProfiles (name,password,email) VALUES
     ('Berhans','BEESecret','bclar006@gmail.com');
 
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Hard', 'Healer', 1),
-    (FALSE, 'Dnd', 'In-Person', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Hard', 'Tank', 1),
-    (TRUE, 'Warhammer', 'Online', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Hard', 'Rogue', 1);
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', 'Healer', 1),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', 'Tank', 1),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', 'Rogue', 1);

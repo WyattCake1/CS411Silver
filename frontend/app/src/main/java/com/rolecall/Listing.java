@@ -1,13 +1,8 @@
 package com.rolecall;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Locale;
+import java.io.Serializable;
 
-
-public class Listing {
+public class Listing implements Serializable {
     private boolean campaign;
     private String gameName;
     private String environment;
@@ -78,26 +73,14 @@ public class Listing {
                 "\"campaign\": " + campaign + ", " +
                 "\"gameName\": \"" + gameName + "\", " +
                 "\"environment\": \"" + environment + "\", " +
-                "\"startTime\": \"" + convertToTimeStamp(startTime) + "\", " +
-                "\"endTime\": \"" + convertToTimeStamp(endTime) + "\", " +
+                "\"startTime\": \"" + startTime + "\", " +
+                "\"endTime\": \"" + endTime + "\", " +
                 "\"difficulty\": \"" + difficulty + "\", " +
                 "\"role\": \"" + role + "\", " +
                 "\"userProfileId\": \"" + userProfileId + "\"" +
                 "}";
     }
 
-    public Timestamp convertToTimeStamp(String time){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z", Locale.getDefault());
-        try {
-            System.out.println(time);
-            Date parsedDate = dateFormat.parse(time);
-            System.out.println(parsedDate);
-            return new Timestamp(parsedDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     public boolean isCampaign() {
         return campaign;
     }
