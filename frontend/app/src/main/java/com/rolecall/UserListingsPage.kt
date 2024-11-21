@@ -119,6 +119,7 @@ fun RenderListings(userListings: List<Listing>){
 
 @Composable
 fun ListingItem(listing: Listing){
+    val context = LocalContext.current
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(125.dp)
@@ -136,7 +137,11 @@ fun ListingItem(listing: Listing){
                         text = listing.gameName,
                         fontSize = 28.sp,
                     )
-                    IconButton(onClick = {}){
+                    IconButton(onClick = {
+                        val intent = Intent(context, ViewListing::class.java)
+                        intent.putExtra("Listing",listing)
+                        context.startActivity(intent)
+                    }){
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = "Listing Details",

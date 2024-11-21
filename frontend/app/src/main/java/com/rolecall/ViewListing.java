@@ -27,6 +27,8 @@ public class ViewListing extends AppCompatActivity {
             return insets;
         });
         fillFields(new TextView(this));
+        Intent intent = getIntent();
+        Listing listing = (Listing) intent.getSerializableExtra("Listing");
     }
 
     public void backToListings(View v){
