@@ -127,7 +127,7 @@ public class LoginPage extends AppCompatActivity {
 
                                     if (holder.isEmpty()) {
                                         View.OnClickListener listener = new View.OnClickListener() {
-
+//f
                                         @Override
                                         public void onClick (View view){
                                             Intent intent = new Intent(view.getContext(), Registrar.class);
