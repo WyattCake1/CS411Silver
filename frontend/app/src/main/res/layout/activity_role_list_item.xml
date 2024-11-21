@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@drawable/listing_background">
+
+    <EditText
+        android:id="@+id/role_count"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="number"
+        android:hint="@string/enter_amount" />
+
+    <TextView
+        android:id="@+id/role_name"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_weight="4"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="[Role here]" />
+
+
+</LinearLayout>

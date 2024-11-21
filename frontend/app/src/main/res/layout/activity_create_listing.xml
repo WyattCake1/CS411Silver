@@ -17,7 +17,7 @@
         <View
             android:id="@+id/frame"
             android:layout_width="397dp"
-            android:layout_height="942dp"
+            android:layout_height="1100dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/listing_background"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
             android:id="@+id/char_slots_input"
             android:layout_width="160dp"
             android:layout_height="56dp"
-            android:layout_marginTop="148dp"
+            android:layout_marginTop="268dp"
             android:layout_marginEnd="36dp"
             android:gravity="center"
             android:hint="@string/char_slot_label"
@@ -165,8 +165,8 @@
             android:id="@+id/textInputEditText"
             android:layout_width="160dp"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="268dp"
             android:gravity="center"
             android:hint="@string/game_title_label"
             android:inputType="text"
@@ -175,10 +175,10 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/campaign_listing_button" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/pref_role_input"
+        <Button
+            android:id="@+id/pref_role_character_button"
             android:layout_width="160dp"
             android:layout_height="56dp"
             android:layout_marginTop="20dp"
@@ -187,13 +187,13 @@
             android:hint="@string/pref_role_char"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/char_slots_input" />
 
-        <TextView
-            android:id="@+id/pref_role_campaign"
+        <Button
+            android:id="@+id/pref_role_campaign_button"
             android:layout_width="160dp"
             android:layout_height="56dp"
             android:layout_marginStart="32dp"
@@ -202,7 +202,7 @@
             android:hint="@string/pref_role_camp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
@@ -219,7 +219,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pref_role_campaign" />
+            app:layout_constraintTop_toBottomOf="@+id/pref_role_campaign_button" />
 
         <TextView
             android:id="@+id/difficulty_title"
@@ -245,7 +245,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pref_role_input" />
+            app:layout_constraintTop_toBottomOf="@+id/pref_role_character_button" />
 
         <Spinner
             android:id="@+id/campaign_difficulty_spinner"
@@ -591,26 +591,43 @@
 
         </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/character_listing_button"
-            android:layout_width="159dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="32dp"
+        <RadioGroup
+            android:layout_width="337dp"
+            android:layout_height="126dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="88dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radio_character"
+                android:layout_width="185dp"
+                android:layout_height="63dp"
+                android:text="@string/character_type_listing"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_campaign"
+                android:layout_width="185dp"
+                android:layout_height="63dp"
+                android:text="@string/campaign_type_listing"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/choose_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="60dp"
-            android:text="@string/character_type_listing"
+            android:text="@string/choose_listing_type_title"
             android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioButton
-            android:id="@+id/campaign_listing_button"
-            android:layout_width="159dp"
-            android:layout_height="37dp"
-            android:layout_marginStart="32dp"
-            android:text="@string/campaign_type_listing"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/character_listing_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
