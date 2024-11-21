@@ -17,7 +17,7 @@
         <View
             android:id="@+id/frame"
             android:layout_width="397dp"
-            android:layout_height="942dp"
+            android:layout_height="1100dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/listing_background"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,8 +177,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/pref_role_input"
+        <Button
+            android:id="@+id/pref_role_character_button"
             android:layout_width="160dp"
             android:layout_height="56dp"
             android:layout_marginTop="20dp"
@@ -187,13 +187,13 @@
             android:hint="@string/pref_role_char"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/char_slots_input" />
 
-        <TextView
-            android:id="@+id/pref_role_campaign"
+        <Button
+            android:id="@+id/pref_role_campaign_button"
             android:layout_width="160dp"
             android:layout_height="56dp"
             android:layout_marginStart="32dp"
@@ -202,7 +202,7 @@
             android:hint="@string/pref_role_camp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
@@ -219,7 +219,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pref_role_campaign" />
+            app:layout_constraintTop_toBottomOf="@+id/pref_role_campaign_button" />
 
         <TextView
             android:id="@+id/difficulty_title"
@@ -245,7 +245,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pref_role_input" />
+            app:layout_constraintTop_toBottomOf="@+id/pref_role_character_button" />
 
         <Spinner
             android:id="@+id/campaign_difficulty_spinner"

@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +37,9 @@ public class CreateListing extends AppCompatActivity {
             return insets;
         });
 
+        //------------------------------------------------------------------------------------------
+        // Create listing page data structures for drop down menus.
+        // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
         arrayEnv.add("In-person");
         arrayEnv.add("Digital");
@@ -54,14 +61,14 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
-
+        // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
         arrayDist.add("5");
         arrayDist.add("10");
         arrayDist.add("25");
         arrayDist.add("50");
         arrayDist.add("100");
-        ArrayAdapter<String> adapterDist = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
+        ArrayAdapter<String> adapterDist = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayDist);
         adapterEnv.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner distance_spinner = findViewById(R.id.max_distance_spinner);
         distance_spinner.setAdapter(adapterDist);
@@ -79,10 +86,7 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
-
-
-
-
+        // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
         arrayDiff.add("First Game");
         arrayDiff.add("Casual");
@@ -106,7 +110,50 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
-    }
+        //------------------------------------------------------------------------------------------
+        // Create listing page logic
+        Button roleCampaignButton = findViewById(R.id.pref_role_campaign_button);
+        Button roleCharacterButton = findViewById(R.id.pref_role_character_button);
+        EditText charSlots = findViewById(R.id.char_slots_input);
+        // Character radio button
+        RadioButton radioButtonChar = findViewById(R.id.radio_character);
+        radioButtonChar.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Listing type is character, enable preferred character button and disable character slots input and preferred role campaign button
+                roleCharacterButton.setEnabled(true);
+                roleCharacterButton.setCursorVisible(true);
+
+                roleCampaignButton.setEnabled(false);
+                roleCampaignButton.setCursorVisible(false);
+
+                charSlots.setFocusable(false);
+                charSlots.setEnabled(false);
+                charSlots.setCursorVisible(false);
+
+
+            }
+        });
+
+        // Campaign radio button
+        RadioButton radioButtonCamp = findViewById(R.id.radio_campaign);
+        radioButtonCamp.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Listing type is campaign, enable number of character slots and preferred role campaign, disable preferred character role
+                charSlots.setFocusable(true);
+                charSlots.setEnabled(true);
+                charSlots.setCursorVisible(true);
+
+                roleCampaignButton.setEnabled(true);
+                roleCampaignButton.setCursorVisible(true);
+
+                roleCharacterButton.setEnabled(false);
+                roleCharacterButton.setCursorVisible(false);
+                roleCharacterButton.setKeyListener(null);
+            }
+        });
+
+
+    } // End onCreate
 
     public void viewListing(View v){
         startActivity(new Intent(CreateListing.this, ViewListing.class));
