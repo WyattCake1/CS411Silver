@@ -77,11 +77,10 @@ public class LoginPage extends AppCompatActivity {
                         setEnteredData(editText.getText().toString());
                         setEnteredPassword(editPassword.getText().toString());
 
-
                         Thread HttpThread= new  Thread(() -> {
                             try {
 
-                                String urlString = "http://localhost:5000/login";
+                                String urlString = "http://10.0.2.2:5000/login";
                                 String username = "Berhans";
                                 String password = "BEESecret";
                                 JSONParser jsonParser = new JSONParser();
@@ -116,10 +115,8 @@ public class LoginPage extends AppCompatActivity {
                                     JSONParser parser = new JSONParser();
                                     JSONArray jsonResponse = (JSONArray) parser.parse(content.toString());
                                     for (Object element : jsonResponse) {
-                                        // Each element is a JSONObject
                                         JSONObject jsonObject = (JSONObject) element;
 
-                                        // Access individual fields in the JSONObject
                                         String name = (String) jsonObject.get("name");
                                         String SQLpassword = (String) jsonObject.get("password");
                                         holder=SQLpassword;
@@ -131,9 +128,28 @@ public class LoginPage extends AppCompatActivity {
                                     if (holder == "") {
                                         System.out.println("Wrong login.");
 
-                                    } else {
-                                        System.out.println("Success");
+                                        View.OnClickListener listener = new View.OnClickListener() {
 
+                                        @Override
+                                        public void onClick (View view){
+                                            Intent intent = new Intent(view.getContext(), Registrar.class);
+                                            view.getContext().startActivity(intent);
+                                        }
+                                    };
+                                        submitButton.setOnClickListener(listener);
+
+
+                                    } else {
+                                        View.OnClickListener listener = new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick (View view){
+                                                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                                view.getContext().startActivity(intent);
+                                            }
+                                        };
+                                        submitButton.setOnClickListener(listener);
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show());
                                     }
 
 
