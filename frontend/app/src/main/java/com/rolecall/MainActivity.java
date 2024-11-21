@@ -23,6 +23,15 @@ public class MainActivity extends AppCompatActivity {
 
         final Button mybutton = findViewById(R.id.new_account_button);
         final Button ListingButton = findViewById(R.id.login_button);
+        final Button LoginButton= findViewById(R.id.Real_Login);
+
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(view.getContext(), LoginPage.class);
+                view.getContext().startActivity(intent);
+            }
+        });
 
         mybutton.setOnClickListener(new View.OnClickListener() {
             @Override
