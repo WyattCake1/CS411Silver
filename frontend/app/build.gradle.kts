@@ -53,7 +53,9 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.okhttp)
-    testImplementation(libs.junit)
+    implementation ("com.googlecode.json-simple:json-simple:1.1.1")
+    implementation(libs.junit)
+
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
