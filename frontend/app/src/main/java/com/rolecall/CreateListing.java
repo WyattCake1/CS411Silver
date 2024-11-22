@@ -3,6 +3,7 @@ package com.rolecall;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,13 @@ public class CreateListing extends AppCompatActivity {
         });
 
         //------------------------------------------------------------------------------------------
+        // Roles for dialog recycler view
+        ArrayList<Pair<String, String>> roles = new ArrayList<>();
+        roles.add(new Pair<>("0", "Tank"));
+        roles.add(new Pair<>("0", "DPS"));
+        roles.add(new Pair<>("0", "Face"));
+        roles.add(new Pair<>("0", "Healer"));
+        roles.add(new Pair<>("0", "Support"));
         // Create listing page data structures for drop down menus.
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
@@ -114,7 +122,7 @@ public class CreateListing extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-        // Create Listing Toggle Switch
+        // Listing Toggle Switch
         Button roleCampaignButton = findViewById(R.id.pref_role_campaign_button);
         Button roleCharacterButton = findViewById(R.id.pref_role_character_button);
         EditText charSlots = findViewById(R.id.char_slots_input);
@@ -143,6 +151,15 @@ public class CreateListing extends AppCompatActivity {
                 roleCharacterButton.setCursorVisible(false);
                 roleCharacterButton.setKeyListener(null);
             }
+        });
+        // Role Selection
+        roleCampaignButton.setOnClickListener(v -> {
+            ListRoleDialog dialogFragment = ListRoleDialog.newInstance(roles);
+            dialogFragment.show(getSupportFragmentManager(), "ListRoleDialog");
+        });
+        roleCharacterButton.setOnClickListener(v -> {
+            ListRoleDialog dialogFragment = ListRoleDialog.newInstance(roles);
+            dialogFragment.show(getSupportFragmentManager(), "ListRoleDialog");
         });
 
 
