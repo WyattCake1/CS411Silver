@@ -135,8 +135,8 @@
             android:id="@+id/char_slots_input"
             android:layout_width="160dp"
             android:layout_height="56dp"
-            android:layout_marginTop="268dp"
-            android:layout_marginEnd="36dp"
+            android:layout_marginTop="156dp"
+            android:layout_marginEnd="32dp"
             android:gravity="center"
             android:hint="@string/char_slot_label"
             android:inputType="number"
@@ -165,8 +165,8 @@
             android:id="@+id/textInputEditText"
             android:layout_width="160dp"
             android:layout_height="56dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="268dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="156dp"
             android:gravity="center"
             android:hint="@string/game_title_label"
             android:inputType="text"
@@ -591,43 +591,21 @@
 
         </LinearLayout>
 
-        <RadioGroup
-            android:layout_width="337dp"
-            android:layout_height="126dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="88dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/radio_character"
-                android:layout_width="185dp"
-                android:layout_height="63dp"
-                android:text="@string/character_type_listing"
-                android:textColor="@color/white" />
-
-            <RadioButton
-                android:id="@+id/radio_campaign"
-                android:layout_width="185dp"
-                android:layout_height="63dp"
-                android:text="@string/campaign_type_listing"
-                android:textColor="@color/white" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/choose_type_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="60dp"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/listing_type_switch"
+            android:layout_width="202dp"
+            android:layout_height="73dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="68dp"
             android:text="@string/choose_listing_type_title"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.SwitchCompat>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

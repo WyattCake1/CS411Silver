@@ -6,20 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rolecall.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -110,15 +114,13 @@ public class CreateListing extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-        // Create listing page logic
+        // Create Listing Toggle Switch
         Button roleCampaignButton = findViewById(R.id.pref_role_campaign_button);
         Button roleCharacterButton = findViewById(R.id.pref_role_character_button);
         EditText charSlots = findViewById(R.id.char_slots_input);
-        // Character radio button
-        RadioButton radioButtonChar = findViewById(R.id.radio_character);
-        radioButtonChar.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
+        listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                // Listing type is character, enable preferred character button and disable character slots input and preferred role campaign button
                 roleCharacterButton.setEnabled(true);
                 roleCharacterButton.setCursorVisible(true);
 
@@ -128,16 +130,8 @@ public class CreateListing extends AppCompatActivity {
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
-
-
             }
-        });
-
-        // Campaign radio button
-        RadioButton radioButtonCamp = findViewById(R.id.radio_campaign);
-        radioButtonCamp.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Listing type is campaign, enable number of character slots and preferred role campaign, disable preferred character role
+            else {
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
@@ -150,6 +144,7 @@ public class CreateListing extends AppCompatActivity {
                 roleCharacterButton.setKeyListener(null);
             }
         });
+
 
 
     } // End onCreate
