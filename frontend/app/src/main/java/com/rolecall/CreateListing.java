@@ -122,9 +122,14 @@ public class CreateListing extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-        // Listing Toggle Switch
         Button roleCampaignButton = findViewById(R.id.pref_role_campaign_button);
         Button roleCharacterButton = findViewById(R.id.pref_role_character_button);
+        // Turn off buttons on load
+        roleCharacterButton.setEnabled(false);
+        roleCharacterButton.setCursorVisible(false);
+        roleCampaignButton.setEnabled(false);
+        roleCampaignButton.setCursorVisible(false);
+        // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {

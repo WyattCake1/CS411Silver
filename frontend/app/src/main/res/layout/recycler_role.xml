@@ -8,11 +8,31 @@
     android:padding="16dp"
     android:background="@drawable/gradient_background">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:text="@string/character_role_instructions"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:text="@string/campaign_role_instructions"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/roles_view"
-            android:layout_width="300dp"
-            android:layout_height="440dp"
+            android:layout_width="350dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:padding="10dp"
             tools:itemCount="5" />
 
 

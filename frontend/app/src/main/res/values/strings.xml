@@ -38,4 +38,6 @@
     <string name="face_label">Face</string>
     <string name="support_label">Support</string>
     <string name="enter_amount">0</string>
+    <string name="character_role_instructions">Character Listings: Enter 1 next to your desired role</string>
+    <string name="campaign_role_instructions">Campaign Listings: Enter number next to roles neeeded</string>
 </resources>
