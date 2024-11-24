@@ -3,18 +3,15 @@ package com.rolecall;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +19,13 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rolecall.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateListing extends AppCompatActivity {
 
@@ -41,6 +40,8 @@ public class CreateListing extends AppCompatActivity {
             return insets;
         });
 
+
+
         //------------------------------------------------------------------------------------------
         // Roles for dialog recycler view
         ArrayList<Pair<String, String>> roles = new ArrayList<>();
@@ -49,7 +50,13 @@ public class CreateListing extends AppCompatActivity {
         roles.add(new Pair<>("0", "Face"));
         roles.add(new Pair<>("0", "Healer"));
         roles.add(new Pair<>("0", "Support"));
-        // Create listing page data structures for drop down menus.
+
+        // Adapter for the recycler view
+        RecyclerView recyclerView = findViewById(R.id.roles_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ListAdapter adapter = new ListAdapter(roles);
+        recyclerView.setAdapter(adapter);
+
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
         arrayEnv.add("In-person");
@@ -62,9 +69,8 @@ public class CreateListing extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView)parent.getChildAt(0)).setTextSize(20);
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(CreateListing.this, "Selected Location: " + item, Toast.LENGTH_SHORT).show();
+                ((TextView)parent.getChildAt(0)).setTextSize(18);
+                ((TextView)parent.getChildAt(0)).setText("Select");
             }
 
             @Override
@@ -72,6 +78,7 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
+
         // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
         arrayDist.add("5");
@@ -87,9 +94,8 @@ public class CreateListing extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView)parent.getChildAt(0)).setTextSize(20);
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(CreateListing.this, "Selected Max Distance: " + item, Toast.LENGTH_SHORT).show();
+                ((TextView)parent.getChildAt(0)).setTextSize(18);
+                ((TextView)parent.getChildAt(0)).setText("Select");
             }
 
             @Override
@@ -97,6 +103,7 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
+
         // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
         arrayDiff.add("First Game");
@@ -111,9 +118,8 @@ public class CreateListing extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView)parent.getChildAt(0)).setTextSize(20);
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(CreateListing.this, "Selected Difficulty: " + item, Toast.LENGTH_SHORT).show();
+                ((TextView)parent.getChildAt(0)).setTextSize(18);
+                ((TextView)parent.getChildAt(0)).setText("Select");
             }
 
             @Override
@@ -122,50 +128,57 @@ public class CreateListing extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-        Button roleCampaignButton = findViewById(R.id.pref_role_campaign_button);
-        Button roleCharacterButton = findViewById(R.id.pref_role_character_button);
-        // Turn off buttons on load
-        roleCharacterButton.setEnabled(false);
-        roleCharacterButton.setCursorVisible(false);
-        roleCampaignButton.setEnabled(false);
-        roleCampaignButton.setCursorVisible(false);
+        // Setting Importance
+        ArrayList<String> arrayImportance = new ArrayList<>();
+        arrayImportance.add("Non-negotiable");
+        arrayImportance.add("Important");
+        arrayImportance.add("Nice to Have");
+        arrayImportance.add("Not Important");
+        Spinner environmentSpinner = findViewById(R.id.env_pref_spinner);
+        setupSpinner(environmentSpinner, arrayImportance, "Select");
+        Spinner charRoleSpinner = findViewById(R.id.char_pref_spinner);
+        setupSpinner(charRoleSpinner, arrayImportance, "Select");
+        Spinner campaignRoleSpinner = findViewById(R.id.campaign_pref_spinner);
+        setupSpinner(campaignRoleSpinner, arrayImportance, "Select");
+        Spinner difficultyPrefSpinner = findViewById(R.id.difficulty_pref_spinner);
+        setupSpinner(difficultyPrefSpinner, arrayImportance, "Select");
+        Spinner scheduleSpinner = findViewById(R.id.schedule_pref_spinner);
+        setupSpinner(scheduleSpinner, arrayImportance, "Select");
+
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                roleCharacterButton.setEnabled(true);
-                roleCharacterButton.setCursorVisible(true);
-
-                roleCampaignButton.setEnabled(false);
-                roleCampaignButton.setCursorVisible(false);
-
+                charSlots.setText("1");
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
             }
             else {
+                charSlots.setText("");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
-
-                roleCampaignButton.setEnabled(true);
-                roleCampaignButton.setCursorVisible(true);
-
-                roleCharacterButton.setEnabled(false);
-                roleCharacterButton.setCursorVisible(false);
-                roleCharacterButton.setKeyListener(null);
+                environmentSpinner.setEnabled(false);
+                charRoleSpinner.setEnabled(false);
+                campaignRoleSpinner.setEnabled(false);
+                difficultyPrefSpinner.setEnabled(false);
+                scheduleSpinner.setEnabled(false);
             }
         });
-        // Role Selection
-        roleCampaignButton.setOnClickListener(v -> {
-            ListRoleDialog dialogFragment = ListRoleDialog.newInstance(roles);
-            dialogFragment.show(getSupportFragmentManager(), "ListRoleDialog");
+        //
+        Button submitButton = findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(v -> {
+            // getRoles() is a helper function that's defined in the ListAdapter class. Below
+            // is the loop to get the entered data.
+            List<Pair<String, String>> updatedRoles = adapter.getRoles();
+            for (Pair<String, String> role : updatedRoles) {
+
+            }
+
         });
-        roleCharacterButton.setOnClickListener(v -> {
-            ListRoleDialog dialogFragment = ListRoleDialog.newInstance(roles);
-            dialogFragment.show(getSupportFragmentManager(), "ListRoleDialog");
-        });
+
 
 
 
@@ -173,5 +186,30 @@ public class CreateListing extends AppCompatActivity {
 
     public void viewListing(View v){
         startActivity(new Intent(CreateListing.this, ViewListing.class));
+    }
+
+    // Helper function to reuse preference spinner for all options
+    private void setupSpinner(Spinner spinner, ArrayList<String> items, String defaultText) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) parent.getChildAt(0);
+                if (textView != null) {
+                    textView.setTextColor(Color.WHITE);
+                    textView.setTextSize(18);
+                    if (position == 0) {
+                        textView.setText(defaultText);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }
