@@ -127,10 +127,10 @@ public class LoginPage extends AppCompatActivity {
 
                                     if (holder.isEmpty()) {
                                         View.OnClickListener listener = new View.OnClickListener() {
-//ff
+
                                         @Override
                                         public void onClick (View view){
-                                            Intent intent = new Intent(view.getContext(), Registrar.class);
+                                            Intent intent = new Intent(view.getContext(), MainActivity.class);
                                             view.getContext().startActivity(intent);
                                         }
                                     };
@@ -143,7 +143,7 @@ public class LoginPage extends AppCompatActivity {
 
                                             @Override
                                             public void onClick (View view){
-                                                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                                Intent intent = new Intent(view.getContext(), UserListingsPage.class);
                                                 view.getContext().startActivity(intent);
                                             }
                                         };

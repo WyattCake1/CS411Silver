@@ -1,5 +1,7 @@
 from flask import (Blueprint, request, jsonify)
 from db import get_db_connection
+import hashlib
+import mysql.connector
 
 main = Blueprint("main",__name__)
 
@@ -59,6 +61,7 @@ def set_users():
     username = request.args.get('username')
     password = request.args.get('password')
     email = request.args.get('email')
+    password=hashlib.sha256(password.encode()).hexdigest()
 
     cursor = conn.cursor(dictionary=True)
     cursor.execute('INSERT INTO UserProfiles (name,password,email) VALUES (%s, %s, %s);', (username,password,email))
@@ -76,12 +79,12 @@ def check_users():
 
     username = request.args.get('username')
     password = request.args.get('password')
+    password=hashlib.sha256(password.encode()).hexdigest()
     
 
     cursor = conn.cursor(dictionary=True)
     cursor.execute('Select name, password from UserProfiles Where name=%(emp_no)s AND password=%(emp_no2)s ;',{ 'emp_no': username,'emp_no2': password })
     result=cursor.fetchall()
-    conn.commit()
     conn.close()
 
     
