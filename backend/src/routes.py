@@ -99,12 +99,12 @@ def get_chat_messages():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-
     cursor.execute(
     """   
-        select mock_account.name, mock_listing.listing_id,
+        SELECT
+        mock_account.name,
+        mock_listing.listing_id,
         COALESCE(campaign_character_slots.campaign_listing_id, mock_listing.listing_id) as campaign_id,
-
         chatrooms.chatroom_id,
         chat_messages.message,
         chat_messages.timestamp
@@ -123,3 +123,40 @@ def get_chat_messages():
     return jsonify(chat_messages)
 
 
+@main.route('/chatroom/<int:chatroom_id>', methods=['GET'])
+def get_messages_from_chatroom(chatroom_id: int):
+    """
+        Gets all the chat messages from a specific chat room in chronological order.
+
+        Param:
+            chatroom_id: int, the id of the chatroom to get messages from
+
+        Returns:
+            str: A JSON string containing all messages from a specific chat room.
+                Specifically, the following data is returned for each message:
+                    user_id: of sender,
+                    name: of sender,
+                    message: the text,
+                    timestamp: eg. "Mon, 25 Nov 2024 01:18:21 GMT":
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    cursor.execute(
+    f"""   
+        SELECT 
+        chat_messages.user_id,
+        mock_account.name,
+        chat_messages.message,
+        chat_messages.timestamp
+
+        from chat_messages
+
+        left join mock_account on mock_account.user_id = chat_messages.user_id
+        where chatroom_id = {chatroom_id}
+        order by chat_messages.timestamp;"""
+    )
+
+    chat_messages = cursor.fetchall()
+    conn.close()
+    return jsonify(chat_messages)
