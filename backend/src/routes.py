@@ -93,7 +93,7 @@ def flask_status():
 
 
 # Mock Chatroom Test
-
+# Can probably remove now.
 @main.route('/chatroom_test_query', methods=['GET'])
 def get_chat_messages():
     conn = get_db_connection()
@@ -141,7 +141,7 @@ def get_messages_from_chatroom(chatroom_id: int):
     """
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    
+
     cursor.execute(
     f"""   
         SELECT 
@@ -160,3 +160,29 @@ def get_messages_from_chatroom(chatroom_id: int):
     chat_messages = cursor.fetchall()
     conn.close()
     return jsonify(chat_messages)
+
+@main.route('/chatroom/members/<int:chatroom_id>', methods=['GET'])
+def get_members_of_chatroom(chatroom_id: int):
+    '''Returns a JSON String of the user_id and name of all members of a chatroom.'''
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+    f"""   
+        SELECT
+        mock_account.user_id,
+        mock_account.name
+
+        from mock_account
+        RIGHT JOIN mock_listing on mock_account.user_id = mock_listing.creator_id
+        LEFT JOIN campaign_character_slots on campaign_character_slots.character_listing_id = mock_listing.listing_id
+        INNER JOIN chatrooms on chatrooms.campaign_id
+            = COALESCE(campaign_character_slots.campaign_listing_id, mock_listing.listing_id)
+
+        WHERE chatrooms.chatroom_id = {chatroom_id};
+       ;"""
+    )
+
+    chatroom_members = cursor.fetchall()
+    conn.close()
+    return jsonify(chatroom_members)
