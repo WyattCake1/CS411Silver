@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#009688"
+    android:gravity="start"
+    android:orientation="vertical"
+    android:padding="50dp"
+    tools:context="com.rolecall.CreateListing">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".1">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Mock Chatroom"
+                android:textColor="#3C0202"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".6"
+            android:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatroom_message_stream"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#D1FFFFFF"
+                android:clipChildren="false"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/chatroom_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4sp"
+                android:layout_marginBottom="4sp"
+                android:background="#FFFFFF"
+                android:hint="@string/open_text_field"
+                android:paddingLeft="4sp"
+                android:paddingTop="4sp"
+                android:paddingRight="4sp"
+                android:paddingBottom="4sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight=".10">
+
+            <Button
+                android:id="@+id/chatroom_send"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#009688"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:maxHeight="30dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="2dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/send"
+                android:textSize="20sp"
+                app:strokeColor="#009688" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
