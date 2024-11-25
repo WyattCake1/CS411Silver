@@ -87,8 +87,39 @@ def check_users():
     
     return jsonify(result)
 
-
-
 @main.route('/flaskStatus', methods=['GET'])
 def flask_status():
     return "Working Good"
+
+
+# Mock Chatroom Test
+
+@main.route('/chatroom_test_query', methods=['GET'])
+def get_chat_messages():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+
+    cursor.execute(
+    """   
+        select mock_account.name, mock_listing.listing_id,
+        COALESCE(campaign_character_slots.campaign_listing_id, mock_listing.listing_id) as campaign_id,
+
+        chatrooms.chatroom_id,
+        chat_messages.message,
+        chat_messages.timestamp
+
+        from mock_account
+        right join mock_listing on mock_account.user_id = mock_listing.creator_id
+        left join campaign_character_slots on campaign_character_slots.character_listing_id = mock_listing.listing_id
+        inner join chatrooms on chatrooms.campaign_id = campaign_id
+        left join chat_messages on chat_messages.chatroom_id = chatrooms.chatroom_id
+        where mock_account.user_id = 5
+        order by chat_messages.timestamp;"""
+    )
+                   
+    chat_messages = cursor.fetchall()
+    conn.close()
+    return jsonify(chat_messages)
+
+
