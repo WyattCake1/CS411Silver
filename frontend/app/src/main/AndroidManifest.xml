@@ -32,6 +32,11 @@
         <activity
             android:name="com.rolecall.CreateListing"
             android:exported="true" />
+
+        <activity
+            android:name="com.rolecall.Chatroom"
+            android:exported="false" />
+
         <activity
             android:name="com.rolecall.ViewListing"
             android:exported="false" />
