@@ -2,7 +2,7 @@
     <string name="app_name">RoleCall</string>
     <string name="title_activity_user_listings_page">UserListingsPage</string>
     <string name="account_creation">Create Account</string>
-    <string name="login_label">Login</string>
+    <string name="login_label">Login as Dev</string>
     <string name="empty_field">Null</string>
     <string name="location_label">Location:</string>
     <string name="difficulty_label">Difficulty:</string>
@@ -14,16 +14,13 @@
     <string name="match_button_label">Match</string>
     <string name="submit_button_label">Submit</string>
     <string name="create_listing_title">Create Listing</string>
-    <string name="choose_listing_type_title">Choose Type:</string>
-    <string name="character_type_listing">Character Listing</string>
-    <string name="campaign_type_listing">Campaign Listing</string>
+    <string name="character_type_listing">Character</string>
+    <string name="campaign_type_listing">Campaign</string>
     <string name="game_title_label">Game Title</string>
     <string name="char_slot_label">Character Slots</string>
-    <string name="pref_role_char">Character Roles</string>
-    <string name="pref_role_camp">Campaign Roles</string>
-    <string name="location_spin_label">Select Location</string>
-    <string name="max_dist_label">Select Maximum Distance</string>
-    <string name="difficulty_spin_label">Select Difficulty</string>
+    <string name="location_spin_label">Select Location:</string>
+    <string name="max_dist_label">Select Maximum Distance:</string>
+    <string name="difficulty_spin_label">Select Difficulty:</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="sunday_label">Sunday</string>
@@ -33,9 +30,22 @@
     <string name="thursday_label">Thursday</string>
     <string name="friday_label">Friday</string>
     <string name="saturday_label">Saturday</string>
+
+    <string name="mock_chatroom_button">Mock Chatroom</string>
+    <string name="open_text_field">enter text here</string>
+    <string name="send">Send</string>
     <string name="tank_label">Tank</string>
     <string name="dps_label">DPS</string>
     <string name="face_label">Face</string>
     <string name="support_label">Support</string>
     <string name="enter_amount">0</string>
+    <string name="character_role_instructions">Character Listings: Enter 1 next to your desired role</string>
+    <string name="campaign_role_instructions">Campaign Listings: Enter number next to roles needed</string>
+    <string name="setting_pref_instructions">Character Listings: Help us find the best matches for you by selecting whats matters most to you</string>
+    <string name="pref_environment">Environment:</string>
+    <string name="pref_char_role">Character Role:</string>
+    <string name="pref_campaign_role">Campaign Role:</string>
+    <string name="pref_campaign_difficulty">Campaign Difficulty:</string>
+    <string name="pref_schedule">Schedule:</string>
+
 </resources>

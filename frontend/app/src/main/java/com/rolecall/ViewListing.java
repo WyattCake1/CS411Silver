@@ -15,6 +15,7 @@ import com.example.rolecall.R;
 
 public class ViewListing extends AppCompatActivity {
     private Listing display;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +30,13 @@ public class ViewListing extends AppCompatActivity {
         fillFields(new TextView(this));
         Intent intent = getIntent();
         Listing listing = (Listing) intent.getSerializableExtra("Listing");
+        userId = (String) intent.getExtras().get("userId");
     }
 
     public void backToListings(View v){
-        startActivity(new Intent(ViewListing.this, MainActivity.class));
+        Intent intent = new Intent(ViewListing.this, UserListingsPage.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 
     public void fillFields(View v){

@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.rolecall.R;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -27,7 +28,7 @@ import org.json.simple.JSONObject;
 
 import org.json.simple.parser.*;
 import java.net.URLEncoder;
-
+import java.util.concurrent.CountDownLatch;
 
 
 public class LoginPage extends AppCompatActivity {
@@ -130,7 +131,7 @@ public class LoginPage extends AppCompatActivity {
 
                                         @Override
                                         public void onClick (View view){
-                                            Intent intent = new Intent(view.getContext(), Registrar.class);
+                                            Intent intent = new Intent(view.getContext(), MainActivity.class);
                                             view.getContext().startActivity(intent);
                                         }
                                     };
@@ -139,19 +140,44 @@ public class LoginPage extends AppCompatActivity {
 
 
                                     } else {
-                                        View.OnClickListener listener = new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick (View view){
-                                                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                                                view.getContext().startActivity(intent);
-                                            }
-                                        };
-                                        submitButton.setOnClickListener(listener);
-                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show());
+                                        final String[] userId = new String[1];
+                                        CountDownLatch latch = new CountDownLatch(1);
+                                        if(!jsonResponse.isEmpty()){
+                                            JSONObject jsonObject = (JSONObject) jsonResponse.get(0);
+                                            String name = (String) jsonObject.get("name");
+                                            FlaskClient flaskClient = new FlaskClient();
+                                            flaskClient.getActiveUsersId(name, new ResponseCallback() {
+                                                @Override
+                                                public void onSuccess(String response) {
+                                                    try{
+                                                        JSONArray jsonArray = (JSONArray) parser.parse(response);
+                                                        JSONObject responseObject = (JSONObject) jsonArray.get(0);
+                                                        if (responseObject != null) {
+                                                            userId[0] = responseObject.get("id").toString();
+                                                        }
+                                                    } catch (ParseException e){
+                                                        e.printStackTrace();
+                                                    } finally {
+                                                        latch.countDown();
+                                                    }
+                                                }
+                                                @Override
+                                                public void onError(IOException e) {
+                                                    e.printStackTrace();
+                                                    latch.countDown();
+                                                }
+                                            });
+                                        }
+                                        latch.await();
+                                        if(userId[0] != null){
+                                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show());
+                                            Intent intent = new Intent(view.getContext(), UserListingsPage.class);
+                                            intent.putExtra("userId", userId[0]);
+                                            view.getContext().startActivity(intent);
+                                        } else {
+                                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show());
+                                        }
                                     }
-
-
                                 } else {
                                     System.out.println("Request failed with status: " + responseCode);
                                 }

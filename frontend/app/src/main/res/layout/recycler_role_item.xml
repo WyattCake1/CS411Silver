@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:background="@drawable/listing_background">
+    android:padding="8dp">
 
     <EditText
         android:id="@+id/role_count"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_weight="1"
+        android:autofillHints=""
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:inputType="number"
