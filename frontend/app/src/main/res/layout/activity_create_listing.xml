@@ -107,7 +107,7 @@
                 android:hint="@string/game_title_label"
                 android:inputType="text"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                 android:hint="@string/char_slot_label"
                 android:inputType="number"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -303,11 +303,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 tools:ignore="DuplicateSpeakableTextCheck" />
 
             <EditText
@@ -316,11 +316,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 tools:ignore="DuplicateSpeakableTextCheck" />
         </LinearLayout>
 
@@ -349,22 +349,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/monday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -392,22 +392,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/tuesday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -436,22 +436,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/wednesday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -469,7 +469,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:text="@string/thursday_label"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -480,22 +480,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/thursday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -524,22 +524,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/friday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -558,7 +558,7 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/saturday_label"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -568,22 +568,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:hint="@string/start_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
 
             <EditText
                 android:id="@+id/saturday_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/end_time"
+                android:hint="@string/time_format"
                 android:inputType="time"
                 android:minHeight="48dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/text_hint" />
         </LinearLayout>
 
 

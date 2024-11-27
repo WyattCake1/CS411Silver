@@ -43,6 +43,8 @@ public class CreateListing extends AppCompatActivity {
 
 
         //------------------------------------------------------------------------------------------
+        String spinSelect = "Select";
+
         // Roles for dialog recycler view
         ArrayList<Pair<String, String>> roles = new ArrayList<>();
         roles.add(new Pair<>("0", "Tank"));
@@ -70,7 +72,7 @@ public class CreateListing extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
                 ((TextView)parent.getChildAt(0)).setTextSize(18);
-                ((TextView)parent.getChildAt(0)).setText("Select");
+                //((TextView)parent.getChildAt(0)).setText(spinSelect);
             }
 
             @Override
@@ -95,7 +97,7 @@ public class CreateListing extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
                 ((TextView)parent.getChildAt(0)).setTextSize(18);
-                ((TextView)parent.getChildAt(0)).setText("Select");
+                //((TextView)parent.getChildAt(0)).setText(spinSelect);
             }
 
             @Override
@@ -119,7 +121,7 @@ public class CreateListing extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
                 ((TextView)parent.getChildAt(0)).setTextSize(18);
-                ((TextView)parent.getChildAt(0)).setText("Select");
+                //((TextView)parent.getChildAt(0)).setText(spinSelect);
             }
 
             @Override
@@ -135,27 +137,22 @@ public class CreateListing extends AppCompatActivity {
         arrayImportance.add("Nice to Have");
         arrayImportance.add("Not Important");
         Spinner environmentSpinner = findViewById(R.id.env_pref_spinner);
-        setupSpinner(environmentSpinner, arrayImportance, "Select");
+        setupSpinner(environmentSpinner, arrayImportance, spinSelect);
         Spinner charRoleSpinner = findViewById(R.id.char_pref_spinner);
-        setupSpinner(charRoleSpinner, arrayImportance, "Select");
+        setupSpinner(charRoleSpinner, arrayImportance, spinSelect);
         Spinner campaignRoleSpinner = findViewById(R.id.campaign_pref_spinner);
-        setupSpinner(campaignRoleSpinner, arrayImportance, "Select");
+        setupSpinner(campaignRoleSpinner, arrayImportance, spinSelect);
         Spinner difficultyPrefSpinner = findViewById(R.id.difficulty_pref_spinner);
-        setupSpinner(difficultyPrefSpinner, arrayImportance, "Select");
+        setupSpinner(difficultyPrefSpinner, arrayImportance, spinSelect);
         Spinner scheduleSpinner = findViewById(R.id.schedule_pref_spinner);
-        setupSpinner(scheduleSpinner, arrayImportance, "Select");
+        setupSpinner(scheduleSpinner, arrayImportance, spinSelect);
 
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
+        charSlots.setText("1");
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                charSlots.setText("1");
-                charSlots.setFocusable(false);
-                charSlots.setEnabled(false);
-                charSlots.setCursorVisible(false);
-            }
-            else {
                 charSlots.setText("");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
@@ -165,6 +162,12 @@ public class CreateListing extends AppCompatActivity {
                 campaignRoleSpinner.setEnabled(false);
                 difficultyPrefSpinner.setEnabled(false);
                 scheduleSpinner.setEnabled(false);
+            }
+            else {
+                charSlots.setText("1");
+                charSlots.setFocusable(false);
+                charSlots.setEnabled(false);
+                charSlots.setCursorVisible(false);
             }
         });
         //
@@ -176,6 +179,7 @@ public class CreateListing extends AppCompatActivity {
             for (Pair<String, String> role : updatedRoles) {
 
             }
+            processListing("This is a test");
 
         });
 
@@ -183,6 +187,22 @@ public class CreateListing extends AppCompatActivity {
 
 
     } // End onCreate
+
+    /**
+     *      boolean campaign,
+     *      String gameName,
+     *      String environment,
+     *      String startTime,
+     *      String endTime,
+     *      String difficulty,
+     *      String role,
+     *      String userProfileId
+     */
+    Listing newListing = new Listing(false, "testGame", "testEnv", "testStartTime", "testEndTime", "tesDiff", "testRole", "testProfileID");
+
+    public void processListing(String p) {
+        Log.i("test", p);
+    }
 
     public void viewListing(View v){
         startActivity(new Intent(CreateListing.this, ViewListing.class));
@@ -211,5 +231,7 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

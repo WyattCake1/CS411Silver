@@ -47,5 +47,6 @@
     <string name="pref_campaign_role">Campaign Role:</string>
     <string name="pref_campaign_difficulty">Campaign Difficulty:</string>
     <string name="pref_schedule">Schedule:</string>
+    <string name="time_format">00:00pm/am</string>
 
 </resources>
