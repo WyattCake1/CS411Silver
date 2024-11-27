@@ -15,9 +15,10 @@ public class FlaskClient{
     public FlaskClient(){
 
     }
-    public void requestUserListings(int userId, ResponseCallback callback){
+    public void requestUserListings(String userId, ResponseCallback callback){
         String endpoint = FlaskEndpoints.userListings;
         Listing[] userListings = null;
+        userId = userId.trim();
             makeRequest(userId, endpoint, new ResponseCallback() {
                 @Override
                 public void onSuccess(String response) {
@@ -32,7 +33,7 @@ public class FlaskClient{
                 }
             });
     }
-    public void makeRequest(int userId, String endpoint, ResponseCallback callback) {
+    public void makeRequest(String userId, String endpoint, ResponseCallback callback) {
         String url = "http://10.0.2.2:5000" + endpoint + "/" + userId;
         Request request = new Request.Builder().url(url).build();
 
@@ -77,6 +78,30 @@ public class FlaskClient{
             @Override
             public void onFailure(Call call, IOException e) {
                 callback.onError(e);
+            }
+        });
+    }
+
+    public void getActiveUsersId(String name, ResponseCallback callback){
+        String url = "http://10.0.2.2:5000/users/" + name;
+        Request request = new Request.Builder().url(url).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Trigger the callback's onError method
+                callback.onError(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // Trigger the callback's onSuccess method with the response body
+                    String responseData = response.body().string();
+                    callback.onSuccess(responseData);
+                } else {
+                    // Trigger the callback's onError method with a generic IOException
+                    callback.onError(new IOException("Request failed with code: " + response.code()));
+                }
             }
         });
     }

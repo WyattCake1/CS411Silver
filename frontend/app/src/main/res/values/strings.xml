@@ -2,7 +2,7 @@
     <string name="app_name">RoleCall</string>
     <string name="title_activity_user_listings_page">UserListingsPage</string>
     <string name="account_creation">Create Account</string>
-    <string name="login_label">Login</string>
+    <string name="login_label">Login as Dev</string>
     <string name="empty_field">Null</string>
     <string name="location_label">Location:</string>
     <string name="difficulty_label">Difficulty:</string>

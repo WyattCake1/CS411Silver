@@ -45,6 +45,15 @@ def save_user_listings():
 
     return jsonify({"message": "Listing saved", "listing_id": listing_id}),201
 
+@main.route('/users/<string:name>', methods=['GET'])
+def get_user_profile_id(name):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT id FROM UserProfiles WHERE name = %s",(name,))
+    user_id = cursor.fetchall()
+    conn.close()
+    return jsonify(user_id)
+                   
 @main.route('/users', methods=['GET'])
 def get_users():
     conn = get_db_connection()
