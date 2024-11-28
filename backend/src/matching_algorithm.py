@@ -2,7 +2,7 @@ import json
 from listing import Listing
 from datetime import datetime
 
-def match_listings(data_set: list[str], to_match: str) -> list[tuple[Listing, float]]:
+def match_listings(data_set: list[str], to_match: str) -> list[tuple[str, float]]:
     my_listing = Listing(json.dumps(to_match))
     searches = [Listing(json.dumps(entry)) for entry in data_set]
     scores = []

@@ -17,20 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/display"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:showDividers="middle"
+            android:divider="@drawable/list_gap"
             android:layout_gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/header"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:background="@drawable/listing_background"
-                android:text="@string/matches_header"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="30sp">
-            </TextView>
         </LinearLayout>
 
     </ScrollView>
