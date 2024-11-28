@@ -2,6 +2,7 @@ from flask import (Blueprint, request, jsonify)
 from db import get_db_connection
 import hashlib
 import mysql.connector
+from matching_algorithm import match_listings
 
 main = Blueprint("main",__name__)
 
@@ -18,7 +19,7 @@ def get_user_listings(userId):
 def save_user_listings():
     data = request.get_json()
     
-    required_fields = ["campaign", "gameName", "environment", "startTime", "endTime", "difficulty", "role", "userProfileId"]
+    required_fields = ["campaign", "gameName", "environment", "day", "startTime", "endTime", "difficulty", "role", "userProfileId"]
     for field in required_fields:
         if field not in data:
             return jsonify({"error": f"Missing required field: {field}"}), 400
@@ -26,12 +27,13 @@ def save_user_listings():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
-        "INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId)"
+        "INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId)"
         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
         (
             data["campaign"],
             data["gameName"],
             data["environment"],
+            data["day"],
             data["startTime"],
             data["endTime"],
             data["difficulty"],
@@ -54,16 +56,21 @@ def get_user_profile_id(name):
     conn.close()
     return jsonify(user_id)
 
-@main.route('/listings/<int:userId>', methods=['GET'])
-def get_match_listings(userId):
+@main.route('/matches', methods=['GET'])
+def get_match_listings():
+    listId = request.args.get("listingId")
+    userId = request.args.get("userId")
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM UserListings WHERE id = %s", (listId,))
+    being_matched = cursor.fetchone()
     cursor.execute("SELECT * FROM UserListings WHERE userProfileId != %s",(userId,))
     compare_listings = cursor.fetchall()
     conn.close()
-    #TODO call match_listings function and return results
-    # results = match_listings(compare_listings, passed in user listing)
-    # retrun results
+    results = match_listings(compare_listings, being_matched)
+    if not results:
+        return "None"
+    return results
 
 @main.route('/users', methods=['GET'])
 def get_users():

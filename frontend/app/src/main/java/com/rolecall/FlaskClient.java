@@ -105,5 +105,30 @@ public class FlaskClient{
             }
         });
     }
+
+    public void requestMatches(String listId, String userId, ResponseCallback callback) {
+        String url = "http://10.0.2.2:5000/matches?listingId=" + listId + "&userId=" + userId;
+        Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Trigger the callback's onError method
+                callback.onError(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // Trigger the callback's onSuccess method with the response body
+                    String responseData = response.body().string();
+                    callback.onSuccess(responseData);
+                } else {
+                    // Trigger the callback's onError method with a generic IOException
+                    callback.onError(new IOException("Request failed with code: " + response.code()));
+                }
+            }
+        });
+    }
 }
 

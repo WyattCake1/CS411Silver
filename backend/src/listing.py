@@ -1,7 +1,7 @@
 import json
 
 class Listing:
-    listingId = 0
+    id = 0
     campaign = False
     userProfileId = 0
     gameName = None

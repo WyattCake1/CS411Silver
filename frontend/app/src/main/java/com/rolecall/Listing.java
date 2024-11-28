@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public class Listing implements Serializable {
     private boolean campaign;
+    private String listingId;
     private String gameName;
     private String environment;
+    private String day;
     private String startTime;
     private String endTime;
     private String difficulty;
@@ -48,6 +50,9 @@ public class Listing implements Serializable {
                 case "environment":
                     this.environment = value.substring(1,value.length()-1);
                     break;
+                case "day":
+                    this.day = value.substring(1,value.length()-1);
+                    break;
                 case "startTime":
                     this.startTime = value.substring(1,value.length()-1);
                     break;
@@ -63,6 +68,9 @@ public class Listing implements Serializable {
                 case "userProfileId":
                     this.userProfileId = value;
                     break;
+                case "id":
+                    this.listingId = value;
+                    break;
             }
         }
     }
@@ -72,6 +80,7 @@ public class Listing implements Serializable {
         return "{" +
                 "\"campaign\": " + campaign + ", " +
                 "\"gameName\": \"" + gameName + "\", " +
+                "\"day\": " + day + "\", " +
                 "\"environment\": \"" + environment + "\", " +
                 "\"startTime\": \"" + startTime + "\", " +
                 "\"endTime\": \"" + endTime + "\", " +
@@ -85,12 +94,20 @@ public class Listing implements Serializable {
         return campaign;
     }
 
+    public String getListingId(){
+        return listingId;
+    }
+
     public String getGameName() {
         return gameName;
     }
 
     public String getEnvironment() {
         return environment;
+    }
+
+    public String getDay() {
+        return day;
     }
 
     public String getStartTime() {
@@ -123,6 +140,10 @@ public class Listing implements Serializable {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public void setStartTime(String startTime) {
