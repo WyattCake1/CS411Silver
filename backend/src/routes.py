@@ -2,6 +2,7 @@ from flask import (Blueprint, request, jsonify)
 from db import get_db_connection
 import hashlib
 import mysql.connector
+from matching_algorithm import match_listings
 
 main = Blueprint("main",__name__)
 
@@ -18,7 +19,7 @@ def get_user_listings(userId):
 def save_user_listings():
     data = request.get_json()
     
-    required_fields = ["campaign", "gameName", "environment", "startTime", "endTime", "difficulty", "role", "userProfileId"]
+    required_fields = ["campaign", "gameName", "environment", "day", "startTime", "endTime", "difficulty", "role", "userProfileId"]
     for field in required_fields:
         if field not in data:
             return jsonify({"error": f"Missing required field: {field}"}), 400
@@ -26,12 +27,13 @@ def save_user_listings():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
-        "INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId)"
+        "INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId)"
         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
         (
             data["campaign"],
             data["gameName"],
             data["environment"],
+            data["day"],
             data["startTime"],
             data["endTime"],
             data["difficulty"],
@@ -53,7 +55,23 @@ def get_user_profile_id(name):
     user_id = cursor.fetchall()
     conn.close()
     return jsonify(user_id)
-                   
+
+@main.route('/matches', methods=['GET'])
+def get_match_listings():
+    listId = request.args.get("listingId")
+    userId = request.args.get("userId")
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM UserListings WHERE id = %s", (listId,))
+    being_matched = cursor.fetchone()
+    cursor.execute("SELECT * FROM UserListings WHERE userProfileId != %s",(userId,))
+    compare_listings = cursor.fetchall()
+    conn.close()
+    results = match_listings(compare_listings, being_matched)
+    if not results:
+        return "None"
+    return results
+
 @main.route('/users', methods=['GET'])
 def get_users():
     conn = get_db_connection()
@@ -89,7 +107,7 @@ def check_users():
     username = request.args.get('username')
     password = request.args.get('password')
     password=hashlib.sha256(password.encode()).hexdigest()
-    
+
 
     cursor = conn.cursor(dictionary=True)
     cursor.execute('Select name, password from UserProfiles Where name=%(emp_no)s AND password=%(emp_no2)s ;',{ 'emp_no': username,'emp_no2': password })
@@ -112,7 +130,7 @@ def get_chat_messages():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    """   
+    """
         SELECT
         mock_account.name,
         mock_listing.listing_id,
@@ -129,7 +147,7 @@ def get_chat_messages():
         where mock_account.user_id = 5
         order by chat_messages.timestamp;"""
     )
-                   
+
     chat_messages = cursor.fetchall()
     conn.close()
     return jsonify(chat_messages)
@@ -155,8 +173,8 @@ def get_messages_from_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""   
-        SELECT 
+    f"""
+        SELECT
         chat_messages.user_id,
         mock_account.name,
         chat_messages.message,
@@ -180,7 +198,7 @@ def get_members_of_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""   
+    f"""
         SELECT
         mock_account.user_id,
         mock_account.name

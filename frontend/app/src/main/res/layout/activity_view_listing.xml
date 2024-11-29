@@ -222,7 +222,7 @@
             android:background="@drawable/match_button"
             android:text="@string/match_button_label"
             android:textColor="@color/white"
-            android:onClick="backToListings">
+            android:onClick="findMatches">
         </androidx.appcompat.widget.AppCompatButton>
 
     </LinearLayout>
