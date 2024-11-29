@@ -10,6 +10,7 @@
     <string name="start_label">Start Time:</string>
     <string name="end_label">End Time:</string>
     <string name="role_label">Desired Role</string>
+    <string name="edit_listing_label">Edit</string>
     <string name="back_button_label">Back</string>
     <string name="match_button_label">Match</string>
     <string name="submit_button_label">Submit</string>

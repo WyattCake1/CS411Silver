@@ -48,19 +48,13 @@ public class ViewListing extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void editListing(View v){
+        Intent intent = new Intent(ViewListing.this, EditListingsPage.class);
+        intent.putExtra("listing", display);
+        startActivity(intent);
+    }
+
     public void fillFields(View v){
-        //Dummy Listing for proof of concept
-        display = new Listing();
-        display.setGameName("Dungeons & Dragons");
-        display.setEnvironment("Foundry Virtual Tabletop");
-        display.setStartTime("Mon 12:30 PM");
-        display.setEndTime("Mon 4:30 PM");
-        display.setDifficulty("Intermediate");
-        display.setRole(new HashMap<>(){{
-            put("dps",1);
-            put("healer",2);
-            put("tank",3);
-        }});
         //Implemented Logic
         TextView gameName = findViewById(R.id.game_name_field);
         TextView difficulty = findViewById(R.id.difficulty_field);

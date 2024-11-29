@@ -21,17 +21,24 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -40,7 +47,7 @@ import com.rolecall.ui.theme.BlueBox
 import com.rolecall.ui.theme.RedStroke
 import com.rolecall.ui.theme.RoleCallTheme
 import com.rolecall.ui.theme.WhiteText
-
+import androidx.compose.runtime.remember
 
 class EditListingsPage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,17 +56,16 @@ class EditListingsPage : ComponentActivity() {
         val listing = intent.getSerializableExtra("listing") as Listing
         setContent {
             RoleCallTheme {
-                RenderEditListingsPage()
+                RenderEditListingsPage(listing)
             }
         }
     }
 }
 
-@Preview
 @Composable
-fun RenderEditListingsPage(){
-    val listing : Listing
-    val isCampaign = true
+fun RenderEditListingsPage(listing: Listing){
+    val mutableListing = remember { mutableStateOf(listing)}
+    val isCampaign = listing.isCampaign;
     val gradientBrush = Brush.linearGradient(
         colors = listOf(
             Color(0xFF067E8E),
@@ -80,26 +86,61 @@ fun RenderEditListingsPage(){
         {
             Column {
                 if(isCampaign){
-                    RenderRoleLimits()
+                    RenderRoleLimits(mutableListing)
                 } else{
+                    RenderRoleSelect(mutableListing)
                 }
             }
         }
     }
 }
 @Composable
-fun RenderRoleLimits(){
+fun RenderRoleLimits(listing : MutableState<Listing>){
     val roles = listOf("Tank","DPS","Face","Healer","Support")
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
-        for (role in roles) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text=role,color= WhiteText)
-                RenderRoleSelector()
+    Box(Modifier.fillMaxWidth().padding(24.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()){
+            Text("Role Limits", color = WhiteText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp), modifier = Modifier.fillMaxWidth()) {
+                for (role in roles.take(3)) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text=role,color= WhiteText)
+                        RenderRoleSelector()
+                    }
+                }
             }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally), modifier = Modifier.fillMaxWidth()) {
+                for (role in roles.drop(3)) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text=role,color= WhiteText)
+                        RenderRoleSelector()
+                    }
+                }
+            }
+            Divider(color = Color.Gray, thickness = 1.dp)
         }
     }
 }
-
+@Composable
+fun RenderRoleSelect(listing : MutableState<Listing>){
+    val roles = listOf("Tank","DPS","Face","Healer","Support")
+    Box(Modifier.fillMaxWidth().padding(24.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()){
+            Text("Role Limits", color = WhiteText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
+                for (role in roles ){
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text=role,color= WhiteText)
+                        RadioButton( selected = listing.value.getRoleValue(role) == 1, onClick = {
+                            println(listing.value.getRoleValue(role))
+                            listing.value.setRoleValue(role, if (listing.value.getRoleValue(role) == 1) 0 else 1)
+                        })
+                    }
+                }
+            }
+            Divider(color = Color.Gray, thickness = 1.dp)
+        }
+    }
+}
 @Composable
 fun RenderRoleSelector(){
     Row(verticalAlignment = Alignment.CenterVertically) {

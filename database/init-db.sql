@@ -38,19 +38,19 @@ INSERT INTO UserProfiles (name,password,email) VALUES
 
  -- User 1 (dev)
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1),
-    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1),
-    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1);
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1);
 -- User 2 (Berhan)
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2),
-    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2),
-    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2);
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2);
 -- User 3 (Wyatt)
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3),
-    (FALSE, 'Warhammer', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3),
-    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3);
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
+    (FALSE, 'Warhammer', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3);
 
 -- DATABASE Tests for Chatroom Feature
 
