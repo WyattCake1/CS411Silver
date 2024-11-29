@@ -15,6 +15,7 @@ import com.example.rolecall.R;
 
 public class ViewListing extends AppCompatActivity {
     private Listing display;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,24 +27,26 @@ public class ViewListing extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        fillFields(new TextView(this));
         Intent intent = getIntent();
-        Listing listing = (Listing) intent.getSerializableExtra("Listing");
+        display = (Listing) intent.getSerializableExtra("Listing");
+        userId = (String) intent.getExtras().get("userId");
+        fillFields(new TextView(this));
     }
 
     public void backToListings(View v){
-        startActivity(new Intent(ViewListing.this, MainActivity.class));
+        Intent intent = new Intent(ViewListing.this, UserListingsPage.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void findMatches(View v){
+        Intent intent = new Intent(ViewListing.this, MatchingListings.class);
+        intent.putExtra("listingId", display.getListingId());
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 
     public void fillFields(View v){
-        //Dummy Listing for proof of concept
-        display = new Listing();
-        display.setGameName("Dungeons & Dragons");
-        display.setEnvironment("Foundry Virtual Tabletop");
-        display.setStartTime("Mon 12:30 PM");
-        display.setEndTime("Mon 4:30 PM");
-        display.setDifficulty("Intermediate");
-        display.setRole("DPS");
         //Implemented Logic
         TextView gameName = findViewById(R.id.game_name_field);
         TextView difficulty = findViewById(R.id.difficulty_field);

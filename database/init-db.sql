@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS UserListings (
     campaign BOOLEAN NOT NULL,
     gameName VARCHAR(255) NOT NULL,
     environment VARCHAR(100) NOT NULL,
+    day VARCHAR(100),
     startTime VARCHAR(100),
     endTime VARCHAR(100),
     difficulty VARCHAR(100),
@@ -29,16 +30,27 @@ CREATE TABLE IF NOT EXISTS UserListings (
 );
 
 
--- Test Inserts
+-- User Profiles
 INSERT INTO UserProfiles (name,password,email) VALUES
-    ('Test User','testPass', 'user@test.com'),
-    ('Berhansz',SHA2('BEESecret',256),'bclar006@gmail.com');
+    ('dev',SHA2('dev',256), 'dev'),
+    ('Berhansz',SHA2('BEESecret',256),'bclar006@gmail.com'),
+    ('cake',SHA2('cake',256),'cake@mail.com');
 
-INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', 'Healer', 1),
-    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', 'Tank', 1),
-    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', 'Rogue', 1),
-    (TRUE, 'WarhammerTEst', 'Online', "1000", "2000", 'Hard', 'Rogue', 2);
+ -- User 1 (dev)
+INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "Fri", "5:30 PM", "8:30 PM", 'Casual', 'Healer, DPS, Tank', 1),
+    (FALSE, 'Dnd', 'In-Person', "Tue", "4:00 PM", "7:00 PM", 'Intermediate', 'Tank', 1),
+    (TRUE, 'Warhammer', 'Online', "Sat", "10:00 AM", "2:00 PM", 'Intermediate', 'DPS, Face', 1);
+-- User 2 (Berhan)
+INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (FALSE, 'Dnd', 'Online', "Fri", "5:30 PM", "8:30 PM", 'First Game', 'Healer', 2),
+    (TRUE, 'Dnd', 'In-Person', "Tue", "4:30 PM", "7:00 PM", 'Intermediate', 'Tank, DPS', 2),
+    (FALSE, 'Warhammer', 'Online', "Wed", "6:00 PM", "9:30 PM", 'Casual', 'Face', 2);
+-- User 3 (Wyatt)
+INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (False, 'Dnd', 'Online', "Fri", "5:00 PM", "9:00 PM", 'Casual', 'Tank', 3),
+    (FALSE, 'Warhammer', 'In-Person', "Mon", "4:00 PM", "7:00 PM", 'First Game', 'Tank', 3),
+    (TRUE, 'Warhammer', 'Online', "Sat", "3:30 PM", "7:00 PM", 'Intermediate', 'Tank, Healer', 3);
 
 -- DATABASE Tests for Chatroom Feature
 
