@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rolecall.R;
 
+import java.util.HashMap;
+
 public class ViewListing extends AppCompatActivity {
     private Listing display;
     private String userId;
@@ -47,6 +49,18 @@ public class ViewListing extends AppCompatActivity {
     }
 
     public void fillFields(View v){
+        //Dummy Listing for proof of concept
+        display = new Listing();
+        display.setGameName("Dungeons & Dragons");
+        display.setEnvironment("Foundry Virtual Tabletop");
+        display.setStartTime("Mon 12:30 PM");
+        display.setEndTime("Mon 4:30 PM");
+        display.setDifficulty("Intermediate");
+        display.setRole(new HashMap<>(){{
+            put("dps",1);
+            put("healer",2);
+            put("tank",3);
+        }});
         //Implemented Logic
         TextView gameName = findViewById(R.id.game_name_field);
         TextView difficulty = findViewById(R.id.difficulty_field);
@@ -59,6 +73,6 @@ public class ViewListing extends AppCompatActivity {
         environment.setText(display.getEnvironment());
         startTime.setText(display.getStartTime());
         endTime.setText(display.getEndTime());
-        role.setText(display.getRole());
+        role.setText(display.getRole().toString());
     }
 }
