@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS UserListings (
     campaign BOOLEAN NOT NULL,
     gameName VARCHAR(255) NOT NULL,
     environment VARCHAR(100) NOT NULL,
+    day VARCHAR(100),
     startTime VARCHAR(100),
     endTime VARCHAR(100),
     difficulty VARCHAR(100),
@@ -29,16 +30,27 @@ CREATE TABLE IF NOT EXISTS UserListings (
 );
 
 
--- Test Inserts
+-- User Profiles
 INSERT INTO UserProfiles (name,password,email) VALUES
-    ('Test User','testPass', 'user@test.com'),
-    ('Berhansz',SHA2('BEESecret',256),'bclar006@gmail.com');
+    ('dev',SHA2('dev',256), 'dev'),
+    ('Berhansz',SHA2('BEESecret',256),'bclar006@gmail.com'),
+    ('cake',SHA2('cake',256),'cake@mail.com');
 
+ -- User 1 (dev)
 INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', 'Healer', 1),
-    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', 'Tank', 1),
-    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', 'Rogue', 1),
-    (TRUE, 'WarhammerTEst', 'Online', "1000", "2000", 'Hard', 'Rogue', 2);
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 1);
+-- User 2 (Berhan)
+INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 2);
+-- User 3 (Wyatt)
+INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3),
+    (FALSE, 'Warhammer', 'In-Person', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"dps": 1, "healer" : 2, "tank" : 3}', 3);
 
 -- DATABASE Tests for Chatroom Feature
 

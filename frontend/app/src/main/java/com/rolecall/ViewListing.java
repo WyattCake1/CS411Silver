@@ -13,8 +13,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rolecall.R;
 
+import java.util.HashMap;
+
 public class ViewListing extends AppCompatActivity {
     private Listing display;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +29,23 @@ public class ViewListing extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        fillFields(new TextView(this));
         Intent intent = getIntent();
-        Listing listing = (Listing) intent.getSerializableExtra("Listing");
+        display = (Listing) intent.getSerializableExtra("Listing");
+        userId = (String) intent.getExtras().get("userId");
+        fillFields(new TextView(this));
     }
 
     public void backToListings(View v){
-        startActivity(new Intent(ViewListing.this, MainActivity.class));
+        Intent intent = new Intent(ViewListing.this, UserListingsPage.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void findMatches(View v){
+        Intent intent = new Intent(ViewListing.this, MatchingListings.class);
+        intent.putExtra("listingId", display.getListingId());
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 
     public void fillFields(View v){
@@ -43,7 +56,11 @@ public class ViewListing extends AppCompatActivity {
         display.setStartTime("Mon 12:30 PM");
         display.setEndTime("Mon 4:30 PM");
         display.setDifficulty("Intermediate");
-        display.setRole("DPS");
+        display.setRole(new HashMap<>(){{
+            put("dps",1);
+            put("healer",2);
+            put("tank",3);
+        }});
         //Implemented Logic
         TextView gameName = findViewById(R.id.game_name_field);
         TextView difficulty = findViewById(R.id.difficulty_field);
@@ -56,6 +73,6 @@ public class ViewListing extends AppCompatActivity {
         environment.setText(display.getEnvironment());
         startTime.setText(display.getStartTime());
         endTime.setText(display.getEndTime());
-        role.setText(display.getRole());
+        role.setText(display.getRole().toString());
     }
 }
