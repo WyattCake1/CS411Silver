@@ -80,6 +80,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
+        arrayDist.add("0");
         arrayDist.add("5");
         arrayDist.add("10");
         arrayDist.add("25");
@@ -146,14 +147,18 @@ public class CreateListing extends AppCompatActivity {
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
         charSlots.setText("1");
+        distance_spinner.setSelection(1);
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 listingType = 0;
-                charSlots.setText("");
+                charSlots.setText("0");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
+                distance_spinner.setSelection(0);
+                distance_spinner.setFocusable(false);
+                distance_spinner.setEnabled(false);
                 environmentSpinner.setEnabled(false);
                 charRoleSpinner.setEnabled(false);
                 campaignRoleSpinner.setEnabled(false);
@@ -166,6 +171,8 @@ public class CreateListing extends AppCompatActivity {
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
+                distance_spinner.setEnabled(true);
+                distance_spinner.setSelection(1);
             }
         });
         //------------------------------------------------------------------------------------------
