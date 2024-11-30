@@ -26,7 +26,6 @@ import com.example.rolecall.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CreateListing extends AppCompatActivity {
 
@@ -59,6 +58,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
+        arrayEnv.add("Select");
         arrayEnv.add("In-person");
         arrayEnv.add("Digital");
         ArrayAdapter<String> adapterEnv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
@@ -80,7 +80,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
-        arrayDist.add("0");
+        arrayDist.add("Select");
         arrayDist.add("5");
         arrayDist.add("10");
         arrayDist.add("25");
@@ -105,6 +105,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
+        arrayDiff.add("Select");
         arrayDiff.add("First Game");
         arrayDiff.add("Casual");
         arrayDiff.add("Intermediate");
@@ -129,6 +130,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Setting Importance
         ArrayList<String> arrayImportance = new ArrayList<>();
+        arrayImportance.add("Select");
         arrayImportance.add("Non-negotiable");
         arrayImportance.add("Important");
         arrayImportance.add("Nice to Have");
@@ -146,8 +148,6 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
-        charSlots.setText("1");
-        distance_spinner.setSelection(1);
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -156,7 +156,6 @@ public class CreateListing extends AppCompatActivity {
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
-                distance_spinner.setSelection(0);
                 distance_spinner.setFocusable(false);
                 distance_spinner.setEnabled(false);
                 environmentSpinner.setEnabled(false);
@@ -172,8 +171,25 @@ public class CreateListing extends AppCompatActivity {
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
                 distance_spinner.setEnabled(true);
-                distance_spinner.setSelection(1);
+                distance_spinner.setSelection(0);
+                environmentSpinner.setEnabled(true);
+                environmentSpinner.setSelection(0);
+                charRoleSpinner.setEnabled(true);
+                charRoleSpinner.setSelection(0);
+                campaignRoleSpinner.setEnabled(true);
+                campaignRoleSpinner.setSelection(0);
+                difficultyPrefSpinner.setEnabled(true);
+                difficultyPrefSpinner.setSelection(0);
+                scheduleSpinner.setEnabled(true);
+                scheduleSpinner.setSelection(0);
             }
+        });
+        //------------------------------------------------------------------------------------------
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
         //------------------------------------------------------------------------------------------
         Button submitButton = findViewById(R.id.submit_button);
