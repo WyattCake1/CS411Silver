@@ -145,7 +145,7 @@
                 android:padding="10dp"
                 android:text="@string/character_role_instructions"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -155,7 +155,7 @@
                 android:padding="10dp"
                 android:text="@string/campaign_role_instructions"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
