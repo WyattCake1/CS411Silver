@@ -148,6 +148,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
+        charSlots.setText("1");
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -158,13 +159,24 @@ public class CreateListing extends AppCompatActivity {
                 charSlots.setCursorVisible(true);
                 distance_spinner.setFocusable(false);
                 distance_spinner.setEnabled(false);
+                distance_spinner.setSelection(0);
+                environment_spinner.setSelection(0);
+                difficulty_spinner.setSelection(0);
                 environmentSpinner.setEnabled(false);
+                environmentSpinner.setSelection(0);
                 charRoleSpinner.setEnabled(false);
+                charRoleSpinner.setSelection(0);
                 campaignRoleSpinner.setEnabled(false);
+                campaignRoleSpinner.setSelection(0);
                 difficultyPrefSpinner.setEnabled(false);
+                difficultyPrefSpinner.setSelection(0);
                 scheduleSpinner.setEnabled(false);
+                scheduleSpinner.setSelection(0);
             }
             else {
+                Intent intent = new Intent(CreateListing.this, CreateListing.class);
+                startActivity(intent);
+                finish();
                 listingType = 1;
                 charSlots.setText("1");
                 charSlots.setFocusable(false);
