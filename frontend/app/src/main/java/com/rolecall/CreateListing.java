@@ -26,7 +26,6 @@ import com.example.rolecall.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CreateListing extends AppCompatActivity {
 
@@ -42,9 +41,7 @@ public class CreateListing extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         //------------------------------------------------------------------------------------------
-
         // Roles for dialog recycler view
         ArrayList<Pair<String, String>> roles = new ArrayList<>();
         roles.add(new Pair<>("0", "Tank"));
@@ -52,15 +49,16 @@ public class CreateListing extends AppCompatActivity {
         roles.add(new Pair<>("0", "Face"));
         roles.add(new Pair<>("0", "Healer"));
         roles.add(new Pair<>("0", "Support"));
-
+        //------------------------------------------------------------------------------------------
         // Adapter for the recycler view
         RecyclerView recyclerView = findViewById(R.id.roles_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ListAdapter adapter = new ListAdapter(roles);
         recyclerView.setAdapter(adapter);
-
+        //------------------------------------------------------------------------------------------
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
+        arrayEnv.add("Select");
         arrayEnv.add("In-person");
         arrayEnv.add("Digital");
         ArrayAdapter<String> adapterEnv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
@@ -79,9 +77,10 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
-
+        //------------------------------------------------------------------------------------------
         // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
+        arrayDist.add("Select");
         arrayDist.add("5");
         arrayDist.add("10");
         arrayDist.add("25");
@@ -103,9 +102,10 @@ public class CreateListing extends AppCompatActivity {
 
             }
         });
-
+        //------------------------------------------------------------------------------------------
         // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
+        arrayDiff.add("Select");
         arrayDiff.add("First Game");
         arrayDiff.add("Casual");
         arrayDiff.add("Intermediate");
@@ -130,6 +130,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Setting Importance
         ArrayList<String> arrayImportance = new ArrayList<>();
+        arrayImportance.add("Select");
         arrayImportance.add("Non-negotiable");
         arrayImportance.add("Important");
         arrayImportance.add("Nice to Have");
@@ -144,7 +145,7 @@ public class CreateListing extends AppCompatActivity {
         setupSpinner(difficultyPrefSpinner, arrayImportance);
         Spinner scheduleSpinner = findViewById(R.id.schedule_pref_spinner);
         setupSpinner(scheduleSpinner, arrayImportance);
-
+        //------------------------------------------------------------------------------------------
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
         charSlots.setText("1");
@@ -152,36 +153,63 @@ public class CreateListing extends AppCompatActivity {
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 listingType = 0;
-                charSlots.setText("");
+                charSlots.setText("0");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
+                distance_spinner.setFocusable(false);
+                distance_spinner.setEnabled(false);
+                distance_spinner.setSelection(0);
+                environment_spinner.setSelection(0);
+                difficulty_spinner.setSelection(0);
                 environmentSpinner.setEnabled(false);
+                environmentSpinner.setSelection(0);
                 charRoleSpinner.setEnabled(false);
+                charRoleSpinner.setSelection(0);
                 campaignRoleSpinner.setEnabled(false);
+                campaignRoleSpinner.setSelection(0);
                 difficultyPrefSpinner.setEnabled(false);
+                difficultyPrefSpinner.setSelection(0);
                 scheduleSpinner.setEnabled(false);
+                scheduleSpinner.setSelection(0);
             }
             else {
+                Intent intent = new Intent(CreateListing.this, CreateListing.class);
+                startActivity(intent);
+                finish();
                 listingType = 1;
                 charSlots.setText("1");
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
+                distance_spinner.setEnabled(true);
+                distance_spinner.setSelection(0);
+                environmentSpinner.setEnabled(true);
+                environmentSpinner.setSelection(0);
+                charRoleSpinner.setEnabled(true);
+                charRoleSpinner.setSelection(0);
+                campaignRoleSpinner.setEnabled(true);
+                campaignRoleSpinner.setSelection(0);
+                difficultyPrefSpinner.setEnabled(true);
+                difficultyPrefSpinner.setSelection(0);
+                scheduleSpinner.setEnabled(true);
+                scheduleSpinner.setSelection(0);
             }
         });
-
-
-
-
+        //------------------------------------------------------------------------------------------
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        //------------------------------------------------------------------------------------------
         Button submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener(v -> {
             // Get game name and character slots
             EditText gameName = findViewById(R.id.game_name_input);
             String name = String.valueOf(gameName.getText());
             String slots = String.valueOf(charSlots.getText());
-
-
 
             // Get distance, env, difficulty
             String distance = distance_spinner.getSelectedItem().toString();
@@ -265,11 +293,6 @@ public class CreateListing extends AppCompatActivity {
 
             processListing(listingType, name, slots, distance, environment, difficulty, finalSchedule, finalRoles, finalPreferences);
 
-
-
-
-
-
         });
     } // End onCreate
 
@@ -291,17 +314,21 @@ public class CreateListing extends AppCompatActivity {
      */
     public String rolesToJson(List<Pair<String, String>> roles) {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ ");
+
+        sb.append("{\n  \"roles\": {\n");
         for (Pair<String, String> role : roles) {
             String roleCount = role.first;
             String roleName = role.second;
-            String subString = roleName.toLowerCase() + ": " + roleCount + ", ";
-            sb.append(subString);
+            sb.append("    \"").append(roleName.toLowerCase()).append("\": ")
+                    .append(roleCount).append(",\n");
         }
 
-        int i = sb.lastIndexOf(",");
-        sb.append("}");
-        sb.deleteCharAt(i);
+        if (!roles.isEmpty()) {
+            sb.setLength(sb.length() - 2);
+            sb.append("\n");
+        }
+
+        sb.append("  }\n}");
         return sb.toString();
     }
 
@@ -312,6 +339,7 @@ public class CreateListing extends AppCompatActivity {
      */
     public String scheduleToJson(ArrayList<String> schedule) {
         StringBuilder sb = new StringBuilder();
+
         sb.append("{\n  \"schedule\": {\n");
         for (int i = 0; i < schedule.size(); i += 3) {
             String day = schedule.get(i).toLowerCase();
@@ -342,8 +370,8 @@ public class CreateListing extends AppCompatActivity {
      */
     public String prefToJson(String env, String character, String campaign, String difficulty, String schedule) {
         StringBuilder sb = new StringBuilder();
-        sb.append("{\n \"preferences\": {\n");
 
+        sb.append("{\n \"preferences\": {\n");
         sb.append("\"environment\": \"").append(env).append("\",\n");
         sb.append("\"character\": \"").append(character).append("\",\n");
         sb.append("\"campaign\": \"").append(campaign).append("\",\n");
