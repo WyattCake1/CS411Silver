@@ -41,7 +41,7 @@
     <string name="support_label">Support</string>
     <string name="enter_amount">0</string>
     <string name="character_role_instructions">Character Listings: Enter 1 next to your desired role</string>
-    <string name="campaign_role_instructions">Campaign Listings: Enter number next to roles needed</string>
+    <string name="campaign_role_instructions">Campaign Listings: For each role, enter the number of people needed (e.g., if you need 2 people for "DPS" type 2 next to "DPS").</string>
     <string name="setting_pref_instructions">Character Listings: Help us find the best matches for you by selecting whats matters most to you</string>
     <string name="pref_environment">Environment:</string>
     <string name="pref_char_role">Character Role:</string>
