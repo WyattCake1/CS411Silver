@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MatchingListings extends AppCompatActivity {
+    private String listId;
+    private String userId;
     private ArrayList<Listing> matches;
     private ArrayList<String> scores;
     private boolean fetched;
@@ -40,8 +42,8 @@ public class MatchingListings extends AppCompatActivity {
             return insets;
         });
         Intent intent = getIntent();
-        String listId = intent.getStringExtra("listingId");
-        String userId = intent.getStringExtra("userId");
+        listId = intent.getStringExtra("listingId");
+        userId = intent.getStringExtra("userId");
         matches = new ArrayList<>();
         scores = new ArrayList<>();
         searchListings(listId, userId);
@@ -70,7 +72,7 @@ public class MatchingListings extends AppCompatActivity {
 
             @Override
             public void onError(IOException e) {
-
+                System.err.println(e);
             }
         });
 
@@ -183,5 +185,9 @@ public class MatchingListings extends AppCompatActivity {
     private int dpToPx (int dp){
         float density = this.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    public void backToPrevious(View v){
+        finish();
     }
 }

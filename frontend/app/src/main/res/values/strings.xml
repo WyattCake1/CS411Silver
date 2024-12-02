@@ -141,5 +141,6 @@
     <string name="matches_header">Matches</string>
     <string name="no_matches">No matches found</string>
     <string name="accept_button_label">Accept</string>
+    <string name="day_label">Day:</string>
 
 </resources>
