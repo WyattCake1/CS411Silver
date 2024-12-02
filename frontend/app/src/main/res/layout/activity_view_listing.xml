@@ -191,6 +191,22 @@
         app:layout_constraintTop_toBottomOf="@+id/role_label">
     </TextView>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:onClick="editListing"
+        android:text="@string/edit_listing_label"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/frame"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/frame"
+        app:layout_constraintTop_toBottomOf="@+id/role_label">
+
+    </androidx.appcompat.widget.AppCompatButton>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -224,6 +240,8 @@
             android:textColor="@color/white"
             android:onClick="findMatches">
         </androidx.appcompat.widget.AppCompatButton>
+
+
 
     </LinearLayout>
 

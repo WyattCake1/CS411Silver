@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rolecall.R;
 
+import java.util.HashMap;
+
 public class ViewListing extends AppCompatActivity {
     private Listing display;
     private String userId;
@@ -46,6 +48,12 @@ public class ViewListing extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void editListing(View v){
+        Intent intent = new Intent(ViewListing.this, EditListingsPage.class);
+        intent.putExtra("listing", display);
+        startActivity(intent);
+    }
+
     public void fillFields(View v){
         //Implemented Logic
         TextView gameName = findViewById(R.id.game_name_field);
@@ -59,6 +67,6 @@ public class ViewListing extends AppCompatActivity {
         environment.setText(display.getEnvironment());
         startTime.setText(display.getStartTime());
         endTime.setText(display.getEndTime());
-        role.setText(display.getRole());
+        role.setText(display.getRole().toString());
     }
 }

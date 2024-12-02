@@ -42,6 +42,9 @@ import com.rolecall.ui.theme.RoleCallTheme
 import com.rolecall.ui.theme.WhiteText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.simple.JSONArray
+import org.json.simple.JSONObject
+import org.json.simple.parser.JSONParser
 import java.io.IOException
 
 class UserListingsPage : ComponentActivity() {
@@ -106,17 +109,11 @@ suspend fun getListings(id : String, userListings: MutableList<Listing>) {
         flaskClient.requestUserListings(id,object : ResponseCallback {
             override fun onSuccess(response: String) {
                 if(response.trim() != "[]"){
-                    val trimmedResponse = response.trim().removePrefix("[").removeSuffix("]")
-                    val listings = trimmedResponse.split("},")
-                        .mapIndexed { index, item ->
-                            if (index == trimmedResponse.split("},").size - 1) {
-                                item.trim()
-                            } else {
-                                "$item}".trim()
-                            }
-                        }
-                    for (listing in listings) {
-                        val newListing = Listing(listing)
+                    val parser = JSONParser()
+                    val jsonArray = parser.parse(response.trimIndent()) as JSONArray
+                    for(i in 0 until jsonArray.size){
+                        val jsonObject = jsonArray[i] as JSONObject
+                        val newListing = Listing(jsonObject)
                         userListings.add(newListing)
                     }
                 }

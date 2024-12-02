@@ -37,20 +37,20 @@ INSERT INTO UserProfiles (name,password,email) VALUES
     ('cake',SHA2('cake',256),'cake@mail.com');
 
  -- User 1 (dev)
-INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (TRUE, 'Dnd', 'Online', "Fri", "5:30 PM", "8:30 PM", 'Casual', 'Healer, DPS, Tank', 1),
-    (FALSE, 'Dnd', 'In-Person', "Tue", "4:00 PM", "7:00 PM", 'Intermediate', 'Tank', 1),
-    (TRUE, 'Warhammer', 'Online', "Sat", "10:00 AM", "2:00 PM", 'Intermediate', 'DPS, Face', 1);
+INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 1);
 -- User 2 (Berhan)
-INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (FALSE, 'Dnd', 'Online', "Fri", "5:30 PM", "8:30 PM", 'First Game', 'Healer', 2),
-    (TRUE, 'Dnd', 'In-Person', "Tue", "4:30 PM", "7:00 PM", 'Intermediate', 'Tank, DPS', 2),
-    (FALSE, 'Warhammer', 'Online', "Wed", "6:00 PM", "9:30 PM", 'Casual', 'Face', 2);
+INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2),
+    (FALSE, 'Dnd', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 2);
 -- User 3 (Wyatt)
-INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId) VALUES
-    (False, 'Dnd', 'Online', "Fri", "5:00 PM", "9:00 PM", 'Casual', 'Tank', 3),
-    (FALSE, 'Warhammer', 'In-Person', "Mon", "4:00 PM", "7:00 PM", 'First Game', 'Tank', 3),
-    (TRUE, 'Warhammer', 'Online', "Sat", "3:30 PM", "7:00 PM", 'Intermediate', 'Tank, Healer', 3);
+INSERT INTO UserListings (campaign, gameName, environment, startTime, endTime, difficulty, role, userProfileId) VALUES
+    (TRUE, 'Dnd', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
+    (FALSE, 'Warhammer', 'In-Person', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
+    (TRUE, 'Warhammer', 'Online', "1000", "2000", 'Hard', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3);
 
 -- DATABASE Tests for Chatroom Feature
 
