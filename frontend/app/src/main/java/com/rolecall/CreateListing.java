@@ -24,12 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rolecall.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateListing extends AppCompatActivity {
 
-    private int listingType = 0;
+    private boolean listingType = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +44,17 @@ public class CreateListing extends AppCompatActivity {
         });
         //------------------------------------------------------------------------------------------
         // Roles for dialog recycler view
-        ArrayList<Pair<String, String>> roles = new ArrayList<>();
-        roles.add(new Pair<>("0", "Tank"));
-        roles.add(new Pair<>("0", "DPS"));
-        roles.add(new Pair<>("0", "Face"));
-        roles.add(new Pair<>("0", "Healer"));
-        roles.add(new Pair<>("0", "Support"));
+        ArrayList<Pair<String, String>> arrayRoles = new ArrayList<>();
+        arrayRoles.add(new Pair<>("0", "Tank"));
+        arrayRoles.add(new Pair<>("0", "DPS"));
+        arrayRoles.add(new Pair<>("0", "Face"));
+        arrayRoles.add(new Pair<>("0", "Healer"));
+        arrayRoles.add(new Pair<>("0", "Support"));
         //------------------------------------------------------------------------------------------
         // Adapter for the recycler view
         RecyclerView recyclerView = findViewById(R.id.roles_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ListAdapter adapter = new ListAdapter(roles);
+        ListAdapter adapter = new ListAdapter(arrayRoles);
         recyclerView.setAdapter(adapter);
         //------------------------------------------------------------------------------------------
         // Preferred environment
@@ -152,7 +153,7 @@ public class CreateListing extends AppCompatActivity {
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                listingType = 0;
+                listingType = true;
                 charSlots.setText("0");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
@@ -177,7 +178,7 @@ public class CreateListing extends AppCompatActivity {
                 Intent intent = new Intent(CreateListing.this, CreateListing.class);
                 startActivity(intent);
                 finish();
-                listingType = 1;
+                listingType = false;
                 charSlots.setText("1");
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
@@ -209,7 +210,7 @@ public class CreateListing extends AppCompatActivity {
             // Get game name and character slots
             EditText gameName = findViewById(R.id.game_name_input);
             String name = String.valueOf(gameName.getText());
-            String slots = String.valueOf(charSlots.getText());
+            String characterSlots = String.valueOf(charSlots.getText());
 
             // Get distance, env, difficulty
             String distance = distance_spinner.getSelectedItem().toString();
@@ -217,67 +218,67 @@ public class CreateListing extends AppCompatActivity {
             String difficulty = difficulty_spinner.getSelectedItem().toString();
 
             // Build schedule
-            ArrayList<String> schedule = new ArrayList<String>();
+            ArrayList<String> tempSchedule = new ArrayList<String>();
             String start;
             String end;
 
             EditText sundayStart = findViewById(R.id.sunday_start_time);
             EditText sundayEnd = findViewById(R.id.sunday_end_time);
-            schedule.add("sunday");
+            tempSchedule.add("sunday");
             start = String.valueOf(sundayStart.getText());
             end = String.valueOf(sundayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText mondayStart = findViewById(R.id.monday_start_time);
             EditText mondayEnd = findViewById(R.id.monday_end_time);
-            schedule.add("monday");
+            tempSchedule.add("monday");
             start = String.valueOf(mondayStart.getText());
             end = String.valueOf(mondayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText tuesdayStart = findViewById(R.id.tuesday_start_time);
             EditText tuesdayEnd = findViewById(R.id.tuesday_end_time);
-            schedule.add("tuesday");
+            tempSchedule.add("tuesday");
             start = String.valueOf(tuesdayStart.getText());
             end = String.valueOf(tuesdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText wedStart = findViewById(R.id.wednesday_start_time);
             EditText wedEnd = findViewById(R.id.wednesday_end_time);
-            schedule.add("wednesday");
+            tempSchedule.add("wednesday");
             start = String.valueOf(wedStart.getText());
             end = String.valueOf(wedEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText thursdayStart = findViewById(R.id.thursday_start_time);
             EditText thursdayEnd = findViewById(R.id.thursday_end_time);
-            schedule.add("thursday");
+            tempSchedule.add("thursday");
             start = String.valueOf(thursdayStart.getText());
             end = String.valueOf(thursdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText fridayStart = findViewById(R.id.friday_start_time);
             EditText fridayEnd = findViewById(R.id.friday_end_time);
-            schedule.add("friday");
+            tempSchedule.add("friday");
             start = String.valueOf(fridayStart.getText());
             end = String.valueOf(fridayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
             EditText saturdayStart = findViewById(R.id.saturday_start_time);
             EditText saturdayEnd = findViewById(R.id.saturday_end_time);
-            schedule.add("saturday");
+            tempSchedule.add("saturday");
             start = String.valueOf(saturdayStart.getText());
             end = String.valueOf(saturdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
+            tempSchedule.add(start);
+            tempSchedule.add(end);
 
-            String finalSchedule = scheduleToJson(schedule);
+            String schedule = scheduleToJson(tempSchedule);
 
             // Build preferences
             String envPref = environmentSpinner.getSelectedItem().toString();
@@ -287,25 +288,48 @@ public class CreateListing extends AppCompatActivity {
             String schedulePref = scheduleSpinner.getSelectedItem().toString();
 
             List<Pair<String, String>> updatedRoles = adapter.getRoles();
-            String finalRoles = rolesToJson(updatedRoles);
+            String roles = rolesToJson(updatedRoles);
 
-            String finalPreferences = prefToJson(envPref, charPref, campPref, diffPref, schedulePref);
+            String characterImportance = prefToJson(envPref, charPref, campPref, diffPref, schedulePref);
 
-            processListing(listingType, name, slots, distance, environment, difficulty, finalSchedule, finalRoles, finalPreferences);
+            processListing(listingType, name, characterSlots, distance, environment, difficulty, schedule, roles, characterImportance);
 
+            Intent intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     } // End onCreate
 
-    public void processListing(int listingType, String name, String slots, String distance, String environment, String difficulty, String finalSchedule, String finalRoles, String finalPreferences) {
-        Log.i("Game name: ", name);
-        Log.i("Character Slots: ", slots);
+    public void processListing(boolean listingType, String gameName, String characterSlots, String distance, String environment, String difficulty, String schedule, String roles, String characterImportance) {
+        Log.i("Game name: ", gameName);
+        Log.i("Character Slots: ", characterSlots);
         Log.i("Max Distance: ", distance);
         Log.i("Environment: ", environment);
         Log.i("Difficulty: ", difficulty);
-        Log.i("Schedule: ", finalSchedule);
-        Log.i("Roles: ", finalRoles);
-        Log.i("Preferences: ", finalPreferences);
+        Log.i("Schedule: ", schedule);
+        Log.i("Roles: ", roles);
+        Log.i("Preferences: ", characterImportance);
+
         Listing newListing = new Listing();
+
+        FlaskClient flask = new FlaskClient();
+        ResponseCallback response = new ResponseCallback() {
+            @Override
+            public void onSuccess(String response) {
+
+            }
+
+            @Override
+            public void onError(IOException e) {
+
+            }
+        };
+
+
+
+
+        // Save listing function in flask client
+        // Go back to the main listing page
     }
     /**
      * This method creates a JSON from the listings roles(s)
