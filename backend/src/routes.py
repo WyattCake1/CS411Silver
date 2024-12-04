@@ -216,3 +216,39 @@ def get_members_of_chatroom(chatroom_id: int):
     chatroom_members = cursor.fetchall()
     conn.close()
     return jsonify(chatroom_members)
+
+@main.route('/send_chatroom_message', methods=["POST"])
+def add_chatroom_message():
+    """
+        Adds a new chat message to the database.
+
+        Params:
+            ...
+
+        Returns:
+            str: ...
+
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        user_id = request.form['user_id']
+        chatroom_id = request.form['chatroom_id']
+        message = request.form['message']
+
+        cursor.execute(
+        f"""
+            INSERT INTO `chat_messages`(`chatroom_id`, `user_id`, `message`)
+                VALUES ({chatroom_id}, {user_id}, '{message}');
+        """
+        )
+        conn.commit()
+        cursor.close()
+
+        return jsonify({"message": "Chatroom message added successfully"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    
