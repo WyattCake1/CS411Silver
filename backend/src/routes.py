@@ -173,7 +173,7 @@ def get_messages_from_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""
+    """
         SELECT
         chat_messages.user_id,
         mock_account.name,
@@ -183,8 +183,8 @@ def get_messages_from_chatroom(chatroom_id: int):
         from chat_messages
 
         left join mock_account on mock_account.user_id = chat_messages.user_id
-        where chatroom_id = {chatroom_id}
-        order by chat_messages.timestamp;"""
+        where chatroom_id = %s
+        order by chat_messages.timestamp;""", (chatroom_id,)
     )
 
     chat_messages = cursor.fetchall()
@@ -198,7 +198,7 @@ def get_members_of_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""
+    """
         SELECT
         mock_account.user_id,
         mock_account.name
@@ -209,8 +209,8 @@ def get_members_of_chatroom(chatroom_id: int):
         INNER JOIN chatrooms on chatrooms.campaign_id
             = COALESCE(campaign_character_slots.campaign_listing_id, mock_listing.listing_id)
 
-        WHERE chatrooms.chatroom_id = {chatroom_id};
-       ;"""
+        WHERE chatrooms.chatroom_id = %s;
+       ;""", (chatroom_id,)
     )
 
     chatroom_members = cursor.fetchall()
@@ -238,14 +238,14 @@ def add_chatroom_message():
         message = request.form['message']
 
         cursor.execute(
-        f"""
-            INSERT INTO `chat_messages`(`chatroom_id`, `user_id`, `message`)
-                VALUES ({chatroom_id}, {user_id}, '{message}');
         """
+            INSERT INTO `chat_messages`(`chatroom_id`, `user_id`, `message`)
+                VALUES (%s, %s, %s);
+        """, (chatroom_id, user_id, message)
         )
         conn.commit()
         cursor.close()
-
+        conn.close()
         return jsonify({"message": "Chatroom message added successfully"})
     
     except Exception as e:
