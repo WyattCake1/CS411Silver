@@ -57,6 +57,7 @@ dependencies {
     implementation ("com.googlecode.json-simple:json-simple:1.1.1")
     implementation(libs.junit)
     implementation(libs.dflib)
+    implementation("org.dflib:dflib-json:1.0.0-RC2")
 
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
