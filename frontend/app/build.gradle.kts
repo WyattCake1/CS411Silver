@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation ("com.googlecode.json-simple:json-simple:1.1.1")
     implementation(libs.junit)
+    implementation(libs.dflib)
 
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
