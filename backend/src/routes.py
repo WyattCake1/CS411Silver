@@ -278,8 +278,8 @@ def create_chatroom():
         return jsonify({"error": str(e)}), 500
 
 
-@main.route('/get_campaign_chatroom', methods=["GET"])
-def campaign_chatroom_lookup():
+@main.route('/get_campaign_chatroom/<int:campaign_id>', methods=["GET"])
+def campaign_chatroom_lookup(campaign_id: int):
     """
         Finds the chatroom associated with a campaign, if it exists.
 
@@ -291,19 +291,15 @@ def campaign_chatroom_lookup():
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
 
-        campaign_id = request.form['campaign_id']
-
         cursor.execute(
         """
             SELECT `chatroom_id` FROM chatrooms
                 WHERE `campaign_id` = %s;
         """, (campaign_id,)
         )
-        conn.commit()
-        cursor.close()
-        conn.close()
-
+       
         chatroom = cursor.fetchall()
+        cursor.close()
         conn.close()
         return jsonify(chatroom)
     
