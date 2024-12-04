@@ -42,19 +42,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-
 import org.dflib.DataFrame;
 import org.dflib.json.Json;
 import java.util.concurrent.TimeUnit;
 import java.net.URLEncoder;
 
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.Callable;
+
 
 
 public class Chatroom extends AppCompatActivity {
-
-    String USER_NAME = "TeamSilver";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +65,14 @@ public class Chatroom extends AppCompatActivity {
         int userId = getIntent().getIntExtra("userId", -1);
         int chatroomId = getIntent().getIntExtra("chatroomId", -1);
 
-        // TODO if the default values are used, show an error page OR if these values not in
-        // the database
+        // TODO if the default values are used, show an error page OR if these values not in the database
+            // Probably should occur from the previous activity...
+
+        // Future Tasks
+
+        FutureTask<ArrayList<String>> loadChatroomMessagesTask = new FutureTask<>(() -> loadChatroomMessages(chatroomId));
+        Thread loadChatMessagesThread = new Thread(loadChatroomMessagesTask); loadChatMessagesThread.start();
+        // get username data
 
         // Initialize the UI elements
 
@@ -87,54 +92,19 @@ public class Chatroom extends AppCompatActivity {
         // Initialize the message log
 
         ArrayList<String> messageLog = new ArrayList<>();
-
-        // HTTPS request to get the chatroom messages
-
-        Thread HttpThread = new Thread(() -> {
-            try {
-                Log.d("CHATROOM", "Attempting HTTP connection");
-
-                String urlString = "http://10.0.2.2:5000/chatroom/" + chatroomId;
-                URL url = new URL(urlString);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                // TODO, add username and password args so random users cannot view chatroom
-
-                conn.setRequestMethod("GET");
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == 200) {
-                    String jsonResponse = getJson(conn);
-                    DataFrame df = Json.loader().load(jsonResponse);
-
-                    Log.d("CHATROOM", String.valueOf(df));
-
-                    df.forEach(row -> {
-                        String name = row.get("name").toString();
-                        String message = row.get("message").toString();
-                        Log.d("CHATROOM", name + ": " + message);
-                        messageLog.add(name + ": " + message);
-                        });
-                    }
-                else {
-                    Log.d("CHATROOM", "Request failed with status: " + responseCode);
-                }
-                conn.disconnect();
-            } catch (Exception e) {
-                Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
-                e.printStackTrace();
-            }
-        }); HttpThread.start();
-
-        // END HTTPS request
-
-        // TODO replace this with a proper AWAIT sequence
         try {
-            Thread.sleep(2000);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            messageLog = loadChatroomMessagesTask.get(5, TimeUnit.SECONDS);
         }
+        catch (Exception e) {
+            Log.d("CHATROOM", "An exception was thrown...");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String stackTrace = sw.toString();
+            Log.d("CHATROOM", stackTrace);
+        }
+
+        // Initialize the adapter with the chatroom message log.
 
         ChatroomMessageAdapter adapter = new ChatroomMessageAdapter(messageLog);
         ChatroomMessageStream.setAdapter(adapter);
@@ -156,6 +126,58 @@ public class Chatroom extends AppCompatActivity {
             }
         });
     };
+
+    /**
+     * Loads all messages from a chatroom, returning them as a list of Strings.
+     *
+     * @pre chatroomId is in chatroom database && this method is not invoked via the main thread.
+     * @param chatroomId
+     * @return a list of all messages from the chatroom
+     */
+    private static ArrayList<String> loadChatroomMessages(Integer chatroomId){
+
+        ArrayList<String> messageLog = new ArrayList<>();
+        try {
+            Log.d("CHATROOM", "Attempting HTTP connection");
+
+            String urlString = "http://10.0.2.2:5000/chatroom/" + chatroomId;
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            // TODO, add username and password args so random users cannot view chatroom
+
+            conn.setRequestMethod("GET");
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) {
+                String jsonResponse = getJson(conn);
+                DataFrame df = Json.loader().load(jsonResponse);
+
+                Log.d("CHATROOM", String.valueOf(df));
+
+                df.forEach(row -> {
+                    String name = row.get("name").toString();
+                    String message = row.get("message").toString();
+                    Log.d("CHATROOM", name + ": " + message);
+                    messageLog.add(name + ": " + message);
+                });
+            }
+            else {
+                Log.d("CHATROOM", "Request failed with status: " + responseCode);
+            }
+            conn.disconnect();
+        } catch (Exception e) {
+            //Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
+            Log.d("CHATROOM", "An exception was thrown...");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String stackTrace = sw.toString();
+            Log.d("CHATROOM", stackTrace);
+        }
+        return messageLog;
+    }
+
 
     /**
      * Inserts a new message into the chat_messages database.
