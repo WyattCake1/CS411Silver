@@ -299,8 +299,6 @@ def campaign_chatroom_lookup(campaign_id: int):
         )
        
         chatroom = cursor.fetchall()
-        cursor.close()
-        conn.close()
         return jsonify(chatroom)
     
     except Exception as e:

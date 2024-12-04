@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Chatroom.class);
                 intent.putExtra("userId", 1);
-                intent.putExtra("chatroomId", 1);
+                intent.putExtra("campaignId", 6);
                 view.getContext().startActivity(intent);}
         });
 

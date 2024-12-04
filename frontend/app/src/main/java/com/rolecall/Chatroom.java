@@ -51,8 +51,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Callable;
 
+import com.rolecall.Utility;
 
-
+/**
+ * Chatroom Activity
+ * @pre Activity is launched with a userId && ( Activity is launched with chatroomId || Activity is launched with
+ * campaign_id
+ */
 public class Chatroom extends AppCompatActivity {
 
     @Override
@@ -63,10 +68,10 @@ public class Chatroom extends AppCompatActivity {
 
         // Retrieve the data
         int userId = getIntent().getIntExtra("userId", -1);
-        int campaignId = getIntent().getIntExtra("chatroomId", -1);
-        int chatroomId = findChatroomId(campaignId);
-        Log.d("CHATROOM", campaignId + " " + chatroomId);
+        int campaignId = getIntent().getIntExtra("campaignId", -1);
+        int chatroomId = getIntent().getIntExtra("chatroomId", createOrGetChatroom(campaignId));
 
+        Log.d("CHATROOM", campaignId + " " + chatroomId);
 
         // TODO if the default values are used, show an error page OR if these values not in the database
             // Probably should occur from the previous activity...
@@ -99,12 +104,7 @@ public class Chatroom extends AppCompatActivity {
             messageLog = loadChatroomMessagesTask.get(5, TimeUnit.SECONDS);
         }
         catch (Exception e) {
-            Log.d("CHATROOM", "An exception was thrown...");
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            Log.d("CHATROOM", stackTrace);
+            Utility.outputExceptionTrace("CHATROOM", e);
         }
 
         // Initialize the adapter with the chatroom message log.
@@ -170,13 +170,7 @@ public class Chatroom extends AppCompatActivity {
             }
             conn.disconnect();
         } catch (Exception e) {
-            //Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
-            Log.d("CHATROOM", "An exception was thrown...");
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            Log.d("CHATROOM", stackTrace);
+            Utility.outputExceptionTrace("CHATROOM", e);
         }
         return messageLog;
     }
@@ -213,36 +207,12 @@ public class Chatroom extends AppCompatActivity {
                 os.write(input, 0, input.length);
             }
 
-            // OUTPUT
+            Utility.outputConnectionLog(conn);
 
-            // Get the response code and message
-            int responseCode = conn.getResponseCode();
-            String responseMessage = conn.getResponseMessage();
-            Log.d("CHATROOM", "Response: " + responseCode + " " + responseMessage);
-
-            // Read the server's response
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                Log.d("CHATROOM", "Server response: " + response.toString());
-
-            } catch (IOException e) {
-                Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
-            }
-
-            // END OUTPUT
             conn.disconnect();
 
         } catch (Exception e) {
-            Log.d("CHATROOM", "An exception was thrown...");
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            Log.d("CHATROOM", stackTrace);
+            Utility.outputExceptionTrace("CHATROOM", e);
         }
     }
 
@@ -253,21 +223,22 @@ public class Chatroom extends AppCompatActivity {
      * @return the JSON data as a String
      */
     private static String getJson(HttpURLConnection conn){
+
         Log.d("CHATROOM", "call to getJSON");
         StringBuilder response = new StringBuilder();
+
         try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
         } catch (IOException e) {
-            Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
-            e.printStackTrace();
+            Log.d("CHATROOM", "1");
+            Utility.outputExceptionTrace("CHATROOM", e);
         }
         Log.d("CHATROOM", response.toString());
         return response.toString();
     }
-
 
     /**
      * Gets a ChatroomId associated with a campaignListingId from the database, creating
@@ -285,141 +256,110 @@ public class Chatroom extends AppCompatActivity {
 
     /**
      * Creates a Chatroom for a Campaign Listing
+     * Preconditions:
+     *      there is not a chatroom already associated with the campaignListingId
+     * Postconditions:
+     *      a new row is added to the chatroom database.
      *
-     * @param campaignListingId
-     * Turn to private later
+     * @param campaignListingId the campaign that needs a chatroom
      */
-    private static void createChatroom(Integer campaignListingId){
-        try {
-            String urlString = "http://10.0.2.2:5000/create_chatroom";
-            String encodedParams = "campaign_id="
-                    + URLEncoder.encode(campaignListingId.toString(), "UTF-8");
+    private static void createChatroom(Integer campaignListingId) {
 
-            Log.d("CHATROOM", urlString);
-            urlString += "?" + encodedParams;
+        FutureTask<Integer> httpTask = new FutureTask<>(() -> {
+            try {
+                String urlString = "http://10.0.2.2:5000/create_chatroom";
+                String encodedParams = "campaign_id="
+                        + URLEncoder.encode(campaignListingId.toString(), "UTF-8");
 
-            URL url = new URL(urlString);
+                Log.d("CHATROOM", urlString);
+                urlString += "?" + encodedParams;
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setDoOutput(true);
+                URL url = new URL(urlString);
 
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = encodedParams.getBytes("UTF-8");
-                os.write(input, 0, input.length);
-            }
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setDoOutput(true);
 
-            // OUTPUT
-
-            // Get the response code and message
-            int responseCode = conn.getResponseCode();
-            String responseMessage = conn.getResponseMessage();
-            Log.d("CHATROOM", "Response: " + responseCode + " " + responseMessage);
-
-            // Read the server's response
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = encodedParams.getBytes("UTF-8");
+                    os.write(input, 0, input.length);
                 }
-                Log.d("CHATROOM", "Server response: " + response.toString());
 
-            } catch (IOException e) {
-                Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
+                Utility.outputConnectionLog(conn);
+
+                // END OUTPUT
+                conn.disconnect();
+
+            } catch (Exception e) {
+                Utility.outputExceptionTrace("CHATROOM", e);
             }
+            return 0;
+        });
 
-            // END OUTPUT
-            conn.disconnect();
-
+        Thread httpThread = new Thread(httpTask);
+        httpThread.start();
+        try {
+            httpTask.get(2, TimeUnit.SECONDS);
         } catch (Exception e) {
-            Log.d("CHATROOM", "An exception was thrown...");
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            Log.d("CHATROOM", stackTrace);
+            throw (new RuntimeException(e));
         }
     }
 
     /**
-     * Evaluates whether a chatroom exists for a campaign listing.
+     * Checks whether a chatroom exists for a campaign listing.
      *
-     * @param campaignListingID
+     * @param campaignListingID the campaign listing for which to check for a chatroom
      * @return true if a chatroom exists for the campaign listing, false otherwise
      */
     public static Boolean hasChatroom(Integer campaignListingID){
-        return findChatroomId(campaignListingID) != -1;
+        Boolean result = findChatroomId(campaignListingID) >= 0;
+        Log.d("CHATROOM", "result = " + result);
+        return result;
     }
 
     /**
-     *
-     * TODO WIP DO NOT USE YET
      * Finds the chatroomId associated with a CampaignListing, or -1 if it does not exist.
      *
-     * @param campaignListingId
+     * @param campaignListingId the campaign listing for which to find a chatroom
      * @return a valid chatroomId if there is a chatroom associated with a campaign listing,
      *         or -1 if there is no such chatroom.
-     *
      */
     public static int findChatroomId(Integer campaignListingId){
 
         FutureTask<Integer> httpTask = new FutureTask<>(() -> {
+
+            Integer result = -1;
+
             try {
-                String urlString = "http://10.0.2.2:5000/get_campaign_chatroom/" + campaignListingId.toString();
+                String urlString = "http://10.0.2.2:5000/get_campaign_chatroom/" + campaignListingId;
                 Log.d("CHATROOM", urlString);
                 URL url = new URL(urlString);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setDoOutput(true);
 
-                // OUTPUT
-
-                // Get the response code and message
-                int responseCode = conn.getResponseCode();
-                String responseMessage = conn.getResponseMessage();
-                Log.d("CHATROOM", "Response: " + responseCode + " " + responseMessage);
-
-                // Read the server's response
-                try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                    String inputLine;
-                    StringBuilder response = new StringBuilder();
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    Log.d("CHATROOM", "Server response: " + response.toString());
-
-                } catch (IOException e) {
-                    Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
-                }
-
-                // END OUTPUT
-                conn.disconnect();
+                Utility.outputConnectionLog(conn);
 
                 String jsonResponse = getJson(conn);
-                DataFrame df = Json.loader().load(jsonResponse);
 
-
-                if (df.height() == 0) {
+                if (jsonResponse.isBlank()) {
                     return -1;
                 }
+
+                DataFrame df = Json.loader().load(jsonResponse);
                 Series<Integer> chatroom_ids = df.getColumn("chatroom_id");
-                return chatroom_ids.get(0);
+
+                result = chatroom_ids.get(0);
+                conn.disconnect();
 
             } catch (Exception e) {
-                Log.d("CHATROOM", "An exception was thrown...");
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                String stackTrace = sw.toString();
-                Log.d("CHATROOM", stackTrace);
-                return -2;
-                }
+                Utility.outputExceptionTrace("CHATROOM", e);
+                result = -2;
+
             }
-        );
+            return result;
+        });
 
         Thread httpThread = new Thread(httpTask); httpThread.start();
 
@@ -431,5 +371,6 @@ public class Chatroom extends AppCompatActivity {
         }
     }
 }
+
 
 
