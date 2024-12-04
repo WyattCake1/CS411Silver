@@ -250,5 +250,64 @@ def add_chatroom_message():
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@main.route('/create_chatroom', methods=["POST"])
+def create_chatroom():
+    """
+        Creates a new chatroom given a campaign_id.
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        campaign_id = request.form['campaign_id']
+
+        cursor.execute(
+        """
+            INSERT INTO `chatrooms`(`campaign_id`)
+                VALUES (%s);
+        """, (campaign_id,)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Chatroom created successfully!"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@main.route('/get_campaign_chatroom', methods=["GET"])
+def campaign_chatroom_lookup():
+    """
+        Finds the chatroom associated with a campaign, if it exists.
+
+        Returns:
+            A JSON containing either 0 or 1 chatroom_ids associated with
+            the campaign. 
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        campaign_id = request.form['campaign_id']
+
+        cursor.execute(
+        """
+            SELECT `chatroom_id` FROM chatrooms
+                WHERE `campaign_id` = %s;
+        """, (campaign_id,)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        chatroom = cursor.fetchall()
+        conn.close()
+        return jsonify(chatroom)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
     

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.rolecall.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.dflib.Series;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -129,8 +130,8 @@ public class Chatroom extends AppCompatActivity {
 
         // TODO replace this with a proper AWAIT sequence
         try {
-            // Sleep for 2 seconds (2000 milliseconds)
             Thread.sleep(2000);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -163,7 +164,7 @@ public class Chatroom extends AppCompatActivity {
      * @param userId the ID of the user who sent the message
      * @param message the content
      */
-    public static void postMessage(Integer chatroomId, Integer userId, String message){
+    private static void postMessage(Integer chatroomId, Integer userId, String message){
 
         try {
             String urlString = "http://10.0.2.2:5000/send_chatroom_message";
@@ -203,14 +204,15 @@ public class Chatroom extends AppCompatActivity {
                     response.append(inputLine);
                 }
                 Log.d("CHATROOM", "Server response: " + response.toString());
+
             } catch (IOException e) {
                 Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
             }
 
             // END OUTPUT
             conn.disconnect();
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             Log.d("CHATROOM", "An exception was thrown...");
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -226,7 +228,7 @@ public class Chatroom extends AppCompatActivity {
      * @param conn the HTTP connection where the JSON data is recieved from.
      * @return the JSON data as a String
      */
-    public static String getJson(HttpURLConnection conn){
+    private static String getJson(HttpURLConnection conn){
         Log.d("CHATROOM", "call to getJSON");
         StringBuilder response = new StringBuilder();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
@@ -234,8 +236,7 @@ public class Chatroom extends AppCompatActivity {
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
             e.printStackTrace();
         }
@@ -244,4 +245,149 @@ public class Chatroom extends AppCompatActivity {
     }
 
 
+    /**
+     * Creates a Chatroom for a Campaign Listing
+     *
+     * @param campaignListingId
+     */
+    public static void createChatroom(Integer campaignListingId){
+        try {
+            String urlString = "http://10.0.2.2:5000/create_chatroom";
+            String encodedParams = "campaign_id="
+                    + URLEncoder.encode(campaignListingId.toString(), "UTF-8");
+
+            Log.d("CHATROOM", urlString);
+            urlString += "?" + encodedParams;
+
+            URL url = new URL(urlString);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = encodedParams.getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            // OUTPUT
+
+            // Get the response code and message
+            int responseCode = conn.getResponseCode();
+            String responseMessage = conn.getResponseMessage();
+            Log.d("CHATROOM", "Response: " + responseCode + " " + responseMessage);
+
+            // Read the server's response
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                Log.d("CHATROOM", "Server response: " + response.toString());
+
+            } catch (IOException e) {
+                Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
+            }
+
+            // END OUTPUT
+            conn.disconnect();
+
+        } catch (Exception e) {
+            Log.d("CHATROOM", "An exception was thrown...");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String stackTrace = sw.toString();
+            Log.d("CHATROOM", stackTrace);
+        }
+    }
+
+    /**
+     * Evaluates whether a chatroom exists for a campaign listing.
+     *
+     * @param campaignListingID
+     * @return true if a chatroom exists for the campaign listing, false otherwise
+     */
+    public static Boolean hasChatroom(Integer campaignListingID){
+        return findChatroomId(campaignListingID) != -1;
+    }
+
+    /**
+     *
+     * TODO WIP DO NOT USE YET
+     * Finds the chatroomId associated with a CampaignListing, or -1 if it does not exist.
+     *
+     * @param campaignListingId
+     * @return a valid chatroomId if there is a chatroom associated with a campaign listing,
+     *         or -1 if there is no such chatroom.
+     */
+    public static int findChatroomId(Integer campaignListingId){
+
+        try {
+            String urlString = "http://10.0.2.2:5000/get_campaign_chatroom";
+            String encodedParams = "campaign_id="
+                    + URLEncoder.encode(campaignListingId.toString(), "UTF-8");
+
+            Log.d("CHATROOM", urlString);
+            urlString += "?" + encodedParams;
+
+            URL url = new URL(urlString);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = encodedParams.getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            // OUTPUT
+
+            // Get the response code and message
+            int responseCode = conn.getResponseCode();
+            String responseMessage = conn.getResponseMessage();
+            Log.d("CHATROOM", "Response: " + responseCode + " " + responseMessage);
+
+            // Read the server's response
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                Log.d("CHATROOM", "Server response: " + response.toString());
+
+            } catch (IOException e) {
+                Log.d("CHATROOM", "Error reading server response: " + e.getMessage());
+            }
+
+            // END OUTPUT
+            conn.disconnect();
+
+            String jsonResponse = getJson(conn);
+            DataFrame df = Json.loader().load(jsonResponse);
+
+
+            if (df.height() == 0) {
+                return -1;
+            }
+            Series<Integer> chatroom_ids = df.getColumn("chatroom_id");
+            return chatroom_ids.get(0);
+
+        } catch (Exception e) {
+            Log.d("CHATROOM", "An exception was thrown...");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String stackTrace = sw.toString();
+            Log.d("CHATROOM", stackTrace);
+        }
+        return -2;
+    }
 }
+
+
