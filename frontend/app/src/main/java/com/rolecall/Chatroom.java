@@ -43,6 +43,9 @@ import java.nio.file.Files;
 
 import org.dflib.DataFrame;
 import org.dflib.json.Json;
+import java.util.concurrent.TimeUnit;
+
+
 
 public class Chatroom extends AppCompatActivity {
 
@@ -61,7 +64,7 @@ public class Chatroom extends AppCompatActivity {
         // TODO if the default values are used, show an error page OR if these values not in
         // the database
 
-        Log.d("CHATROOM", "Hello, Logcat!");
+        // Initialize the UI elements
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -75,6 +78,10 @@ public class Chatroom extends AppCompatActivity {
         RecyclerView ChatroomMessageStream = findViewById(R.id.chatroom_message_stream);
         ChatroomMessageStream.setLayoutManager(
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+
+        // Initialize the message log
+
+        ArrayList<String> messageLog = new ArrayList<>();
 
         // HTTPS request to get the chatroom messages
 
@@ -96,11 +103,18 @@ public class Chatroom extends AppCompatActivity {
                     DataFrame df = Json.loader().load(jsonResponse);
 
                     Log.d("CHATROOM", String.valueOf(df));
-                    conn.disconnect();
+
+                    df.forEach(row -> {
+                        String name = row.get("name").toString();
+                        String message = row.get("message").toString();
+                        Log.d("CHATROOM", name + ": " + message);
+                        messageLog.add(name + ": " + message);
+                        });
                     }
                 else {
                     Log.d("CHATROOM", "Request failed with status: " + responseCode);
                 }
+                conn.disconnect();
             } catch (Exception e) {
                 Log.d("CHATROOM", "Exception thrown:" + e.getMessage());
                 e.printStackTrace();
@@ -109,20 +123,16 @@ public class Chatroom extends AppCompatActivity {
 
         // END HTTPS request
 
-
-        // TESTING, remove later
-        ArrayList<String> testMessages = new ArrayList<>();
-        testMessages.add("Hello...");
-        testMessages.add("...world!");
-        testMessages.add("A slightly more interesting test message.");
-
-        for (int i = 0; i < 15; i++){
-            testMessages.add("SCROLLING TEST " + i);
+        // TODO replace this with a proper AWAIT sequence
+        try {
+            // Sleep for 2 seconds (2000 milliseconds)
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        ChatroomMessageAdapter adapter = new ChatroomMessageAdapter(testMessages);
+        ChatroomMessageAdapter adapter = new ChatroomMessageAdapter(messageLog);
         ChatroomMessageStream.setAdapter(adapter);
-
         adapter.sendMessage("Sent after initialization!");
 
         // function to print a message to the screen
@@ -133,7 +143,6 @@ public class Chatroom extends AppCompatActivity {
                 ChatroomInput.setText("");
             }
         });
-
     };
 
     /**
