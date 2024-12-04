@@ -278,7 +278,7 @@
 
 
         <LinearLayout
-            android:id="@+id/sunday_row"
+            android:id="@+id/schedule"
             android:layout_width="351dp"
             android:layout_height="54dp"
             android:layout_marginStart="40dp"
@@ -288,17 +288,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat6">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+            <Spinner
+                android:id="@+id/schedule_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:textColor="@color/white"
-                android:text="@string/sunday_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <EditText
-                android:id="@+id/sunday_start_time"
+                android:id="@+id/start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -311,7 +310,7 @@
                 tools:ignore="DuplicateSpeakableTextCheck" />
 
             <EditText
-                android:id="@+id/sunday_end_time"
+                android:id="@+id/end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -324,279 +323,6 @@
                 tools:ignore="DuplicateSpeakableTextCheck" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/monday_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sunday_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white"
-                android:text="@string/monday_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/monday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/monday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tuesday_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/monday_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white"
-                android:text="@string/tuesday_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/tuesday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/tuesday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/wed_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tuesday_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:text="@string/wed_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/wednesday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/wednesday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/thursday_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wed_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint"
-                android:text="@string/thursday_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/thursday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/thursday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/friday_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/thursday_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:layout_marginEnd="8dp"
-                android:text="@string/friday_label"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/friday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/friday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/saturday_row"
-            android:layout_width="351dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friday_row">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/saturday_label"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/saturday_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-
-            <EditText
-                android:id="@+id/saturday_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/time_format"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint" />
-        </LinearLayout>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayout3"
-            android:layout_width="352dp"
-            android:layout_height="13dp"
-            android:orientation="vertical"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saturday_row" />
 
         <TextView
             android:id="@+id/textView"
@@ -607,7 +333,7 @@
             android:text="@string/setting_pref_instructions"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
 
         <LinearLayout
