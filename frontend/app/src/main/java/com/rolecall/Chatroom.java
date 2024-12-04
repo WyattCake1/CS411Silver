@@ -52,7 +52,11 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.Callable;
 
 
-
+/**
+ * Chatroom Activity
+ * @pre Activity is launched with a userId && ( Activity is launched with chatroomId || Activity is launched with
+ * campaign_id
+ */
 public class Chatroom extends AppCompatActivity {
 
     @Override
@@ -63,10 +67,10 @@ public class Chatroom extends AppCompatActivity {
 
         // Retrieve the data
         int userId = getIntent().getIntExtra("userId", -1);
-        int campaignId = getIntent().getIntExtra("chatroomId", -1);
-        int chatroomId = findChatroomId(campaignId);
-        Log.d("CHATROOM", campaignId + " " + chatroomId);
+        int campaignId = getIntent().getIntExtra("campaignId", -1);
+        int chatroomId = getIntent().getIntExtra("chatroomId", findChatroomId(campaignId));
 
+        Log.d("CHATROOM", campaignId + " " + chatroomId);
 
         // TODO if the default values are used, show an error page OR if these values not in the database
             // Probably should occur from the previous activity...
