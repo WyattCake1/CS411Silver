@@ -28,7 +28,8 @@
             android:exported="false"
             android:label="@string/title_activity_user_listings_page"
             android:theme="@style/Theme.RoleCall" />
-        <activity android:name="com.rolecall.EditListingsPage"
+        <activity
+            android:name="com.rolecall.EditListingsPage"
             android:exported="false"
             android:label="EditListingsPage"
             android:theme="@style/Theme.RoleCall" />
@@ -40,7 +41,8 @@
             android:exported="false" />
         <activity
             android:name="com.rolecall.CreateListing"
-            android:exported="true" />
+            android:exported="true"
+            android:label="CreateListingsPage"/>
         <activity
             android:name="com.rolecall.Chatroom"
             android:exported="false" />
