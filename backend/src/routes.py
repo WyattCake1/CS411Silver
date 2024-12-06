@@ -28,7 +28,7 @@ def save_user_listings():
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
         "INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId)"
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
         (
             data["campaign"],
             data["gameName"],
