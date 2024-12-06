@@ -258,9 +258,9 @@ public class CreateListing extends AppCompatActivity {
 
             processListing(listingType, name, environment ,day, start, end, difficulty, roles, userProfileId);
 
-            Intent finsih_intent = new Intent(CreateListing.this, UserListingsPage.class);
-            startActivity(finsih_intent);
-            finish();
+            Intent finish_intent = new Intent(CreateListing.this, UserListingsPage.class);
+            //startActivity(finish_intent);
+            //finish();
         });
     } // End onCreate
 
@@ -281,6 +281,8 @@ public class CreateListing extends AppCompatActivity {
 
             }
         };
+
+        flask.saveListing(newListing, response);
 
     }
     /**
