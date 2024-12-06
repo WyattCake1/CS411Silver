@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS UserProfiles (
 -- Table for UserListings
 CREATE TABLE IF NOT EXISTS UserListings (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    campaign BOOLEAN NOT NULL,
+    campaign INT NOT NULL,
     gameName VARCHAR(255) NOT NULL,
     environment VARCHAR(100) NOT NULL,
     day VARCHAR(100),
