@@ -258,28 +258,35 @@ public class CreateListing extends AppCompatActivity {
 
             processListing(listingType, name, environment ,day, start, end, difficulty, roles, userProfileId);
 
-            Intent finish_intent = new Intent(CreateListing.this, UserListingsPage.class);
-            //startActivity(finish_intent);
-            //finish();
+            Intent finish_intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(finish_intent);
+            finish();
         });
     } // End onCreate
 
+    /**
+     * This method creates a listing object out of the passed parameter. The listing object is then
+     * passed to the flask client which then saves the user listing in the database.
+     * @param campaign - Boolean representing campaign yes or no
+     * @param gameName - String game title
+     * @param environment - String session location
+     * @param day - String session day
+     * @param startTime - String session start time
+     * @param endTime - String session end time
+     * @param difficulty - String session difficulty level
+     * @param role - String role(s) chosen
+     * @param userProfileId - Used to reference what user created the listing
+     */
     public void processListing(boolean campaign, String gameName, String environment,String day, String startTime, String endTime,
                                String difficulty, String role, String userProfileId) {
 
         Listing newListing = new Listing(campaign, gameName, environment ,day, startTime, endTime, difficulty, role, userProfileId);
-
         FlaskClient flask = new FlaskClient();
         ResponseCallback response = new ResponseCallback() {
             @Override
-            public void onSuccess(String response) {
-
-            }
-
+            public void onSuccess(String response) {}
             @Override
-            public void onError(IOException e) {
-
-            }
+            public void onError(IOException e) {Log.e("FlaskClient Listing Call", "Request failed: " + e.getMessage(), e);}
         };
 
         flask.saveListing(newListing, response);
