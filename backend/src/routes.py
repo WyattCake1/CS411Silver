@@ -28,7 +28,7 @@ def save_user_listings():
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
         "INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTime, difficulty, role, userProfileId)"
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
         (
             data["campaign"],
             data["gameName"],
@@ -173,7 +173,7 @@ def get_messages_from_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""
+    """
         SELECT
         chat_messages.user_id,
         mock_account.name,
@@ -183,8 +183,8 @@ def get_messages_from_chatroom(chatroom_id: int):
         from chat_messages
 
         left join mock_account on mock_account.user_id = chat_messages.user_id
-        where chatroom_id = {chatroom_id}
-        order by chat_messages.timestamp;"""
+        where chatroom_id = %s
+        order by chat_messages.timestamp;""", (chatroom_id,)
     )
 
     chat_messages = cursor.fetchall()
@@ -198,7 +198,7 @@ def get_members_of_chatroom(chatroom_id: int):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-    f"""
+    """
         SELECT
         mock_account.user_id,
         mock_account.name
@@ -209,10 +209,99 @@ def get_members_of_chatroom(chatroom_id: int):
         INNER JOIN chatrooms on chatrooms.campaign_id
             = COALESCE(campaign_character_slots.campaign_listing_id, mock_listing.listing_id)
 
-        WHERE chatrooms.chatroom_id = {chatroom_id};
-       ;"""
+        WHERE chatrooms.chatroom_id = %s;
+       ;""", (chatroom_id,)
     )
 
     chatroom_members = cursor.fetchall()
     conn.close()
     return jsonify(chatroom_members)
+
+@main.route('/send_chatroom_message', methods=["POST"])
+def add_chatroom_message():
+    """
+        Adds a new chat message to the database.
+
+        Params:
+            ...
+
+        Returns:
+            str: ...
+
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        user_id = request.form['user_id']
+        chatroom_id = request.form['chatroom_id']
+        message = request.form['message']
+
+        cursor.execute(
+        """
+            INSERT INTO `chat_messages`(`chatroom_id`, `user_id`, `message`)
+                VALUES (%s, %s, %s);
+        """, (chatroom_id, user_id, message)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Chatroom message added successfully"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@main.route('/create_chatroom', methods=["POST"])
+def create_chatroom():
+    """
+        Creates a new chatroom given a campaign_id.
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        campaign_id = request.form['campaign_id']
+
+        cursor.execute(
+        """
+            INSERT INTO `chatrooms`(`campaign_id`)
+                VALUES (%s);
+        """, (campaign_id,)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Chatroom created successfully!"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@main.route('/get_campaign_chatroom/<int:campaign_id>', methods=["GET"])
+def campaign_chatroom_lookup(campaign_id: int):
+    """
+        Finds the chatroom associated with a campaign, if it exists.
+
+        Returns:
+            A JSON containing either 0 or 1 chatroom_ids associated with
+            the campaign. 
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(
+        """
+            SELECT `chatroom_id` FROM chatrooms
+                WHERE `campaign_id` = %s;
+        """, (campaign_id,)
+        )
+       
+        chatroom = cursor.fetchall()
+        return jsonify(chatroom)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    

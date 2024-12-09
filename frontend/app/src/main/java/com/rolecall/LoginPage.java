@@ -44,8 +44,6 @@ public class LoginPage extends AppCompatActivity {
         this.enteredPassword = enteredPassword;
     }
 
-
-
     public String getEnteredData() {
         return enteredData;
     }

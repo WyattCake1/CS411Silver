@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation ("com.googlecode.json-simple:json-simple:1.1.1")
     implementation(libs.junit)
+    implementation(libs.dflib)
+    implementation("org.dflib:dflib-json:1.0.0-RC2")
 
     implementation("org.dflib:dflib:1.0.0-RC2")
 

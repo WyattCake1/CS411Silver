@@ -24,15 +24,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rolecall.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateListing extends AppCompatActivity {
 
-    private int listingType = 0;
+    private boolean listingType = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        String userProfileId = intent.getStringExtra("userId");
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_listing);
@@ -40,27 +45,29 @@ public class CreateListing extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
+
         });
         //------------------------------------------------------------------------------------------
         // Roles for dialog recycler view
-        ArrayList<Pair<String, String>> roles = new ArrayList<>();
-        roles.add(new Pair<>("0", "Tank"));
-        roles.add(new Pair<>("0", "DPS"));
-        roles.add(new Pair<>("0", "Face"));
-        roles.add(new Pair<>("0", "Healer"));
-        roles.add(new Pair<>("0", "Support"));
+        ArrayList<Pair<String, String>> arrayRoles = new ArrayList<>();
+        arrayRoles.add(new Pair<>("0", "tank"));
+        arrayRoles.add(new Pair<>("0", "dps"));
+        arrayRoles.add(new Pair<>("0", "face"));
+        arrayRoles.add(new Pair<>("0", "healer"));
+        arrayRoles.add(new Pair<>("0", "support"));
         //------------------------------------------------------------------------------------------
         // Adapter for the recycler view
         RecyclerView recyclerView = findViewById(R.id.roles_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ListAdapter adapter = new ListAdapter(roles);
+        ListAdapter adapter = new ListAdapter(arrayRoles);
         recyclerView.setAdapter(adapter);
         //------------------------------------------------------------------------------------------
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
-        arrayEnv.add("Select");
-        arrayEnv.add("In-person");
-        arrayEnv.add("Digital");
+        arrayEnv.add("select");
+        arrayEnv.add("in-person");
+        arrayEnv.add("online");
         ArrayAdapter<String> adapterEnv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
         adapterEnv.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner environment_spinner = findViewById(R.id.pref_environment_spinner);
@@ -80,7 +87,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Max distance
         ArrayList<String> arrayDist = new ArrayList<>();
-        arrayDist.add("Select");
+        arrayDist.add("select");
         arrayDist.add("5");
         arrayDist.add("10");
         arrayDist.add("25");
@@ -105,16 +112,43 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
-        arrayDiff.add("Select");
-        arrayDiff.add("First Game");
-        arrayDiff.add("Casual");
-        arrayDiff.add("Intermediate");
-        arrayDiff.add("Advanced");
+        arrayDiff.add("select");
+        arrayDiff.add("first Game");
+        arrayDiff.add("casual");
+        arrayDiff.add("intermediate");
+        arrayDiff.add("advanced");
         ArrayAdapter<String> adapterDiff = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayDiff);
         adapterDiff.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner difficulty_spinner = findViewById(R.id.campaign_difficulty_spinner);
         difficulty_spinner.setAdapter(adapterDiff);
         difficulty_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView)parent.getChildAt(0)).setTextSize(18);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //------------------------------------------------------------------------------------------
+        ArrayList<String> arrayDay = new ArrayList<>();
+        arrayDay.add("select day");
+        arrayDay.add("sunday");
+        arrayDay.add("monday");
+        arrayDay.add("tuesday");
+        arrayDay.add("wednesday");
+        arrayDay.add("thursday");
+        arrayDay.add("friday");
+        arrayDay.add("saturday");
+        ArrayAdapter<String> adapterSchedule = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayDay);
+        adapterSchedule.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        Spinner day_spinner = findViewById(R.id.schedule_spinner);
+        day_spinner.setAdapter(adapterSchedule);
+        day_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView)parent.getChildAt(0)).setTextColor(Color.WHITE);
@@ -152,7 +186,7 @@ public class CreateListing extends AppCompatActivity {
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                listingType = 0;
+                listingType = true;
                 charSlots.setText("0");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
@@ -174,10 +208,10 @@ public class CreateListing extends AppCompatActivity {
                 scheduleSpinner.setSelection(0);
             }
             else {
-                Intent intent = new Intent(CreateListing.this, CreateListing.class);
-                startActivity(intent);
+                Intent refresh_intent = new Intent(CreateListing.this, CreateListing.class);
+                startActivity(refresh_intent);
                 finish();
-                listingType = 1;
+                listingType = false;
                 charSlots.setText("1");
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
@@ -199,113 +233,64 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CreateListing.this, MainActivity.class);
-            startActivity(intent);
+            Intent back_intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(back_intent);
             finish();
         });
         //------------------------------------------------------------------------------------------
         Button submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener(v -> {
-            // Get game name and character slots
+
             EditText gameName = findViewById(R.id.game_name_input);
             String name = String.valueOf(gameName.getText());
-            String slots = String.valueOf(charSlots.getText());
 
-            // Get distance, env, difficulty
-            String distance = distance_spinner.getSelectedItem().toString();
             String environment = environment_spinner.getSelectedItem().toString();
             String difficulty = difficulty_spinner.getSelectedItem().toString();
 
-            // Build schedule
-            ArrayList<String> schedule = new ArrayList<String>();
-            String start;
-            String end;
-
-            EditText sundayStart = findViewById(R.id.sunday_start_time);
-            EditText sundayEnd = findViewById(R.id.sunday_end_time);
-            schedule.add("sunday");
-            start = String.valueOf(sundayStart.getText());
-            end = String.valueOf(sundayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText mondayStart = findViewById(R.id.monday_start_time);
-            EditText mondayEnd = findViewById(R.id.monday_end_time);
-            schedule.add("monday");
-            start = String.valueOf(mondayStart.getText());
-            end = String.valueOf(mondayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText tuesdayStart = findViewById(R.id.tuesday_start_time);
-            EditText tuesdayEnd = findViewById(R.id.tuesday_end_time);
-            schedule.add("tuesday");
-            start = String.valueOf(tuesdayStart.getText());
-            end = String.valueOf(tuesdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText wedStart = findViewById(R.id.wednesday_start_time);
-            EditText wedEnd = findViewById(R.id.wednesday_end_time);
-            schedule.add("wednesday");
-            start = String.valueOf(wedStart.getText());
-            end = String.valueOf(wedEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText thursdayStart = findViewById(R.id.thursday_start_time);
-            EditText thursdayEnd = findViewById(R.id.thursday_end_time);
-            schedule.add("thursday");
-            start = String.valueOf(thursdayStart.getText());
-            end = String.valueOf(thursdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText fridayStart = findViewById(R.id.friday_start_time);
-            EditText fridayEnd = findViewById(R.id.friday_end_time);
-            schedule.add("friday");
-            start = String.valueOf(fridayStart.getText());
-            end = String.valueOf(fridayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            EditText saturdayStart = findViewById(R.id.saturday_start_time);
-            EditText saturdayEnd = findViewById(R.id.saturday_end_time);
-            schedule.add("saturday");
-            start = String.valueOf(saturdayStart.getText());
-            end = String.valueOf(saturdayEnd.getText());
-            schedule.add(start);
-            schedule.add(end);
-
-            String finalSchedule = scheduleToJson(schedule);
-
-            // Build preferences
-            String envPref = environmentSpinner.getSelectedItem().toString();
-            String charPref = charRoleSpinner.getSelectedItem().toString();
-            String campPref = campaignRoleSpinner.getSelectedItem().toString();
-            String diffPref = difficultyPrefSpinner.getSelectedItem().toString();
-            String schedulePref = scheduleSpinner.getSelectedItem().toString();
+            String day = day_spinner.getSelectedItem().toString();
+            EditText startTime = findViewById(R.id.start_time);
+            EditText endTime = findViewById(R.id.end_time);
+            String start = String.valueOf(startTime.getText());
+            String end = String.valueOf(endTime.getText());
 
             List<Pair<String, String>> updatedRoles = adapter.getRoles();
-            String finalRoles = rolesToJson(updatedRoles);
+            String roles = rolesToJson(updatedRoles);
 
-            String finalPreferences = prefToJson(envPref, charPref, campPref, diffPref, schedulePref);
+            processListing(listingType, name, environment ,day, start, end, difficulty, roles, userProfileId);
 
-            processListing(listingType, name, slots, distance, environment, difficulty, finalSchedule, finalRoles, finalPreferences);
-
+            Intent finish_intent = new Intent(CreateListing.this, MainActivity.class);
+            startActivity(finish_intent);
+            finish();
         });
     } // End onCreate
 
-    public void processListing(int listingType, String name, String slots, String distance, String environment, String difficulty, String finalSchedule, String finalRoles, String finalPreferences) {
-        Log.i("Game name: ", name);
-        Log.i("Character Slots: ", slots);
-        Log.i("Max Distance: ", distance);
-        Log.i("Environment: ", environment);
-        Log.i("Difficulty: ", difficulty);
-        Log.i("Schedule: ", finalSchedule);
-        Log.i("Roles: ", finalRoles);
-        Log.i("Preferences: ", finalPreferences);
-        Listing newListing = new Listing();
+    /**
+     * This method creates a listing object out of the passed parameter. The listing object is then
+     * passed to the flask client which then saves the user listing in the database.
+     * @param campaign - Boolean representing campaign yes or no
+     * @param gameName - String game title
+     * @param environment - String session location
+     * @param day - String session day
+     * @param startTime - String session start time
+     * @param endTime - String session end time
+     * @param difficulty - String session difficulty level
+     * @param role - String role(s) chosen
+     * @param userProfileId - Used to reference what user created the listing
+     */
+    public void processListing(boolean campaign, String gameName, String environment,String day, String startTime, String endTime,
+                               String difficulty, String role, String userProfileId) {
+
+        Listing newListing = new Listing(campaign, gameName, environment ,day, startTime, endTime, difficulty, role, userProfileId);
+        FlaskClient flask = new FlaskClient();
+        ResponseCallback response = new ResponseCallback() {
+            @Override
+            public void onSuccess(String response) {}
+            @Override
+            public void onError(IOException e) {Log.e("FlaskClient Listing Call", "Request failed: " + e.getMessage(), e);}
+        };
+
+        flask.saveListing(newListing, response);
+
     }
     /**
      * This method creates a JSON from the listings roles(s)
@@ -371,7 +356,7 @@ public class CreateListing extends AppCompatActivity {
     public String prefToJson(String env, String character, String campaign, String difficulty, String schedule) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("{\n \"preferences\": {\n");
+        sb.append("{\n \"importance\": {\n");
         sb.append("\"environment\": \"").append(env).append("\",\n");
         sb.append("\"character\": \"").append(character).append("\",\n");
         sb.append("\"campaign\": \"").append(campaign).append("\",\n");

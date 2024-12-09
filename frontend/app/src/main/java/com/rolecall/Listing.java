@@ -48,6 +48,7 @@ public class Listing implements Serializable {
         this.campaign = json.get("campaign").toString().equals("1");
         this.gameName = json.get("gameName").toString();
         this.environment = json.get("environment").toString();
+        this.day = json.get("day").toString();
         this.startTime = json.get("startTime").toString();
         this.endTime = json.get("endTime").toString();
         this.difficulty = json.get("difficulty").toString();
@@ -74,6 +75,7 @@ public class Listing implements Serializable {
             this.campaign = json.get("campaign").toString().equals("1");
             this.gameName = json.get("gameName").toString();
             this.environment = json.get("environment").toString();
+            this.day = json.get("day").toString();
             this.startTime = json.get("startTime").toString();
             this.endTime = json.get("endTime").toString();
             this.difficulty = json.get("difficulty").toString();
@@ -93,6 +95,7 @@ public class Listing implements Serializable {
         json.put("campaign", this.campaign ? 1 : 0);
         json.put("gameName", this.gameName);
         json.put("environment", this.environment);
+        json.put("day", this.day);
         json.put("startTime", this.startTime);
         json.put("endTime", this.endTime);
         json.put("difficulty", this.difficulty);
