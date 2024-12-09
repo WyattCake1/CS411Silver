@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Chatroom extends AppCompatActivity {
 
@@ -31,6 +32,18 @@ public class Chatroom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chatroom);
+        Intent intent = getIntent();
+        String deciders=intent.getStringExtra("d");
+
+
+        if(Objects.equals(deciders, "dog")){
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(), deciders, Toast.LENGTH_SHORT).show());
+
+
+            Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(Mover);
+
+        }
 
         // code here
 

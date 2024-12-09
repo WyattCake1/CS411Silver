@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
         MockChatroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String decider="dog";
                 Intent intent = new Intent(view.getContext(), Chatroom.class);
+                intent.putExtra("d",decider);
                 view.getContext().startActivity(intent);}
         });
 
