@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 view.getContext().startActivity(intent);}
         });
 
+
         ListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

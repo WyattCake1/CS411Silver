@@ -101,7 +101,6 @@ public class Registrar extends AppCompatActivity {
                                     Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
                                     startActivity(Mover);
 
-
                                 } else {
                                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
                                 }
