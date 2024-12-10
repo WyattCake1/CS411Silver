@@ -192,7 +192,7 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> {
-            Intent back_intent = new Intent(CreateListing.this, MainActivity.class);
+            Intent back_intent = new Intent(CreateListing.this, UserListingsPage.class);
             startActivity(back_intent);
             finish();
         });
@@ -217,7 +217,7 @@ public class CreateListing extends AppCompatActivity {
 
             processListing(listingType, name, environment ,day, start, end, difficulty, roles, userProfileId);
 
-            Intent finish_intent = new Intent(CreateListing.this, MainActivity.class);
+            Intent finish_intent = new Intent(CreateListing.this, UserListingsPage.class);
             startActivity(finish_intent);
             finish();
         });
