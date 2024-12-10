@@ -81,7 +81,7 @@ public class MatchingListings extends AppCompatActivity {
         String[] matchesAndScores = response.replace("[", "").split("],");
         for(String s : matchesAndScores){
             String[] separated = s.split("\\},");
-            matches.add(new Listing(separated[0]));
+            matches.add(new Listing(separated[0]+"}"));
             scores.add(separated[1].replace("]","").trim());
         }
 
@@ -183,5 +183,9 @@ public class MatchingListings extends AppCompatActivity {
     private int dpToPx (int dp){
         float density = this.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    public void backToPrevious(View v){
+        finish();
     }
 }

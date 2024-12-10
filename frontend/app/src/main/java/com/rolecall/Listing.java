@@ -65,6 +65,7 @@ public class Listing implements Serializable {
             throw new RuntimeException(e);
         }
         this.userProfileId = json.get("userProfileId").toString();
+        this.listingId = json.get("id").toString();
     }
 
     //passed in json string
@@ -81,10 +82,13 @@ public class Listing implements Serializable {
             this.difficulty = json.get("difficulty").toString();
             this.role = new HashMap<>();
             JSONObject roleJson = (JSONObject) parser.parse(json.get("role").toString());
+            this.role.put("Tank", Integer.parseInt(roleJson.get("Tank").toString()));
             this.role.put("DPS", Integer.parseInt(roleJson.get("DPS").toString()));
-            this.role.put("healer", Integer.parseInt(roleJson.get("healer").toString()));
-            this.role.put("tank", Integer.parseInt(roleJson.get("tank").toString()));
+            this.role.put("Face", Integer.parseInt(roleJson.get("Face").toString()));
+            this.role.put("Healer", Integer.parseInt(roleJson.get("Healer").toString()));
+            this.role.put("Support", Integer.parseInt(roleJson.get("Support").toString()));
             this.userProfileId = json.get("userProfileId").toString();
+            this.listingId = json.get("id").toString();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
