@@ -12,8 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
-
+import java.util.Objects;
 
 
 import androidx.activity.EdgeToEdge;
@@ -78,6 +77,14 @@ public class Registrar extends AppCompatActivity {
                         setEnteredData(editText.getText().toString());
                         setEnteredPassword(editPassword.getText().toString());
                         setEnteredEmail(editEmail.getText().toString());
+
+                        if(Objects.equals(getEnteredEmail(), "") || Objects.equals(getEnteredPassword(), "")|| Objects.equals(getEnteredData(), "")){
+                            Intent intent = getIntent();
+                            Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please fill in all Entries.", Toast.LENGTH_SHORT).show());
+                            startActivity(Mover);
+                            return;
+                        }
 
                          Thread HttpThread= new  Thread(() -> {
                             try {

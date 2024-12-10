@@ -136,7 +136,7 @@ public class LoginPage extends AppCompatActivity {
 
 
                                     } else {
-                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Great job", Toast.LENGTH_SHORT).show());
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Credentials found", Toast.LENGTH_SHORT).show());
 
                                         final String[] userId = new String[1];
                                         CountDownLatch latch = new CountDownLatch(1);
