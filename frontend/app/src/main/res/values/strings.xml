@@ -17,8 +17,8 @@
     <string name="create_listing_title">Create Listing</string>
     <string name="character_type_listing">Character</string>
     <string name="campaign_type_listing">Campaign</string>
-    <string name="game_title_label">Game Title</string>
-    <string name="char_slot_label">Character Slots</string>
+    <string name="game_title_label">game title</string>
+    <string name="char_slot_label">character slots</string>
     <string name="location_spin_label">Select Location:</string>
     <string name="max_dist_label">Select Maximum Distance:</string>
     <string name="difficulty_spin_label">Select Difficulty:</string>
