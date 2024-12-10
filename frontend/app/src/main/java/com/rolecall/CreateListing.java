@@ -162,32 +162,14 @@ public class CreateListing extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-        // Setting Importance
-        ArrayList<String> arrayImportance = new ArrayList<>();
-        arrayImportance.add("Select");
-        arrayImportance.add("Non-negotiable");
-        arrayImportance.add("Important");
-        arrayImportance.add("Nice to Have");
-        arrayImportance.add("Not Important");
-        Spinner environmentSpinner = findViewById(R.id.env_pref_spinner);
-        setupSpinner(environmentSpinner, arrayImportance);
-        Spinner charRoleSpinner = findViewById(R.id.char_pref_spinner);
-        setupSpinner(charRoleSpinner, arrayImportance);
-        Spinner campaignRoleSpinner = findViewById(R.id.campaign_pref_spinner);
-        setupSpinner(campaignRoleSpinner, arrayImportance);
-        Spinner difficultyPrefSpinner = findViewById(R.id.difficulty_pref_spinner);
-        setupSpinner(difficultyPrefSpinner, arrayImportance);
-        Spinner scheduleSpinner = findViewById(R.id.schedule_pref_spinner);
-        setupSpinner(scheduleSpinner, arrayImportance);
-        //------------------------------------------------------------------------------------------
         // Listing Toggle Switch
         EditText charSlots = findViewById(R.id.char_slots_input);
         charSlots.setText("1");
         SwitchCompat listingTypeSwitchCompat = findViewById(R.id.listing_type_switch);
         listingTypeSwitchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                listingType = true;
-                charSlots.setText("0");
+                listingType = true; // Campaign listing
+                charSlots.setText("character slots");
                 charSlots.setFocusable(true);
                 charSlots.setEnabled(true);
                 charSlots.setCursorVisible(true);
@@ -196,38 +178,15 @@ public class CreateListing extends AppCompatActivity {
                 distance_spinner.setSelection(0);
                 environment_spinner.setSelection(0);
                 difficulty_spinner.setSelection(0);
-                environmentSpinner.setEnabled(false);
-                environmentSpinner.setSelection(0);
-                charRoleSpinner.setEnabled(false);
-                charRoleSpinner.setSelection(0);
-                campaignRoleSpinner.setEnabled(false);
-                campaignRoleSpinner.setSelection(0);
-                difficultyPrefSpinner.setEnabled(false);
-                difficultyPrefSpinner.setSelection(0);
-                scheduleSpinner.setEnabled(false);
-                scheduleSpinner.setSelection(0);
             }
             else {
-                Intent refresh_intent = new Intent(CreateListing.this, CreateListing.class);
-                startActivity(refresh_intent);
-                finish();
-                listingType = false;
+                listingType = false; // Character listing
                 charSlots.setText("1");
                 charSlots.setFocusable(false);
                 charSlots.setEnabled(false);
                 charSlots.setCursorVisible(false);
                 distance_spinner.setEnabled(true);
                 distance_spinner.setSelection(0);
-                environmentSpinner.setEnabled(true);
-                environmentSpinner.setSelection(0);
-                charRoleSpinner.setEnabled(true);
-                charRoleSpinner.setSelection(0);
-                campaignRoleSpinner.setEnabled(true);
-                campaignRoleSpinner.setSelection(0);
-                difficultyPrefSpinner.setEnabled(true);
-                difficultyPrefSpinner.setSelection(0);
-                scheduleSpinner.setEnabled(true);
-                scheduleSpinner.setSelection(0);
             }
         });
         //------------------------------------------------------------------------------------------
