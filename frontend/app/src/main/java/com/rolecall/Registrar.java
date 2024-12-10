@@ -96,7 +96,12 @@ public class Registrar extends AppCompatActivity {
                                     BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
                                     in.close();
                                     myConnection.disconnect();
-                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show());
+                                    Intent intent = getIntent();
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show());
+                                    Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(Mover);
+
+
                                 } else {
                                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
                                 }
@@ -107,16 +112,6 @@ public class Registrar extends AppCompatActivity {
                     }
                 });
 
-        Button mybutton = findViewById(R.id.nextButton);
-        mybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Profile.class);
-                intent.putExtra("Username",enteredData);
-                intent.putExtra("Password",enteredPassword);
-                intent.putExtra("Email",enteredEmail);
-                view.getContext().startActivity(intent);}
-        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
