@@ -47,6 +47,52 @@ def save_user_listings():
 
     return jsonify({"message": "Listing saved", "listing_id": listing_id}),201
 
+@main.route('/listings', methods=['PUT'])
+def update_user_listings():
+    data = request.get_json()
+    required_fields = ["campaign", "gameName", "environment", "day", "startTime", "endTime", "difficulty", "role", "userProfileId"]
+    for field in required_fields:
+        if field not in data:
+            print(field)
+            return jsonify({"error": f"Missing required field: {field}"}), 400
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    print(data["campaign"])
+    cursor.execute("SELECT * FROM UserListings WHERE userProfileId = %s AND campaign = %s AND gameName = %s",(
+        data["userProfileId"],
+        data["campaign"],
+        data["gameName"]))
+
+    row = cursor.fetchone()
+
+    if not row:
+        return jsonify({"error": "Listing Not Found"}),404
+    
+    listing_id = row['id']
+
+    cursor.execute(
+        "UPDATE UserListings "
+        "SET campaign = %s, gameName = %s, environment = %s, day = %s, "
+        "startTime = %s, endTime = %s, difficulty = %s, role = %s, userProfileId = %s "
+        "WHERE id = %s",
+        (
+            data["campaign"],
+            data["gameName"],
+            data["environment"],
+            data["day"],
+            data["startTime"],
+            data["endTime"],
+            data["difficulty"],
+            data["role"],
+            data["userProfileId"],
+            listing_id
+        )
+    )
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Listing Updated", "listingid": listing_id}),201
+
 @main.route('/users/<string:name>', methods=['GET'])
 def get_user_profile_id(name):
     conn = get_db_connection()
