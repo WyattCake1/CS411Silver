@@ -61,6 +61,7 @@ public class MatchingListings extends AppCompatActivity {
         flaskClient.requestMatches(listId, userId, new ResponseCallback() {
             @Override
             public void onSuccess(String response) {
+                System.out.println(response);
                 hasMatches = !response.equals("None");
                 if(hasMatches){
                     extractListings(response);

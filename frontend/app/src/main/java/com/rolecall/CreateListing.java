@@ -65,9 +65,9 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Preferred environment
         ArrayList<String> arrayEnv = new ArrayList<>();
-        arrayEnv.add("select");
-        arrayEnv.add("in-person");
-        arrayEnv.add("online");
+        arrayEnv.add("Select");
+        arrayEnv.add("In-Person");
+        arrayEnv.add("Online");
         ArrayAdapter<String> adapterEnv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayEnv);
         adapterEnv.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner environment_spinner = findViewById(R.id.pref_environment_spinner);
@@ -112,11 +112,11 @@ public class CreateListing extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         // Campaign difficulty
         ArrayList<String> arrayDiff = new ArrayList<>();
-        arrayDiff.add("select");
-        arrayDiff.add("first Game");
-        arrayDiff.add("casual");
-        arrayDiff.add("intermediate");
-        arrayDiff.add("advanced");
+        arrayDiff.add("Select");
+        arrayDiff.add("First Game");
+        arrayDiff.add("Casual");
+        arrayDiff.add("Intermediate");
+        arrayDiff.add("Advanced");
         ArrayAdapter<String> adapterDiff = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayDiff);
         adapterDiff.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner difficulty_spinner = findViewById(R.id.campaign_difficulty_spinner);
@@ -136,14 +136,14 @@ public class CreateListing extends AppCompatActivity {
         });
         //------------------------------------------------------------------------------------------
         ArrayList<String> arrayDay = new ArrayList<>();
-        arrayDay.add("select day");
-        arrayDay.add("sunday");
-        arrayDay.add("monday");
-        arrayDay.add("tuesday");
-        arrayDay.add("wednesday");
-        arrayDay.add("thursday");
-        arrayDay.add("friday");
-        arrayDay.add("saturday");
+        arrayDay.add("Select day");
+        arrayDay.add("Sun");
+        arrayDay.add("Mon");
+        arrayDay.add("Tue");
+        arrayDay.add("Wed");
+        arrayDay.add("Thu");
+        arrayDay.add("Fri");
+        arrayDay.add("Sat");
         ArrayAdapter<String> adapterSchedule = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayDay);
         adapterSchedule.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         Spinner day_spinner = findViewById(R.id.schedule_spinner);
@@ -210,7 +210,9 @@ public class CreateListing extends AppCompatActivity {
             EditText startTime = findViewById(R.id.start_time);
             EditText endTime = findViewById(R.id.end_time);
             String start = String.valueOf(startTime.getText());
+            start = start.replace("pm"," PM").replace("am", " AM");
             String end = String.valueOf(endTime.getText());
+            end = end.replace("pm"," PM").replace("am", " AM");
 
             List<Pair<String, String>> updatedRoles = adapter.getRoles();
             String roles = rolesToJson(updatedRoles);

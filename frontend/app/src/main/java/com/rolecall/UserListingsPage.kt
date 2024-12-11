@@ -186,7 +186,12 @@ fun ListingItem(listing: Listing){
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Button(modifier = Modifier.weight(1f),onClick = { }) {
+                    Button(modifier = Modifier.weight(1f),onClick = {
+                        val intent = Intent(context, MatchingListings::class.java)
+                        intent.putExtra("listingId",listing.listingId)
+                        intent.putExtra("userId", listing.userProfileId)
+                        context.startActivity(intent)
+                    }) {
                         Text(
                             text = "Matches",
                             fontSize = 16.sp
