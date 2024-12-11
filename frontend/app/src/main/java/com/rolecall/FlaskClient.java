@@ -82,6 +82,30 @@ public class FlaskClient{
         });
     }
 
+    public void updateListing(Listing listing, ResponseCallback callback) {
+        String jsonListing = listing.toJson();
+        RequestBody body = RequestBody.create(jsonListing, MediaType.parse("application/json; charset=utf-8"));
+        Request request = new Request.Builder()
+                .url("http://10.0.2.2:5000" + FlaskEndpoints.userListings)
+                .put(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().string());
+                } else {
+                    callback.onError(new IOException("Request failed with status code: " + response.code()));
+                }
+            }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError(e);
+            }
+        });
+    }
+
     public void getActiveUsersId(String name, ResponseCallback callback){
         String url = "http://10.0.2.2:5000/users/" + name;
         Request request = new Request.Builder().url(url).build();

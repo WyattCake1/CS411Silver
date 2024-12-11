@@ -1,7 +1,9 @@
 package com.rolecall;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.parser.*;
@@ -107,11 +109,25 @@ public class Listing implements Serializable {
 
         JSONObject roleJson = new JSONObject(this.role);
         json.put("role", roleJson.toString());
-
         return json.toJSONString();
     }
 
-    public boolean isCampaign() {
+    public List<Object> toList() {
+        List<Object> fields = new ArrayList<>();
+        fields.add(campaign); //0
+        fields.add(gameName); //1
+        fields.add(environment); //2
+        fields.add(day); //3
+        fields.add(startTime); //4
+        fields.add(endTime); //5
+        fields.add(difficulty); //6
+        fields.add(role); //7
+        fields.add(userProfileId); //8
+
+        return fields;
+    }
+
+    public boolean getCampaign() {
         return campaign;
     }
 
@@ -194,4 +210,6 @@ public class Listing implements Serializable {
     public void setUserProfileId(String userProfileId){
         this.userProfileId = userProfileId;
     }
+
+    public void setListingId(String listingId){this.listingId = listingId;}
 }
