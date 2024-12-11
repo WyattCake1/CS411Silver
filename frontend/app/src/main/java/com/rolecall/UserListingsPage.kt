@@ -2,6 +2,7 @@ package com.rolecall
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -97,7 +98,7 @@ fun Render(userListings: MutableList<Listing>,id : String) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 RenderHeader()
-                RenderListings(userListings)
+                RenderListings(userListings, Integer.parseInt(id))
             }
         }
     }
@@ -126,7 +127,7 @@ suspend fun getListings(id : String, userListings: MutableList<Listing>) {
 }
 
 @Composable
-fun RenderListings(userListings: List<Listing>){
+fun RenderListings(userListings: List<Listing>, id: Int){
     if (userListings.isEmpty()){
         //clean up this
         Text("You have no listings, get started matching with button below", color = WhiteText)
@@ -138,7 +139,7 @@ fun RenderListings(userListings: List<Listing>){
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             userListings.forEach{
-                ListingItem(it)
+                ListingItem(it, id)
             }
         }
     }
@@ -146,7 +147,7 @@ fun RenderListings(userListings: List<Listing>){
 }
 
 @Composable
-fun ListingItem(listing: Listing){
+fun ListingItem(listing: Listing, id: Int){
     val context = LocalContext.current
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -192,7 +193,16 @@ fun ListingItem(listing: Listing){
                             fontSize = 16.sp
                         )
                     }
-                    Button(modifier = Modifier.weight(1f),onClick = { }) {
+                    Button(modifier = Modifier.weight(1f),onClick = {
+
+                        // Launch the Chatroom Activity
+                        val intent = Intent(context, Chatroom::class.java)
+                        // replace the 1 in the next line with the userId
+                        intent.putExtra("userId", id)
+                        intent.putExtra("campaignId", Integer.parseInt(listing.getListingId()))
+                        context.startActivity(intent)
+
+                    }) {
                         Text(
                             text = "Chat",
                             fontSize = 16.sp
