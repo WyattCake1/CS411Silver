@@ -51,6 +51,8 @@ INSERT INTO UserListings (campaign, gameName, environment, day, startTime, endTi
     (FALSE, 'Dnd', 'Online', "Fri", "5:00 PM", "9:00 PM", 'Casual', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
     (FALSE, 'Warhammer', 'In-Person', "Mon", "4:00 PM", "7:00 PM", 'First Game', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3),
     (TRUE, 'Warhammer', 'Online', "Sat", "3:30 PM", "7:00 PM", 'Intermediate', '{"Tank": 1, "DPS" : 2, "Face" : 3, "Healer" : 4, "Support" : 5}', 3);
+-- Additional Users to populate chat messages
+INSERT INTO `UserProfiles` VALUES (4,'brad','322f965a2919f46725dece842eb487fc569656d59bf3e1d35cc33cf8a9dcdfec','brad@brad.com'),(5,'ptv','61c857311c992564367edb239fe92cff65b73562a287ba81c6b1dbbc43549af7','ptv@gmail.com'),(6,'tudor','07a06feaaf9beac6f3ed3e822a008d9193504f726503d4bc23c0d3fe3ae56917','tudor@england.com'),(7,'dummy','b5a2c96250612366ea272ffac6d9744aaf4b45aacd96aa7cfcb931ee3b558259','dummy@mail.com'),(8,'santa','b6dc9083da372fed2119ace11ae9ba8713f7e30827e854371eb5d2335aec664b','santa@claus.com');
 
 -- DATABASE Tests for Chatroom Feature
 
@@ -110,13 +112,16 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `campaign_character_slots`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+DROP TABLE IF EXISTS `campaign_character_slots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `campaign_character_slots` (
   `campaign_listing_id` int NOT NULL,
   `character_listing_id` int NOT NULL,
-  PRIMARY KEY (`campaign_listing_id`,`character_listing_id`),
+  KEY `campaign_listing_id_idx` (`campaign_listing_id`),
   KEY `character_listing_id_idx` (`character_listing_id`),
-  CONSTRAINT `campaign_listing_id` FOREIGN KEY (`campaign_listing_id`) REFERENCES `mock_listing` (`listing_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `character_listing_id` FOREIGN KEY (`character_listing_id`) REFERENCES `mock_listing` (`listing_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `campaign_listing_id` FOREIGN KEY (`campaign_listing_id`) REFERENCES `UserListings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `character_listing_id` FOREIGN KEY (`character_listing_id`) REFERENCES `UserListings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,8 +148,8 @@ CREATE TABLE `chatrooms` (
   UNIQUE KEY `chatroom_id_UNIQUE` (`chatroom_id`),
   KEY `campaign_id_idx` (`chatroom_id`,`campaign_id`),
   KEY `campaign_id_idx1` (`campaign_id`),
-  CONSTRAINT `campaign_id` FOREIGN KEY (`campaign_id`) REFERENCES `mock_listing` (`listing_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `campaign_id` FOREIGN KEY (`campaign_id`) REFERENCES `UserListings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,8 +179,8 @@ CREATE TABLE `chat_messages` (
   KEY `chatroom_id_idx` (`chatroom_id`) /*!80000 INVISIBLE */,
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `chatroom_id` FOREIGN KEY (`chatroom_id`) REFERENCES `chatrooms` (`chatroom_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `mock_account` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `messages_to_user_id` FOREIGN KEY (`user_id`) REFERENCES `UserProfiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

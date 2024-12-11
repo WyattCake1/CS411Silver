@@ -3,6 +3,7 @@ from db import get_db_connection
 import hashlib
 import mysql.connector
 from matching_algorithm import match_listings
+import logging
 
 main = Blueprint("main",__name__)
 
@@ -176,13 +177,13 @@ def get_messages_from_chatroom(chatroom_id: int):
     """
         SELECT
         chat_messages.user_id,
-        mock_account.name,
+        UserProfiles.name,
         chat_messages.message,
         chat_messages.timestamp
 
         from chat_messages
 
-        left join mock_account on mock_account.user_id = chat_messages.user_id
+        left join UserProfiles on UserProfiles.id = chat_messages.user_id
         where chatroom_id = %s
         order by chat_messages.timestamp;""", (chatroom_id,)
     )
@@ -275,6 +276,9 @@ def create_chatroom():
         return jsonify({"message": "Chatroom created successfully!"})
     
     except Exception as e:
+    
+        logging.error(f"Error creating chatroom: {e}")
+        
         return jsonify({"error": str(e)}), 500
 
 
