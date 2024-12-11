@@ -12,8 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
-
+import java.util.Objects;
 
 
 import androidx.activity.EdgeToEdge;
@@ -79,6 +78,14 @@ public class Registrar extends AppCompatActivity {
                         setEnteredPassword(editPassword.getText().toString());
                         setEnteredEmail(editEmail.getText().toString());
 
+                        if(Objects.equals(getEnteredEmail(), "") || Objects.equals(getEnteredPassword(), "")|| Objects.equals(getEnteredData(), "")){
+                            Intent intent = getIntent();
+                            Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please fill in all Entries.", Toast.LENGTH_SHORT).show());
+                            startActivity(Mover);
+                            return;
+                        }
+
                          Thread HttpThread= new  Thread(() -> {
                             try {
                                 String urlString = "http://10.0.2.2:5000/register";
@@ -96,7 +103,11 @@ public class Registrar extends AppCompatActivity {
                                     BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
                                     in.close();
                                     myConnection.disconnect();
-                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show());
+                                    Intent intent = getIntent();
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show());
+                                    Intent Mover= new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(Mover);
+
                                 } else {
                                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show());
                                 }
@@ -107,16 +118,6 @@ public class Registrar extends AppCompatActivity {
                     }
                 });
 
-        Button mybutton = findViewById(R.id.nextButton);
-        mybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Profile.class);
-                intent.putExtra("Username",enteredData);
-                intent.putExtra("Password",enteredPassword);
-                intent.putExtra("Email",enteredEmail);
-                view.getContext().startActivity(intent);}
-        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

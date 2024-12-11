@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 view.getContext().startActivity(intent);}
         });
 
+
         ListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Chatroom.class);
                 intent.putExtra("userId", 1);
-                intent.putExtra("campaignId", 6);
+                intent.putExtra("campaignId", 4);
                 view.getContext().startActivity(intent);}
         });
 

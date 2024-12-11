@@ -80,8 +80,6 @@ public class LoginPage extends AppCompatActivity {
                             try {
 
                                 String urlString = "http://10.0.2.2:5000/login";
-                                String username = "Berhans";
-                                String password = "BEESecret";
                                 JSONParser jsonParser = new JSONParser();
 
 
@@ -127,17 +125,19 @@ public class LoginPage extends AppCompatActivity {
                                     if (holder.isEmpty()) {
                                         View.OnClickListener listener = new View.OnClickListener() {
 
-                                        @Override
-                                        public void onClick (View view){
-                                            Intent intent = new Intent(view.getContext(), MainActivity.class);
-                                            view.getContext().startActivity(intent);
-                                        }
-                                    };
+                                            @Override
+                                            public void onClick (View view){
+                                                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                                view.getContext().startActivity(intent);
+                                            }
+                                        };
                                         submitButton.setOnClickListener(listener);
-                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show());
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_SHORT).show());
 
 
                                     } else {
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Credentials found", Toast.LENGTH_SHORT).show());
+
                                         final String[] userId = new String[1];
                                         CountDownLatch latch = new CountDownLatch(1);
                                         if(!jsonResponse.isEmpty()){

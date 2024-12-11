@@ -38,6 +38,7 @@ android {
         compose = true
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -58,6 +59,8 @@ dependencies {
     implementation(libs.junit)
     implementation(libs.dflib)
     implementation("org.dflib:dflib-json:1.0.0-RC2")
+
+    implementation("org.dflib:dflib:1.0.0-RC2")
 
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
